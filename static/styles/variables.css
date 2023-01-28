@@ -1,0 +1,16 @@
+:root {
+  /* typography */
+  --font-base-absolute: 16px;
+  --font-base: 1rem;
+  --font-family: serif;
+
+  /* dimensions */
+  --padding-base: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-base: 1.125rem;
+
+  /* color */
+  --color-primary: black;
+  --color-secondary: darkgray;
+  --color-background: var(--color-secondary);
+}

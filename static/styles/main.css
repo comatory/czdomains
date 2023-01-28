@@ -1,0 +1,25 @@
+@import url("variables.css");
+@import url("components/nav-bar.css");
+@import url("components/heading.css");
+
+html {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-background);
+  font-size: var(--font-base-absolute);
+  font-family: var(--font-family);
+}
+
+body {
+  padding: var(--padding-base);
+  font-size: var(--font-base);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-align: center;
+}
+
+code {
+  font-family: monospace;
+  background-color: slategrey;
+}
