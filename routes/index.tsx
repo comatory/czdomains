@@ -15,8 +15,16 @@ export default function Home() {
           past. You can search by its name to get its detail.
         </p>
         <p>
-          Some entries contain <a href="https://archive.org" target="_blank" rel="noreferrer noopener">archive.org</a> links. You can also request
-          these links on demand but beware <em>capacity is limited</em>.
+          Some entries contain{" "}
+          <a
+            href="https://archive.org"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            archive.org
+          </a>{" "}
+          links. You can also request these links on demand but beware{" "}
+          <em>capacity is limited</em>.
         </p>
         <p>
           Submissions are welcome if the domain is not already in the database.
@@ -27,11 +35,14 @@ export default function Home() {
         <dl>
           <dt>What is Czechia?</dt>
           <dd>
-            It is a small country of approximately 10.5 million inhabitants located
-            in central Europe. It's also called Czech Republic, formerly it was
-            known as Czechoslovakia (pre 1993).
-            Read more
-            <a href="https://en.wikipedia.org/wiki/Czech_Republic" rel="noreferrer noopener" target="_blank">
+            It is a small country of approximately 10.5 million inhabitants
+            located in central Europe. It's also called Czech Republic, formerly
+            it was known as Czechoslovakia (pre 1993). Read more
+            <a
+              href="https://en.wikipedia.org/wiki/Czech_Republic"
+              rel="noreferrer noopener"
+              target="_blank"
+            >
               here
             </a>
           </dd>

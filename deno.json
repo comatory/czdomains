@@ -1,6 +1,7 @@
 {
   "tasks": {
-    "start": "deno run -A --watch=static/,routes/ dev.ts"
+    "start": "deno run -A --watch=static/,routes/ dev.ts",
+    "import:data": "deno run --allow-read scripts/import-data.ts"
   },
   "importMap": "./import_map.json",
   "compilerOptions": {
