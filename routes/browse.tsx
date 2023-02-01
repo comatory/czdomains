@@ -5,14 +5,9 @@ import Heading from "../components/heading.tsx";
 import NavBar from "../components/nav-bar.tsx";
 import Section from "../components/section.tsx";
 
-// TODO: instantiate elsewhere
-import { DB } from "sqlite";
-import { DomainsRepositoryFactory } from "../services/index.ts";
+import { domainsRepository } from "../services/instances.ts";
 import type { PaginatedList } from "../models/pagination.ts";
 import type { Domain } from "../models/domain.ts";
-
-const db = new DB("./sqlite.db");
-const domainsRepository = DomainsRepositoryFactory({ db });
 
 export const handler: Handlers<PaginatedList<Domain>> = {
   GET(req, ctx) {

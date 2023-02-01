@@ -9,18 +9,19 @@ import type {
 } from "../models/index.ts";
 import { normalizeDomainFromDB, normalizeListFromDB } from "../models/index.ts";
 
-type DomainsRepository = {
-  getDomainDetail: (id: Domain["id"]) => Domain | null;
-  getPaginatedList: (pagination: Pagination) => PaginatedList<Domain>;
-};
+export class DomainsRepository {
+  private db: DB;
 
-export function DomainsRepositoryFactory({
-  db,
-}: {
-  db: DB;
-}): DomainsRepository {
-  function getDomainDetail(id: Domain["id"]) {
-    const records = db.query<RawDomain>(
+  constructor({
+    db,
+  }: {
+    db: DB;
+  }) {
+    this.db = db;
+  }
+
+  public getDomainDetail(id: Domain["id"]): Domain | null {
+    const records = this.db.query<RawDomain>(
       `SELECT id,
               value,
               datetime(created_at, \'unixepoch\'),
@@ -38,16 +39,16 @@ export function DomainsRepositoryFactory({
     return normalizeDomainFromDB(record);
   }
 
-  function getPaginatedList(pagination: Pagination) {
-    const records = db.query<PaginatedRecord<RawDomain>>(
+  getPaginatedList(pagination: Pagination): PaginatedList<Domain> {
+    const records = this.db.query<PaginatedRecord<RawDomain>>(
       `SELECT id,
-              value,
-              datetime(created_at, \'unixepoch\'),
-              datetime(updated_at, \'unixepoch\'),
-              COUNT() OVER() as totalCount
-       FROM domains
-       ORDER BY value
-       LIMIT ? OFFSET ?`,
+                value,
+                datetime(created_at, \'unixepoch\'),
+                datetime(updated_at, \'unixepoch\'),
+                COUNT() OVER() as totalCount
+         FROM domains
+         ORDER BY value
+         LIMIT ? OFFSET ?`,
       [pagination.limit, pagination.offset],
     );
 
@@ -57,9 +58,4 @@ export function DomainsRepositoryFactory({
       pagination,
     );
   }
-
-  return {
-    getDomainDetail,
-    getPaginatedList,
-  };
 }
