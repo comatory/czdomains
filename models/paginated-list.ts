@@ -4,8 +4,17 @@ function isNumber(value: unknown): value is number {
   return Number.isFinite(value);
 }
 
+function isArray(value: unknown): value is Array<unknown> {
+  return Array.isArray(value);
+}
+
 function getTotalCountFieldValue(field: unknown): number {
-  return isNumber(field) ? field : 0;
+  if (!isArray(field)) {
+    return 0;
+  }
+  const lastItem = field[field.length - 1]
+
+  return isNumber(lastItem) ? lastItem : 0;
 }
 
 export function normalizeListFromDB<
@@ -17,7 +26,7 @@ export function normalizeListFromDB<
   pagination: Pagination,
 ): PaginatedList<NormalizedRecord> {
   const normalizedRecords = records.map(normalizerFn);
-  const totalCount = getTotalCountFieldValue(records[records.length - 1]);
+  const totalCount = getTotalCountFieldValue(records[0]);
 
   const paginatedList: PaginatedList<NormalizedRecord> = {
     list: normalizedRecords,
