@@ -13,6 +13,7 @@ import { getPaginationDetailsFromQueryParams } from "../../utils/pagination.ts";
 import { getBrowseFilterFromQueryParams } from "../../utils/browse-filters.ts";
 import type { PaginatedList } from "../../models/pagination.ts";
 import type { Domain } from "../../models/domain.ts";
+import { InvalidInputError } from "../../errors/invalid-input.ts";
 
 type Data = {
   paginatedList: PaginatedList<Domain>;
@@ -22,15 +23,32 @@ type Data = {
 export const handler: Handlers<Data> = {
   GET(req, ctx) {
     const url = new URL(req.url);
-    const records = domainsRepository.getPaginatedList(
-      getPaginationDetailsFromQueryParams(url),
-      getBrowseFilterFromQueryParams(url),
-    );
+    try {
+      const records = domainsRepository.getPaginatedList(
+        getPaginationDetailsFromQueryParams(url),
+        getBrowseFilterFromQueryParams(url),
+      );
 
-    return ctx.render({
-      paginatedList: records,
-      url,
-    });
+      return ctx.render({
+        paginatedList: records,
+        url,
+      });
+    } catch (error: unknown) {
+      if (error instanceof InvalidInputError) {
+        return new Response(null, {
+          status: 400,
+          headers: new Headers({
+            location: new URL(req.url).origin,
+          }),
+        });
+      }
+      return new Response(null, {
+        status: 500,
+        headers: new Headers({
+          location: new URL(req.url).origin,
+        }),
+      });
+    }
   },
 };
 

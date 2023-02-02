@@ -1,5 +1,6 @@
 import type { BrowseFilter } from "../constants/browse.ts";
 import { BROWSE_FILTERS } from "../constants/browse.ts";
+import { InvalidInputError } from "../errors/invalid-input.ts";
 
 function isValidFilter(param: string): param is BrowseFilter {
   return param in BROWSE_FILTERS;
@@ -7,7 +8,7 @@ function isValidFilter(param: string): param is BrowseFilter {
 
 export function sanitizeFilter(param: string): BrowseFilter | never {
   if (!isValidFilter(param)) {
-    throw new Error(`Filter not recognized`);
+    throw new InvalidInputError(`Filter not recognized`);
   }
 
   return param;

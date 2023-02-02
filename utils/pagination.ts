@@ -6,6 +6,7 @@ import {
   DEFAULT_PAGE,
 } from "../constants/pagination.ts";
 import type { AllowedPaginationLimit } from "../constants/pagination.ts";
+import { InvalidInputError } from "../errors/invalid-input.ts";
 
 export function getPaginationDetailsFromQueryParams(url: URL): Pagination {
   const params = new URLSearchParams(url.searchParams);
@@ -82,7 +83,7 @@ export function normalizePageNumber(page: number, total: number): number {
 
 export function sanitizeLimit(limit: number): AllowedPaginationLimit | never {
   if (!isValidLimit(limit)) {
-    throw new Error(`Invalid limit value ${limit}`);
+    throw new InvalidInputError(`Invalid limit value ${limit}`);
   }
 
   return limit;
