@@ -41,10 +41,10 @@ export default function ({
   ]);
 
   return (
-    <nav>
-      <ul>
+    <nav class="browse-nav-menu">
+      <ul class="browse-nav-menu__list">
         {Array.from(orderedLinks.entries()).map(([name, link]) => (
-          <li key={link}>
+          <li class="browse-nav-menu__list__item" key={link}>
             <NavLink url={link} isActive={url.href === link}>{name}</NavLink>
           </li>
         ))}

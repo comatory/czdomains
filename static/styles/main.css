@@ -1,6 +1,7 @@
 @import url("variables.css");
 @import url("components/nav-bar.css");
 @import url("components/heading.css");
+@import url("components/browse/nav-menu.css");
 
 html {
   margin: 0;
