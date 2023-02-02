@@ -8,6 +8,10 @@ import type {
   RawDomain,
 } from "../models/index.ts";
 import { normalizeDomainFromDB, normalizeListFromDB } from "../models/index.ts";
+import type { BrowseFilter } from "../constants/browse.ts";
+import { FILTER_MEMBERS } from "../constants/browse.ts";
+import { sanitizeLimit } from "../utils/pagination.ts";
+import { sanitizeFilter } from "../utils/browse-filters.ts";
 
 export class DomainsRepository {
   private db: DB;
@@ -39,7 +43,15 @@ export class DomainsRepository {
     return normalizeDomainFromDB(record);
   }
 
-  getPaginatedList(pagination: Pagination): PaginatedList<Domain> {
+  getPaginatedList(
+    pagination: Pagination,
+    filter: BrowseFilter,
+  ): PaginatedList<Domain> {
+    const sanitizedLimit = sanitizeLimit(pagination.limit);
+    const sanitizedFilter = sanitizeFilter(filter);
+    const filterMembers = sanitizedFilter === "all"
+      ? null
+      : FILTER_MEMBERS[sanitizedFilter];
     const records = this.db.query<PaginatedRecord<RawDomain>>(
       `SELECT id,
                 value,
@@ -47,9 +59,17 @@ export class DomainsRepository {
                 datetime(updated_at, \'unixepoch\'),
                 COUNT() OVER() as totalCount
          FROM domains
+         ${filterMembers ? `WHERE value BETWEEN ? AND ?` : ""}
          ORDER BY value
          LIMIT ? OFFSET ?`,
-      [pagination.limit, pagination.offset],
+      filterMembers
+        ? [
+          filterMembers.start,
+          filterMembers.end,
+          sanitizedLimit,
+          pagination.offset,
+        ]
+        : [sanitizedLimit, pagination.offset],
     );
 
     return normalizeListFromDB<PaginatedRecord<RawDomain>, Domain>(

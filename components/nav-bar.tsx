@@ -11,7 +11,7 @@ export default function NavBar() {
             <a href="/search">Search</a>
           </li>
           <li class="navigation-list__item">
-            <a href="/browse">Browse</a>
+            <a href="/browse/all">Browse</a>
           </li>
           <li class="navigation-list__item">
             <a href="/submit">Submit</a>

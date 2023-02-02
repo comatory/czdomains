@@ -12,7 +12,7 @@ function getTotalCountFieldValue(field: unknown): number {
   if (!isArray(field)) {
     return 0;
   }
-  const lastItem = field[field.length - 1]
+  const lastItem = field[field.length - 1];
 
   return isNumber(lastItem) ? lastItem : 0;
 }

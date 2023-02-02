@@ -1,8 +1,11 @@
 import type { Pagination, PaginationResult } from "../models/index.ts";
-
-const DEFAULT_OFFSET = 0;
-const DEFAULT_LIMIT = 50;
-const DEFAULT_PAGE = 0;
+import {
+  ALLOWED_LIMITS,
+  DEFAULT_LIMIT,
+  DEFAULT_OFFSET,
+  DEFAULT_PAGE,
+} from "../constants/pagination.ts";
+import type { AllowedPaginationLimit } from "../constants/pagination.ts";
 
 export function getPaginationDetailsFromQueryParams(url: URL): Pagination {
   const params = new URLSearchParams(url.searchParams);
@@ -18,20 +21,19 @@ export function getPaginationDetailsFromQueryParams(url: URL): Pagination {
 }
 
 export function generateNextPageLink(
-  root: string,
+  url: URL,
   pagination: PaginationResult,
 ): string | null {
   if (pagination.page + 1 >= pagination.total) {
     return null;
   }
 
-  const url = new URL(root);
-  const params = new URLSearchParams();
   const page = normalizePageNumber(pagination.page + 1, pagination.total);
 
-  params.set("limit", pagination.limit.toString());
-  params.set("page", page.toString());
-  params.set("offset", (page * pagination.limit).toString());
+  const params = produceParameters({
+    limit: pagination.limit,
+    page,
+  });
 
   url.search = params.toString();
 
@@ -39,26 +41,53 @@ export function generateNextPageLink(
 }
 
 export function generatePrevPageLink(
-  root: string,
+  url: URL,
   pagination: PaginationResult,
 ): string | null {
   if (pagination.page <= 0) {
     return null;
   }
 
-  const url = new URL(root);
-  const params = new URLSearchParams();
   const page = normalizePageNumber(pagination.page - 1, pagination.total);
 
-  params.set("limit", pagination.limit.toString());
-  params.set("page", page.toString());
-  params.set("offset", (page * pagination.limit).toString());
+  const params = produceParameters({
+    limit: pagination.limit,
+    page,
+  });
 
   url.search = params.toString();
 
   return url.toString();
 }
 
+function produceParameters({
+  limit,
+  page,
+}: {
+  limit: number;
+  page: number;
+}): URLSearchParams {
+  const params = new URLSearchParams();
+
+  params.set("limit", limit.toString());
+  params.set("page", page.toString());
+  params.set("offset", (page * limit).toString());
+
+  return params;
+}
+
 export function normalizePageNumber(page: number, total: number): number {
   return Math.min(Math.max(page, 0), total);
+}
+
+export function sanitizeLimit(limit: number): AllowedPaginationLimit | never {
+  if (!isValidLimit(limit)) {
+    throw new Error(`Invalid limit value ${limit}`);
+  }
+
+  return limit;
+}
+
+function isValidLimit(limit: number): limit is AllowedPaginationLimit {
+  return ALLOWED_LIMITS.includes(limit as AllowedPaginationLimit);
 }

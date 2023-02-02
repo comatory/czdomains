@@ -8,18 +8,18 @@ import {
 import type { PaginationResult } from "../../models/index.ts";
 
 export default function ({
-  root,
+  url,
   pagination,
 }: {
   pagination: PaginationResult;
-  root: string;
+  url: URL;
 }) {
-  const prevLink = useMemo(() => generatePrevPageLink(root, pagination), [
-    root,
+  const prevLink = useMemo(() => generatePrevPageLink(url, pagination), [
+    url,
     pagination,
   ]);
-  const nextLink = useMemo(() => generateNextPageLink(root, pagination), [
-    root,
+  const nextLink = useMemo(() => generateNextPageLink(url, pagination), [
+    url,
     pagination,
   ]);
 
@@ -27,19 +27,28 @@ export default function ({
     <nav>
       <ul>
         <li>
-          {prevLink !== null ? (
-            <a href={prevLink}>
-              Prev
-            </a>
-          ) : 'Prev'}
+          {prevLink !== null
+            ? (
+              <a href={prevLink}>
+                Prev
+              </a>
+            )
+            : "Prev"}
         </li>
-        <li>{normalizePageNumber(pagination.page + 1, pagination.total)}/{pagination.total}</li>
         <li>
-          {nextLink !== null ? (
-            <a href={nextLink}>
-              Next
-            </a>
-          ) : 'Next'}
+          {normalizePageNumber(
+            pagination.page + 1,
+            pagination.total,
+          )}/{pagination.total}
+        </li>
+        <li>
+          {nextLink !== null
+            ? (
+              <a href={nextLink}>
+                Next
+              </a>
+            )
+            : "Next"}
         </li>
       </ul>
     </nav>
