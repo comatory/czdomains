@@ -37,7 +37,7 @@ export default function ({
         </li>
         <li>
           {normalizePageNumber(
-            pagination.page + 1,
+            pagination.page,
             pagination.total,
           )}/{pagination.total}
         </li>

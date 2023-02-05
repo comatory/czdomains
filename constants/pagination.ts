@@ -1,6 +1,6 @@
 export const DEFAULT_OFFSET = 0;
 export const DEFAULT_LIMIT = 50;
-export const DEFAULT_PAGE = 0;
+export const DEFAULT_PAGE = 1;
 export const ALLOWED_LIMITS = [
   25,
   DEFAULT_LIMIT,

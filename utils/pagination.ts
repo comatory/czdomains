@@ -2,7 +2,6 @@ import type { Pagination, PaginationResult } from "../models/index.ts";
 import {
   ALLOWED_LIMITS,
   DEFAULT_LIMIT,
-  DEFAULT_OFFSET,
   DEFAULT_PAGE,
 } from "../constants/pagination.ts";
 import type { AllowedPaginationLimit } from "../constants/pagination.ts";
@@ -10,15 +9,12 @@ import { InvalidInputError } from "../errors/invalid-input.ts";
 
 export function getPaginationDetailsFromQueryParams(url: URL): Pagination {
   const params = new URLSearchParams(url.searchParams);
-  const offset = params.get("offset")
-    ? Number(params.get("offset"))
-    : DEFAULT_OFFSET;
   const limit = params.get("limit")
     ? Number(params.get("limit"))
     : DEFAULT_LIMIT;
   const page = params.get("page") ? Number(params.get("page")) : DEFAULT_PAGE;
 
-  return { offset, limit, page };
+  return { limit, page };
 }
 
 export function generateNextPageLink(
@@ -72,7 +68,6 @@ function produceParameters({
 
   params.set("limit", limit.toString());
   params.set("page", page.toString());
-  params.set("offset", (page * limit).toString());
 
   return params;
 }
@@ -91,4 +86,8 @@ export function sanitizeLimit(limit: number): AllowedPaginationLimit | never {
 
 function isValidLimit(limit: number): limit is AllowedPaginationLimit {
   return ALLOWED_LIMITS.includes(limit as AllowedPaginationLimit);
+}
+
+export function createOffsetFromPage(page: number, limit: AllowedPaginationLimit): number {
+  return page * limit;
 }
