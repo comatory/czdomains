@@ -75,7 +75,7 @@ export default function Search({ data }: PageProps<Data>) {
           <input
             name="page"
             type="hidden"
-            value={data.paginatedList.pagination.page}
+            value={1}
           />
           <input
             name="limit"
