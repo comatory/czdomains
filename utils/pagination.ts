@@ -14,14 +14,14 @@ export function getPaginationDetailsFromQueryParams(url: URL): Pagination {
     : DEFAULT_LIMIT;
   const page = params.get("page") ? Number(params.get("page")) : DEFAULT_PAGE;
 
-  return { limit, page };
+  return { limit: sanitizeLimit(limit), page };
 }
 
 export function generateNextPageLink(
   url: URL,
   pagination: PaginationResult,
 ): string | null {
-  if (pagination.page + 1 >= pagination.total) {
+  if (pagination.page >= createTotalPages(pagination.total, pagination.limit)) {
     return null;
   }
 
@@ -90,4 +90,8 @@ function isValidLimit(limit: number): limit is AllowedPaginationLimit {
 
 export function createOffsetFromPage(page: number, limit: AllowedPaginationLimit): number {
   return Math.max(page - 1, 0) * limit;
+}
+
+export function createTotalPages(count: number, limit: AllowedPaginationLimit): number {
+  return Math.ceil(count / limit);
 }

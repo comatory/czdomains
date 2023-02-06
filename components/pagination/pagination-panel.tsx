@@ -4,6 +4,7 @@ import {
   generateNextPageLink,
   generatePrevPageLink,
   normalizePageNumber,
+  createTotalPages,
 } from "../../utils/pagination.ts";
 import type { PaginationResult } from "../../models/index.ts";
 
@@ -22,6 +23,7 @@ export default function ({
     url,
     pagination,
   ]);
+  const currentPage = useMemo(() => normalizePageNumber(pagination.page, pagination.total),[ pagination ])
 
   return (
     <nav>
@@ -36,10 +38,16 @@ export default function ({
             : "Prev"}
         </li>
         <li>
-          {normalizePageNumber(
-            pagination.page,
-            pagination.total,
-          )}/{pagination.total}
+          <form method='GET' action={url.pathname}>
+            <input
+              type="text"
+              name='page'
+              value={currentPage}
+            />
+            <input type='hidden' name='limit' value={pagination.limit} />
+            <span>/{createTotalPages(pagination.total, pagination.limit)}</span>
+          </form>
+          
         </li>
         <li>
           {nextLink !== null

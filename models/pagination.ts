@@ -1,5 +1,7 @@
+import { AllowedPaginationLimit } from "../constants/pagination.ts";
+
 export type Pagination = {
-  limit: number;
+  limit: AllowedPaginationLimit;
   page: number;
 };
 
