@@ -7,7 +7,11 @@ import type {
   Pagination,
   RawDomain,
 } from "../models/index.ts";
-import { normalizeDomainFromDB, normalizeListFromDB, emptyPaginatedList } from "../models/index.ts";
+import {
+  emptyPaginatedList,
+  normalizeDomainFromDB,
+  normalizeListFromDB,
+} from "../models/index.ts";
 import type { BrowseFilter } from "../constants/browse.ts";
 import type { SearchFilters } from "../constants/search.ts";
 import { FILTER_MEMBERS } from "../constants/browse.ts";

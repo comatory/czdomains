@@ -1,5 +1,10 @@
-import type { SearchFilter, SearchFilters, IgnoredSearchFilters, IgnoredSearchFilter } from "../constants/search.ts";
-import { SEARCH_FILTERS, IGNORED_SEARCH_FILTERS } from "../constants/search.ts";
+import type {
+  IgnoredSearchFilter,
+  IgnoredSearchFilters,
+  SearchFilter,
+  SearchFilters,
+} from "../constants/search.ts";
+import { IGNORED_SEARCH_FILTERS, SEARCH_FILTERS } from "../constants/search.ts";
 import { InvalidInputError } from "../errors/invalid-input.ts";
 
 function isValidFilterKey(param: string): param is SearchFilter {

@@ -1,5 +1,5 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
-import { useMemo } from 'preact/hooks';
+import { useMemo } from "preact/hooks";
 
 import Header from "../components/header.tsx";
 import Heading from "../components/heading.tsx";
@@ -56,9 +56,9 @@ export const handler: Handlers<Data> = {
 
 export default function Search({ data }: PageProps<Data>) {
   const search = getSearchFilterQueryFromQueryParams(data.url);
-  const extraParams = useMemo(() => ({
+  const extraParams: { q: string | null } = useMemo(() => ({
     q: search,
-  }), [ data.url, search ])
+  }), [data.url, search]);
 
   return (
     <>
@@ -86,7 +86,11 @@ export default function Search({ data }: PageProps<Data>) {
         </form>
         <>
           <DomainList list={data.paginatedList.list} />
-          <PaginationPanel pagination={data.paginatedList.pagination} url={data.url} extra={extraParams} />
+          <PaginationPanel<{ q: string | null }>
+            pagination={data.paginatedList.pagination}
+            url={data.url}
+            extra={extraParams}
+          />
         </>
       </Section>
     </>

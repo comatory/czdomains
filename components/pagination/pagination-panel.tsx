@@ -8,7 +8,9 @@ import {
 } from "../../utils/pagination.ts";
 import type { PaginationResult } from "../../models/index.ts";
 
-export default function<T extends Record<string, string | number | boolean | symbol>>({
+export default function <
+  T extends Record<string, string | number | boolean | null | symbol>,
+>({
   url,
   pagination,
   extra,
