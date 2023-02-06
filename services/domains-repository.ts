@@ -10,7 +10,7 @@ import type {
 import { normalizeDomainFromDB, normalizeListFromDB } from "../models/index.ts";
 import type { BrowseFilter } from "../constants/browse.ts";
 import { FILTER_MEMBERS } from "../constants/browse.ts";
-import { sanitizeLimit, createOffsetFromPage } from "../utils/pagination.ts";
+import { createOffsetFromPage, sanitizeLimit } from "../utils/pagination.ts";
 import { sanitizeFilter } from "../utils/browse-filters.ts";
 
 export class DomainsRepository {
@@ -49,7 +49,10 @@ export class DomainsRepository {
   ): PaginatedList<Domain> {
     const sanitizedLimit = sanitizeLimit(pagination.limit);
     const sanitizedFilter = sanitizeFilter(filter);
-    const sanitizedOffset = createOffsetFromPage(pagination.page, sanitizedLimit);
+    const sanitizedOffset = createOffsetFromPage(
+      pagination.page,
+      sanitizedLimit,
+    );
     const filterMembers = sanitizedFilter === "all"
       ? null
       : FILTER_MEMBERS[sanitizedFilter];

@@ -88,10 +88,16 @@ function isValidLimit(limit: number): limit is AllowedPaginationLimit {
   return ALLOWED_LIMITS.includes(limit as AllowedPaginationLimit);
 }
 
-export function createOffsetFromPage(page: number, limit: AllowedPaginationLimit): number {
+export function createOffsetFromPage(
+  page: number,
+  limit: AllowedPaginationLimit,
+): number {
   return Math.max(page - 1, 0) * limit;
 }
 
-export function createTotalPages(count: number, limit: AllowedPaginationLimit): number {
+export function createTotalPages(
+  count: number,
+  limit: AllowedPaginationLimit,
+): number {
   return Math.ceil(count / limit);
 }
