@@ -41,7 +41,7 @@ export function generatePrevPageLink(
   url: URL,
   pagination: PaginationResult,
 ): string | null {
-  if (pagination.page <= 0) {
+  if (pagination.page <= 1) {
     return null;
   }
 
@@ -89,5 +89,5 @@ function isValidLimit(limit: number): limit is AllowedPaginationLimit {
 }
 
 export function createOffsetFromPage(page: number, limit: AllowedPaginationLimit): number {
-  return page * limit;
+  return Math.max(page - 1, 0) * limit;
 }
