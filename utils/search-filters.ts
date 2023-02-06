@@ -32,13 +32,9 @@ export function sanitizeSearchFilter(value: unknown): string | never {
   return value;
 }
 
-export function getSearchFilterFromQueryParams(url: URL): SearchFilter | null {
-  const params = new URLSearchParams(url.href);
-  const param = params.get("q");
-
-  const filter = param ? sanitizeFilterKey(param) : null;
-
-  return filter;
+export function getSearchFilterQueryFromQueryParams(url: URL): string | null {
+  const query = new URLSearchParams(url.search).get("q");
+  return query ?? null;
 }
 
 export function getSearchFiltersFromQueryParams(

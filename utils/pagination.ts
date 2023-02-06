@@ -17,9 +17,10 @@ export function getPaginationDetailsFromQueryParams(url: URL): Pagination {
   return { limit: sanitizeLimit(limit), page };
 }
 
-export function generateNextPageLink(
+export function generateNextPageLink<T extends Record<string, string | number | boolean | symbol>>(
   url: URL,
   pagination: PaginationResult,
+  extra?: T,
 ): string | null {
   if (pagination.page >= createTotalPages(pagination.total, pagination.limit)) {
     return null;
@@ -30,6 +31,7 @@ export function generateNextPageLink(
   const params = produceParameters({
     limit: pagination.limit,
     page,
+    extra,
   });
 
   url.search = params.toString();
@@ -37,9 +39,10 @@ export function generateNextPageLink(
   return url.toString();
 }
 
-export function generatePrevPageLink(
+export function generatePrevPageLink<T extends Record<string, string | number | boolean | symbol>>(
   url: URL,
   pagination: PaginationResult,
+  extra?: T,
 ): string | null {
   if (pagination.page <= 1) {
     return null;
@@ -50,6 +53,7 @@ export function generatePrevPageLink(
   const params = produceParameters({
     limit: pagination.limit,
     page,
+    extra,
   });
 
   url.search = params.toString();
@@ -57,17 +61,27 @@ export function generatePrevPageLink(
   return url.toString();
 }
 
-function produceParameters({
+function produceParameters<T extends Record<string, string | number | boolean | symbol>>({
   limit,
   page,
+  extra,
 }: {
   limit: number;
   page: number;
+  extra?: T;
 }): URLSearchParams {
   const params = new URLSearchParams();
 
   params.set("limit", limit.toString());
   params.set("page", page.toString());
+
+  if (extra) {
+    Object.keys(extra).forEach((key) => {
+      if (extra[key]) {
+        params.set(key, extra[key].toString())
+      }
+    });
+  }
 
   return params;
 }

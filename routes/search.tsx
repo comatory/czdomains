@@ -1,4 +1,5 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
+import { useMemo } from 'preact/hooks';
 
 import Header from "../components/header.tsx";
 import Heading from "../components/heading.tsx";
@@ -7,12 +8,14 @@ import Section from "../components/section.tsx";
 import { domainsRepository } from "../services/instances.ts";
 import { getPaginationDetailsFromQueryParams } from "../utils/pagination.ts";
 import {
-  getSearchFilterFromQueryParams,
+  getSearchFilterQueryFromQueryParams,
   getSearchFiltersFromQueryParams,
 } from "../utils/search-filters.ts";
 import type { PaginatedList } from "../models/pagination.ts";
 import type { Domain } from "../models/domain.ts";
 import { InvalidInputError } from "../errors/invalid-input.ts";
+import DomainList from "../components/domain-list.tsx";
+import PaginationPanel from "../components/pagination/pagination-panel.tsx";
 
 type Data = {
   paginatedList: PaginatedList<Domain>;
@@ -52,7 +55,10 @@ export const handler: Handlers<Data> = {
 };
 
 export default function Search({ data }: PageProps<Data>) {
-  const search = getSearchFilterFromQueryParams(data.url);
+  const search = getSearchFilterQueryFromQueryParams(data.url);
+  const extraParams = useMemo(() => ({
+    q: search,
+  }), [ data.url, search ])
 
   return (
     <>
@@ -78,9 +84,10 @@ export default function Search({ data }: PageProps<Data>) {
           />
           <input type="submit" value="Search" />
         </form>
-        <div>
-          {data.paginatedList.list.length}
-        </div>
+        <>
+          <DomainList list={data.paginatedList.list} />
+          <PaginationPanel pagination={data.paginatedList.pagination} url={data.url} extra={extraParams} />
+        </>
       </Section>
     </>
   );

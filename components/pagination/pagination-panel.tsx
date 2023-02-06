@@ -8,18 +8,20 @@ import {
 } from "../../utils/pagination.ts";
 import type { PaginationResult } from "../../models/index.ts";
 
-export default function ({
+export default function<T extends Record<string, string | number | boolean | symbol>>({
   url,
   pagination,
+  extra,
 }: {
   pagination: PaginationResult;
   url: URL;
+  extra?: T;
 }) {
-  const prevLink = useMemo(() => generatePrevPageLink(url, pagination), [
+  const prevLink = useMemo(() => generatePrevPageLink(url, pagination, extra), [
     url,
     pagination,
   ]);
-  const nextLink = useMemo(() => generateNextPageLink(url, pagination), [
+  const nextLink = useMemo(() => generateNextPageLink(url, pagination, extra), [
     url,
     pagination,
   ]);
