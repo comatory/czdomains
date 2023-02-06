@@ -8,7 +8,7 @@ function isValidFilter(param: string): param is BrowseFilter {
 
 export function sanitizeFilter(param: string): BrowseFilter | never {
   if (!isValidFilter(param)) {
-    throw new InvalidInputError(`Filter not recognized`);
+    throw new InvalidInputError(`Browse filter ${param} not recognized`);
   }
 
   return param;

@@ -38,3 +38,17 @@ export function normalizeListFromDB<
 
   return paginatedList;
 }
+
+export function emptyPaginatedList<NormalizedRecord extends Record<string, unknown>>(
+  pagination: Pagination,
+) {
+  const paginatedList: PaginatedList<NormalizedRecord> = {
+    list: [],
+    pagination: {
+      ...pagination,
+      total: 0,
+    },
+  };
+
+  return paginatedList;
+}
