@@ -58,6 +58,11 @@ export default function <
               className="pagination-panel__list__item__page-form__input"
             />
             <input type="hidden" name="limit" value={pagination.limit} />
+            {extra && (
+               Object.keys(extra).map((key) => (
+                 <input key={key} type='hidden' name={key} value={extra[key]} />
+               ))
+            )}
             <span>/</span>
             <span class="pagination-panel__list__item__page-form__counter">
               {createTotalPages(pagination.total, pagination.limit)}
