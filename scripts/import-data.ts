@@ -34,6 +34,14 @@ const lines = fileContent.split("\n");
 console.info("Normalizing domain names...");
 
 const normalizedValues = lines.map(normalizeDomain);
+
+console.info("Connecting to database...");
+
+const dbPath = await Deno.realPath("./sqlite.db");
+const db = new DB(dbPath, { mode: "create" });
+
+const hasImportsTable = checkIfImportsTableExists();
+
 const chunkedValues = normalizedValues.reduce((array, value, i) => {
   if (i % MAX_VARIABLES_CHUNK_SIZE === 0) {
     return [...array, [value]];
@@ -45,11 +53,6 @@ const chunkedValues = normalizedValues.reduce((array, value, i) => {
   return array;
 }, [] as string[][]);
 
-console.info("Connecting to database...");
-
-const dbPath = await Deno.realPath("./sqlite.db");
-const db = new DB(dbPath, { mode: "create" });
-
 console.info("Writing to database...");
 
 const now = Math.ceil(new Date().getTime() / 1000);
@@ -57,21 +60,20 @@ const now = Math.ceil(new Date().getTime() / 1000);
 let rowsWritten = 0;
 
 for (const chunk of chunkedValues) {
-  const sql = `INSERT OR IGNORE INTO domains (value, created_at) VALUES ${
-    chunk.map((_) => "(?, ?)").join(",")
-  };`;
-  const values = chunk.flatMap((value) => [value, now]);
-  db.query(sql, values);
+  const order = chunkedValues.indexOf(chunk) + 1;
+  const total = chunkedValues.length;
 
-  rowsWritten += db.changes;
-
-  if (chunkedValues.length > 1) {
-    console.info(
-      `Chunk ${
-        chunkedValues.indexOf(chunk) + 1
-      }/${chunkedValues.length} processed.`,
+  rowsWritten += hasImportsTable
+    ? insertDomainsV2(
+      chunk,
+      total,
+      order,
+    )
+    : insertDomainsV1(
+      chunk,
+      total,
+      order,
     );
-  }
 }
 
 const ignoredRows = normalizedValues.length - rowsWritten;
@@ -82,3 +84,73 @@ const info =
 console.info(info);
 
 db.close();
+
+function insertDomainsV1(
+  chunk: string[],
+  totalChunks: number,
+  order: number,
+): number {
+  const sql = `INSERT OR IGNORE INTO domains (value, created_at) VALUES ${
+    chunk.map((_) => "(?, ?)").join(",")
+  };`;
+  const values = chunk.flatMap((value) => [value, now]);
+  db.query(sql, values);
+
+  reportProcessedChunk(totalChunks, order);
+
+  return db.changes;
+}
+
+function insertDomainsV2(
+  chunk: string[],
+  totalChunks: number,
+  order: number,
+): number {
+  try {
+    db.query("BEGIN;");
+    const rows = db.query<[number]>(
+      "INSERT OR IGNORE INTO imports (created_at) VALUES (?) RETURNING id;",
+      [now],
+    );
+    const [importIds] = rows.length > 0
+      ? rows
+      : db.query<[number]>("SELECT id FROM imports WHERE created_at = ?", [
+        now,
+      ]);
+    const importId = importIds[0];
+
+    const sql = `INSERT OR IGNORE INTO domains (value, import_id) VALUES ${
+      chunk.map((_) => "(?, ?)").join(",")
+    };`;
+    const values = chunk.flatMap((value) => [value, importId]);
+    db.query(sql, values);
+
+    reportProcessedChunk(totalChunks, order);
+
+    db.query("COMMIT;");
+
+    return db.changes;
+  } catch (e) {
+    db.query("ROLLBACK;");
+    throw e;
+  }
+}
+
+function reportProcessedChunk(totalChunks: number, order: number): void {
+  if (totalChunks < 2) {
+    return;
+  }
+
+  console.info(
+    `Chunk ${order}/${totalChunks} processed.`,
+  );
+}
+
+function checkIfImportsTableExists(): boolean {
+  try {
+    db.query<[string]>("SELECT id FROM imports LIMIT 1;");
+    return true;
+  } catch (_) {
+    return false;
+  }
+}
