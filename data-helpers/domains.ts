@@ -12,6 +12,7 @@ import {
   normalizeDomainFromDB,
   normalizeListFromDB,
 } from "../models/index.ts";
+import { db } from "../services/db.ts";
 import type { BrowseFilter } from "../constants/browse.ts";
 import type { SearchFilters } from "../constants/search.ts";
 import { FILTER_MEMBERS } from "../constants/browse.ts";
@@ -19,22 +20,11 @@ import { createOffsetFromPage, sanitizeLimit } from "../utils/pagination.ts";
 import { sanitizeFilter as sanitizeBrowseFilter } from "../utils/browse-filters.ts";
 import { sanitizeSearchFilter } from "../utils/search-filters.ts";
 
-export class DomainsRepository {
-  private db: DB;
-
-  constructor({
-    db,
-  }: {
-    db: DB;
-  }) {
-    this.db = db;
-  }
-
-  public getDomainDetail(id: Domain["id"]): Domain | null {
-    const records = this.db.query<RawDomain>(
+function createGetDomainDetail(db: DB) {
+  return function getDomainDetail(id: Domain["id"]): Domain | null {
+    const records = db.query<RawDomain>(
       `SELECT id,
               value,
-              datetime(created_at, \'unixepoch\'),
               datetime(updated_at, \'unixepoch\')
        FROM domains
        WHERE id = $id`,
@@ -47,9 +37,11 @@ export class DomainsRepository {
     }
 
     return normalizeDomainFromDB(record);
-  }
+  };
+}
 
-  getPaginatedList(
+function createGetPaginatedList(db: DB) {
+  return function getPaginatedList(
     pagination: Pagination,
     filter: BrowseFilter,
   ): PaginatedList<Domain> {
@@ -62,10 +54,9 @@ export class DomainsRepository {
     const filterMembers = sanitizedFilter === "all"
       ? null
       : FILTER_MEMBERS[sanitizedFilter];
-    const records = this.db.query<PaginatedRecord<RawDomain>>(
+    const records = db.query<PaginatedRecord<RawDomain>>(
       `SELECT id,
                 value,
-                datetime(created_at, \'unixepoch\'),
                 datetime(updated_at, \'unixepoch\'),
                 COUNT() OVER() as totalCount
          FROM domains
@@ -87,9 +78,11 @@ export class DomainsRepository {
       normalizeDomainFromDB,
       pagination,
     );
-  }
+  };
+}
 
-  getPaginatedListSearch(
+function createGetPaginatedListSearch(db: DB) {
+  return function getPaginatedListSearch(
     pagination: Pagination,
     filters: Partial<SearchFilters>,
   ) {
@@ -104,10 +97,9 @@ export class DomainsRepository {
       sanitizedLimit,
     );
 
-    const records = this.db.query<PaginatedRecord<RawDomain>>(
+    const records = db.query<PaginatedRecord<RawDomain>>(
       `SELECT id,
                 value,
-                datetime(created_at, \'unixepoch\'),
                 datetime(updated_at, \'unixepoch\'),
                 COUNT() OVER() as totalCount
          FROM domains
@@ -122,5 +114,9 @@ export class DomainsRepository {
       normalizeDomainFromDB,
       pagination,
     );
-  }
+  };
 }
+
+export const getDomainDetail = createGetDomainDetail(db);
+export const getPaginatedList = createGetPaginatedList(db);
+export const getPaginatedListSearch = createGetPaginatedListSearch(db);

@@ -5,7 +5,7 @@ import Header from "../components/header.tsx";
 import Heading from "../components/heading.tsx";
 import NavBar from "../components/nav-bar.tsx";
 import Section from "../components/section.tsx";
-import { domainsRepository } from "../services/instances.ts";
+import { getPaginatedListSearch } from "../data-helpers/domains.ts";
 import { getPaginationDetailsFromQueryParams } from "../utils/pagination.ts";
 import {
   getSearchFilterQueryFromQueryParams,
@@ -26,7 +26,7 @@ export const handler: Handlers<Data> = {
   GET(req, ctx) {
     const url = new URL(req.url);
     try {
-      const records = domainsRepository.getPaginatedListSearch(
+      const records = getPaginatedListSearch(
         getPaginationDetailsFromQueryParams(url),
         getSearchFiltersFromQueryParams(url),
       );
@@ -36,6 +36,8 @@ export const handler: Handlers<Data> = {
         url,
       });
     } catch (error: unknown) {
+      console.error(error);
+
       if (error instanceof InvalidInputError) {
         return new Response(null, {
           status: 400,

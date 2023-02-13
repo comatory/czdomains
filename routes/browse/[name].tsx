@@ -5,7 +5,7 @@ import Heading from "../../components/heading.tsx";
 import NavBar from "../../components/nav-bar.tsx";
 import Section from "../../components/section.tsx";
 
-import { domainsRepository } from "../../services/instances.ts";
+import { getPaginatedList } from "../../data-helpers/domains.ts";
 import DomainList from "../../components/domain-list.tsx";
 import PaginationPanel from "../../components/pagination/pagination-panel.tsx";
 import NavMenu from "../../components/browse/nav-menu.tsx";
@@ -24,7 +24,7 @@ export const handler: Handlers<Data> = {
   GET(req, ctx) {
     const url = new URL(req.url);
     try {
-      const records = domainsRepository.getPaginatedList(
+      const records = getPaginatedList(
         getPaginationDetailsFromQueryParams(url),
         getBrowseFilterFromQueryParams(url),
       );
@@ -34,6 +34,8 @@ export const handler: Handlers<Data> = {
         url,
       });
     } catch (error: unknown) {
+      console.error(error);
+
       if (error instanceof InvalidInputError) {
         return new Response(null, {
           status: 400,
