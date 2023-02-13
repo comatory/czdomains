@@ -54,23 +54,25 @@ function createGetPaginatedList(db: DB) {
     const filterMembers = sanitizedFilter === "all"
       ? null
       : FILTER_MEMBERS[sanitizedFilter];
+    const values = 
+      filterMembers
+        ? {
+          start: filterMembers.start,
+          end: filterMembers.end,
+          limit: sanitizedLimit,
+          offset: sanitizedOffset,
+        }
+        : { limit: sanitizedLimit, offset: sanitizedOffset };
     const records = db.queryEntries<PaginatedRecord<RawDomain>>(
       `SELECT id,
                 value,
                 datetime(updated_at, \'unixepoch\'),
                 COUNT() OVER() as totalCount
          FROM domains
-         ${filterMembers ? `WHERE value BETWEEN ? AND ?` : ""}
+         ${filterMembers ? `WHERE value BETWEEN :start AND :end` : ""}
          ORDER BY value
-         LIMIT ? OFFSET ?`,
-      filterMembers
-        ? [
-          filterMembers.start,
-          filterMembers.end,
-          sanitizedLimit,
-          sanitizedOffset,
-        ]
-        : [sanitizedLimit, sanitizedOffset],
+         LIMIT :limit OFFSET :offset`,
+         values,
     );
 
     return normalizeListFromDB<RawDomain, Domain>(
@@ -96,6 +98,11 @@ function createGetPaginatedListSearch(db: DB) {
       pagination.page,
       sanitizedLimit,
     );
+    const values = {
+      search: `%${sanitizedSearch}%`,
+      limit: sanitizedLimit,
+      offset: sanitizedOffset,
+    }
 
     const records = db.queryEntries<PaginatedRecord<RawDomain>>(
       `SELECT id,
@@ -103,10 +110,10 @@ function createGetPaginatedListSearch(db: DB) {
                 datetime(updated_at, \'unixepoch\'),
                 COUNT() OVER() as totalCount
          FROM domains
-         WHERE value LIKE ?
+         WHERE value LIKE :search
          ORDER BY value
-         LIMIT ? OFFSET ?`,
-      [`${sanitizedSearch}%`, sanitizedLimit, sanitizedOffset],
+         LIMIT :limit OFFSET :offset`,
+      values,
     );
 
     return normalizeListFromDB<RawDomain, Domain>(
