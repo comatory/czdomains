@@ -16,9 +16,8 @@ export type PaginatedList<T extends Record<string, unknown>> = {
   list: T[];
 };
 
-type PaginationFields = [number];
+type PaginationFields = { totalCount: number };
 
-export type PaginatedRecord<T extends Array<unknown>> = [
-  ...T,
-  ...PaginationFields,
-];
+export type PaginatedRecord<T extends Record<string, unknown>> =
+  & T
+  & PaginationFields;

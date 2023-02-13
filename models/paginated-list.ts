@@ -1,32 +1,19 @@
-import type { PaginatedList, Pagination } from "./pagination.ts";
-
-function isNumber(value: unknown): value is number {
-  return Number.isFinite(value);
-}
-
-function isArray(value: unknown): value is Array<unknown> {
-  return Array.isArray(value);
-}
-
-function getTotalCountFieldValue(field: unknown): number {
-  if (!isArray(field)) {
-    return 0;
-  }
-  const lastItem = field[field.length - 1];
-
-  return isNumber(lastItem) ? lastItem : 0;
-}
+import type {
+  PaginatedList,
+  PaginatedRecord,
+  Pagination,
+} from "./pagination.ts";
 
 export function normalizeListFromDB<
-  DBRecord,
+  DBRecord extends Record<string, unknown>,
   NormalizedRecord extends Record<string, unknown>,
 >(
-  records: DBRecord[],
+  records: PaginatedRecord<DBRecord>[],
   normalizerFn: (record: DBRecord) => NormalizedRecord,
   pagination: Pagination,
 ): PaginatedList<NormalizedRecord> {
   const normalizedRecords = records.map(normalizerFn);
-  const totalCount = getTotalCountFieldValue(records[0]);
+  const totalCount = records[0]?.totalCount;
 
   const paginatedList: PaginatedList<NormalizedRecord> = {
     list: normalizedRecords,

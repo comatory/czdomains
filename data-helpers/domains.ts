@@ -22,7 +22,7 @@ import { sanitizeSearchFilter } from "../utils/search-filters.ts";
 
 function createGetDomainDetail(db: DB) {
   return function getDomainDetail(id: Domain["id"]): Domain | null {
-    const records = db.query<RawDomain>(
+    const records = db.queryEntries<RawDomain>(
       `SELECT id,
               value,
               datetime(updated_at, \'unixepoch\')
@@ -54,7 +54,7 @@ function createGetPaginatedList(db: DB) {
     const filterMembers = sanitizedFilter === "all"
       ? null
       : FILTER_MEMBERS[sanitizedFilter];
-    const records = db.query<PaginatedRecord<RawDomain>>(
+    const records = db.queryEntries<PaginatedRecord<RawDomain>>(
       `SELECT id,
                 value,
                 datetime(updated_at, \'unixepoch\'),
@@ -73,7 +73,7 @@ function createGetPaginatedList(db: DB) {
         : [sanitizedLimit, sanitizedOffset],
     );
 
-    return normalizeListFromDB<PaginatedRecord<RawDomain>, Domain>(
+    return normalizeListFromDB<RawDomain, Domain>(
       records,
       normalizeDomainFromDB,
       pagination,
@@ -97,7 +97,7 @@ function createGetPaginatedListSearch(db: DB) {
       sanitizedLimit,
     );
 
-    const records = db.query<PaginatedRecord<RawDomain>>(
+    const records = db.queryEntries<PaginatedRecord<RawDomain>>(
       `SELECT id,
                 value,
                 datetime(updated_at, \'unixepoch\'),
@@ -109,7 +109,7 @@ function createGetPaginatedListSearch(db: DB) {
       [`${sanitizedSearch}%`, sanitizedLimit, sanitizedOffset],
     );
 
-    return normalizeListFromDB<PaginatedRecord<RawDomain>, Domain>(
+    return normalizeListFromDB<RawDomain, Domain>(
       records,
       normalizeDomainFromDB,
       pagination,
