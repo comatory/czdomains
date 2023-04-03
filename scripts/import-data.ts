@@ -1,4 +1,5 @@
 import { DB } from "sqlite";
+import * as uuid from '$std/uuid/mod.ts';
 
 const filePath = Deno.args[0];
 
@@ -41,6 +42,7 @@ const dbPath = await Deno.realPath("./sqlite.db");
 const db = new DB(dbPath, { mode: "create" });
 
 const hasImportsTable = checkIfImportsTableExists();
+const hasUuids = checkIfUUidsExist();
 
 const chunkedValues = normalizedValues.reduce((array, value, i) => {
   if (i % MAX_VARIABLES_CHUNK_SIZE === 0) {
@@ -74,6 +76,10 @@ for (const chunk of chunkedValues) {
       total,
       order,
     );
+
+  if (hasUuids) {
+    const _uuid = chunk.flatMap((value) => [value, uuid.v4() ]);
+  }
 }
 
 const ignoredRows = normalizedValues.length - rowsWritten;
@@ -149,6 +155,15 @@ function reportProcessedChunk(totalChunks: number, order: number): void {
 function checkIfImportsTableExists(): boolean {
   try {
     db.query<[string]>("SELECT id FROM imports LIMIT 1;");
+    return true;
+  } catch (_) {
+    return false;
+  }
+}
+
+function checkIfUUidsExist(): boolean {
+  try {
+    db.query<[string]>("SELECT uuid FROM domains;");
     return true;
   } catch (_) {
     return false;

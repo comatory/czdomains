@@ -54,15 +54,14 @@ function createGetPaginatedList(db: DB) {
     const filterMembers = sanitizedFilter === "all"
       ? null
       : FILTER_MEMBERS[sanitizedFilter];
-    const values = 
-      filterMembers
-        ? {
-          start: filterMembers.start,
-          end: filterMembers.end,
-          limit: sanitizedLimit,
-          offset: sanitizedOffset,
-        }
-        : { limit: sanitizedLimit, offset: sanitizedOffset };
+    const values = filterMembers
+      ? {
+        start: filterMembers.start,
+        end: filterMembers.end,
+        limit: sanitizedLimit,
+        offset: sanitizedOffset,
+      }
+      : { limit: sanitizedLimit, offset: sanitizedOffset };
     const records = db.queryEntries<PaginatedRecord<RawDomain>>(
       `SELECT id,
                 value,
@@ -72,7 +71,7 @@ function createGetPaginatedList(db: DB) {
          ${filterMembers ? `WHERE value BETWEEN :start AND :end` : ""}
          ORDER BY value
          LIMIT :limit OFFSET :offset`,
-         values,
+      values,
     );
 
     return normalizeListFromDB<RawDomain, Domain>(
@@ -102,7 +101,7 @@ function createGetPaginatedListSearch(db: DB) {
       search: `%${sanitizedSearch}%`,
       limit: sanitizedLimit,
       offset: sanitizedOffset,
-    }
+    };
 
     const records = db.queryEntries<PaginatedRecord<RawDomain>>(
       `SELECT id,
