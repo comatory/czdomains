@@ -4,6 +4,11 @@
   "description": "Web applications for searching and browsing .cz TLD",
   "main": "dist/index.js",
   "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prebuild": "npm run clean",
+    "start": "node dist/index.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "clean": "rm -rf dist",
     "test": "test"
   },
   "repository": {
@@ -28,5 +33,14 @@
   "bugs": {
     "url": "https://github.com/comatory/czdomains/issues"
   },
-  "homepage": "https://github.com/comatory/czdomains#readme"
+  "homepage": "https://github.com/comatory/czdomains#readme",
+  "devDependencies": {
+    "@tsconfig/node18": "^1.0.1",
+    "@types/node": "^18.15.11",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.0.3"
+  },
+  "dependencies": {
+    "fastify": "^4.15.0"
+  }
 }
