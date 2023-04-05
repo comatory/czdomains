@@ -1,11 +1,19 @@
 import fastify from 'fastify';
 
+import { configureViews } from './config/view';
+
 const PORT = Number(process.env.PORT) || 3000;
 
 const server = fastify();
 
-server.get('/ping', async (request, reply) => {
+configureViews(server);
+
+server.get('/ping', async (_, __) => {
   return 'pong\n';
+});
+
+server.get('/', async (_, reply) => {
+  return reply.view('index.hbs');
 });
 
 server.listen({ port: PORT }, (err, address) => {
