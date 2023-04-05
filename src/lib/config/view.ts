@@ -16,8 +16,13 @@ const configureTemplates = (app: FastifyInstance) => {
     engine: {
       handlebars: handlebars,
     },
-    layout: 'layout.hbs',
     root: join(__dirname, '..', 'views'),
+    layout: 'layout.hbs',
+    options: {
+      partials: {
+        heading: 'partials/heading.hbs',
+      },
+    }
   })
 };
 

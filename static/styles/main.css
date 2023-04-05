@@ -1,4 +1,5 @@
 @import url("variables.css");
+@import url("common/index.css");
 
 html {
   margin: 0;
