@@ -2,7 +2,8 @@
 <html>
   <body>
     {{> heading}}
-    <section>
+    {{#> section }}
+      {{> navigation}}
       <p>
         Simple database of Czechia TLD domains which were registered in the
         past. You can search by its name to get its detail.
@@ -41,6 +42,6 @@
         <dt>What is the story behind TLD</dt>
         <dd>TBD</dd>
       </dl>
-    </section>
+    {{/ section }}
   </body>
 </html>

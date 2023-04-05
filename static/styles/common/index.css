@@ -1,3 +1,5 @@
 /* Common styles / partials */
 
 @import url("heading.css");
+@import url("section.css");
+@import url("navigation.css");

@@ -21,6 +21,8 @@ const configureTemplates = (app: FastifyInstance) => {
     options: {
       partials: {
         heading: 'partials/heading.hbs',
+        section: 'partials/section.hbs',
+        navigation: 'partials/navigation.hbs',
       },
     }
   })
