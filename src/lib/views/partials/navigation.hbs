@@ -2,16 +2,32 @@
 <nav class="navigation">
   <ul class="navigation-list">
     <li class="navigation-list__item">
-      <a href="/">Home</a>
+      {{#if isHome}}
+      <a href="/"><strong>Home</strong></span>
+      {{else}}
+        <a href="/">Home</a>
+      {{/if}}
     </li>
     <li class="navigation-list__item">
-      <a href="/search">Search</a>
+      {{#if isSearch}}
+      <a href="/search"><strong>Search</strong></a>
+      {{else}}
+        <a href="/search">Search</a>
+      {{/if}}
     </li>
     <li class="navigation-list__item">
-      <a href="/browse/all">Browse</a>
+      {{#if isBrowse}}
+        <a href="/browse/all"><strong>Browse</strong></a>
+      {{else}}
+        <a href="/browse/all">Browse</a>
+      {{/if}}
     </li>
     <li class="navigation-list__item">
-      <a href="/submit">Submit</a>
+      {{#if isSubmit}}
+        <a href="/submit"><strong>Submit</strong></a>
+      {{else}}
+        <a href="/submit">Submit</a>
+      {{/if}}
     </li>
   </ul>
 </nav>
