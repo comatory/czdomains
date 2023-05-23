@@ -2,7 +2,7 @@ import fastify from 'fastify';
 
 import { configureViews } from './config/view';
 
-const PORT = Number(process.env.PORT) || 3000;
+const PORT = Number.isNaN(Number(process.env.PORT)) ? 3000 : Number(process.env.PORT);
 
 const server = fastify();
 
