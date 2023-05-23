@@ -9,7 +9,8 @@
     "start": "NODE_ENV=production ts-node --transpile-only src/index.ts",
     "dev": "NODE_ENV=development ts-node-dev --respawn --transpile-only src/index.ts",
     "clean": "rm -rf dist",
-    "test": "test"
+    "test": "test",
+    "migrate": "tsx src/migrate.ts"
   },
   "repository": {
     "type": "git",
@@ -39,12 +40,15 @@
     "@types/node": "^18.15.11",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
+    "tsx": "^3.12.7",
     "typescript": "^5.0.3"
   },
   "dependencies": {
     "@fastify/static": "^6.10.0",
     "@fastify/view": "^7.4.1",
     "fastify": "^4.15.0",
-    "handlebars": "^4.7.7"
+    "handlebars": "^4.7.7",
+    "postgrator": "^7.1.1",
+    "sqlite3": "^5.1.6"
   }
 }
