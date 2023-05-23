@@ -2,9 +2,14 @@ import { join } from 'path';
 import Postgrator from 'postgrator';
 import { Database, verbose } from 'sqlite3';
 
-void (async () => {
+void (async (args: string[]) => {
   verbose();
   const client = new Database(join(__dirname, '..', 'sqlite.db'));
+
+  const rollbackArgIndex = args.findIndex((arg) => arg === '--rollback');
+  const rollbackVersion = rollbackArgIndex === -1
+    ? null
+    : args[rollbackArgIndex].replace(/.*=/, '');
 
   try {
     const postgrator = new Postgrator({
@@ -24,7 +29,9 @@ void (async () => {
       }
     });
 
-    const result = await postgrator.migrate();
+    const result = rollbackVersion !== null
+      ? await postgrator.migrate(rollbackVersion)
+      : await postgrator.migrate();
 
     if (result.length === 0) {
       console.log('No migrations to run');
@@ -43,4 +50,4 @@ void (async () => {
   } finally {
     client.close();
   }
-})()
+})(process.argv.slice(2));
