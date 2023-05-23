@@ -1,19 +1,21 @@
-import fastify from 'fastify';
+import fastify from "fastify";
 
-import { configureViews } from './config/view';
+import { configureViews } from "./config/view";
 
-const PORT = Number.isNaN(Number(process.env.PORT)) ? 3000 : Number(process.env.PORT);
+const PORT = Number.isNaN(Number(process.env.PORT))
+  ? 3000
+  : Number(process.env.PORT);
 
 const server = fastify();
 
 configureViews(server);
 
-server.get('/ping', async (_, __) => {
-  return 'pong\n';
+server.get("/ping", async (_, __) => {
+  return "pong\n";
 });
 
-server.get('/', async (_, reply) => {
-  return reply.view('index.hbs');
+server.get("/", async (_, reply) => {
+  return reply.view("index.hbs");
 });
 
 server.listen({ port: PORT }, (err, address) => {
@@ -23,4 +25,3 @@ server.listen({ port: PORT }, (err, address) => {
   }
   console.log(`Server listening at ${address}`);
 });
-
