@@ -28,6 +28,11 @@ void (async () => {
 
     if (result.length === 0) {
       console.log('No migrations to run');
+    } else {
+      console.log(`Processed ${result.length} migrations:`);
+      for (const migration of result) {
+        console.log(`${migration.filename}: ${migration.action}`);
+      }
     }
 
     console.log('Migration done');
