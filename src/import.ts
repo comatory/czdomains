@@ -41,33 +41,38 @@ function reportProcessedChunk(totalChunks: number, order: number): void {
   console.info(`Chunk ${order}/${totalChunks} processed.`);
 }
 
+async function getImportIdByDate(db: Database<sqlite3.Database, sqlite3.Statement>, date: string) {
+  const row = await db.get<{ id: number }>("SELECT id FROM imports WHERE created_at = ?", [
+      date,
+    ]);
+
+  return row?.id ?? null;
+}
+
 async function insertDomains({
   db,
   chunk,
   totalChunks,
   order,
+  now,
 }: {
   db: Database;
   chunk: string[];
   totalChunks: number;
   order: number;
+  now: string;
 }): Promise<number> {
-  const now = new Date().toISOString();
-
   try {
     await db.run("BEGIN;");
-    const rows: number[] | undefined = await db.get<[number]>(
+    const newImport = await db.get<{ id: number }>(
       "INSERT OR IGNORE INTO imports (created_at) VALUES (?) RETURNING id;",
       [now]
     );
 
-    const importIds =
-      Array.isArray(rows) && rows.length > 0
-        ? rows
-        : await db.get<[number]>("SELECT id FROM imports WHERE created_at = ?", [
-            now,
-          ]);
-    const importId: number | undefined = importIds?.[0];
+    const importId =
+      newImport
+        ? newImport.id
+        : await getImportIdByDate(db, now);
 
     const sql = `INSERT OR IGNORE INTO domains (value, import_id) VALUES ${chunk
       .map((_) => "(?, ?)")
@@ -101,7 +106,7 @@ void (async ({ filePath }: typeof cliOptions) => {
 
   console.info("Connecting to database...");
 
-  const dbPath = join("..", "./sqlite.db");
+  const dbPath = join(__dirname, "..", "./sqlite.db");
   const db = await open<sqlite3.Database, sqlite3.Statement>({
     filename: dbPath,
     driver: sqlite3.Database,
@@ -122,6 +127,8 @@ void (async ({ filePath }: typeof cliOptions) => {
 
   let rowsWritten = 0;
 
+  const now = new Date().toISOString();
+
   for (const chunk of chunkedValues) {
     const order = chunkedValues.indexOf(chunk) + 1;
     const total = chunkedValues.length;
@@ -131,6 +138,7 @@ void (async ({ filePath }: typeof cliOptions) => {
       chunk,
       totalChunks: total,
       order,
+      now,
     });
   }
 
