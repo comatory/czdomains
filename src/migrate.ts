@@ -1,9 +1,7 @@
 import { join } from 'path';
 
 import Postgrator from 'postgrator';
-import sqlite3 from 'sqlite3';
-import {  open } from 'sqlite';
-import type { Database } from 'sqlite';
+import { Database, verbose } from 'sqlite3';
 import yargs from 'yargs';
 
 const cliOptions = yargs(process.argv.slice(2))
@@ -20,24 +18,38 @@ const cliOptions = yargs(process.argv.slice(2))
   .help()
   .parseSync();
 
-const list = async (client: Database<sqlite3.Database, sqlite3.Statement>) => {
-  const rows = await client.all<{
+const list = (client: Database) => {
+  client.all<{
     name: string;
     version: string;
     md5: string;
-  }[]>('SELECT * FROM migrations;');
+  }>('SELECT * FROM migrations', (err, rows) => {
+    if (err) {
+      throw err;
+    }
 
-  for (const row of rows) {
-    console.log(`${row.md5}: ${row.name}`);
-  }
+    for (const row of rows) {
+      console.log(`${row.md5}: ${row.name}`);
+    }
+  });
 };
 
-const migrate = async (client: Database<sqlite3.Database, sqlite3.Statement>, version?: string) => {
+const migrate = async (client: Database, version?: string) => {
   const postgrator = new Postgrator({
     driver: 'sqlite3',
     migrationPattern: join(__dirname, 'lib', '/migrations/*.sql'),
     schemaTable: 'migrations',
-    execQuery: (query) => client.all(query),
+    execQuery: async (query) => {
+      return new Promise((resolve, reject) => {
+        client.all(query, (err, rows) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve({ rows });
+          }
+        });
+      });
+    }
   });
 
   const result = await postgrator.migrate(version);
@@ -55,11 +67,8 @@ const migrate = async (client: Database<sqlite3.Database, sqlite3.Statement>, ve
 };
 
 void (async (options: typeof cliOptions) => {
-  sqlite3.verbose();
-  const client = await open<sqlite3.Database, sqlite3.Statement>({
-    filename: join(__dirname, '..', 'sqlite.db'),
-    driver: sqlite3.Database,
-  });
+  verbose();
+  const client = new Database(join(__dirname, '..', 'sqlite.db'));
 
   try {
     if (options.list) {
