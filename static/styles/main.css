@@ -1,5 +1,5 @@
-@import url("variables.css");
-@import url("common/index.css");
+@import url('variables.css');
+@import url('common/index.css');
 
 html {
   margin: 0;
@@ -14,7 +14,12 @@ body {
   font-size: var(--font-base);
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   text-align: center;
 }
 

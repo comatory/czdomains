@@ -12,7 +12,7 @@
     "test": "test",
     "migrate": "tsx src/migrate.ts",
     "import": "tsx src/import.ts",
-    "format": "prettier --write src/**/*.ts",
+    "format": "prettier --write .",
     "prepare": "husky install"
   },
   "repository": {

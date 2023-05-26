@@ -1,16 +1,16 @@
-import { readFile } from "fs/promises";
-import { join } from "path";
+import { readFile } from 'fs/promises';
+import { join } from 'path';
 
-import sqlite3 from "sqlite3";
-import { open } from "sqlite";
-import type { Database } from "sqlite";
-import yargs from "yargs";
+import sqlite3 from 'sqlite3';
+import { open } from 'sqlite';
+import type { Database } from 'sqlite';
+import yargs from 'yargs';
 
 const cliOptions = yargs(process.argv.slice(2))
-  .option("filePath", {
-    alias: "f",
-    type: "string",
-    description: "Path to file with domain names",
+  .option('filePath', {
+    alias: 'f',
+    type: 'string',
+    description: 'Path to file with domain names',
     demandOption: true,
   })
   .parseSync();
@@ -23,11 +23,11 @@ function normalizeDomain(value: string): string {
   let normalizedValue = value;
 
   if (HTTPS_RE.test(value)) {
-    normalizedValue = normalizedValue.replace(HTTPS_RE, "");
+    normalizedValue = normalizedValue.replace(HTTPS_RE, '');
   }
 
   if (WWW_RE.test(normalizedValue)) {
-    normalizedValue = normalizedValue.replace(WWW_RE, "");
+    normalizedValue = normalizedValue.replace(WWW_RE, '');
   }
 
   return normalizedValue;
@@ -41,10 +41,14 @@ function reportProcessedChunk(totalChunks: number, order: number): void {
   console.info(`Chunk ${order}/${totalChunks} processed.`);
 }
 
-async function getImportIdByDate(db: Database<sqlite3.Database, sqlite3.Statement>, date: string) {
-  const row = await db.get<{ id: number }>("SELECT id FROM imports WHERE created_at = ?", [
-      date,
-    ]);
+async function getImportIdByDate(
+  db: Database<sqlite3.Database, sqlite3.Statement>,
+  date: string,
+) {
+  const row = await db.get<{ id: number }>(
+    'SELECT id FROM imports WHERE created_at = ?',
+    [date],
+  );
 
   return row?.id ?? null;
 }
@@ -63,30 +67,29 @@ async function insertDomains({
   now: string;
 }): Promise<number> {
   try {
-    await db.run("BEGIN;");
+    await db.run('BEGIN;');
     const newImport = await db.get<{ id: number }>(
-      "INSERT OR IGNORE INTO imports (created_at) VALUES (?) RETURNING id;",
-      [now]
+      'INSERT OR IGNORE INTO imports (created_at) VALUES (?) RETURNING id;',
+      [now],
     );
 
-    const importId =
-      newImport
-        ? newImport.id
-        : await getImportIdByDate(db, now);
+    const importId = newImport
+      ? newImport.id
+      : await getImportIdByDate(db, now);
 
     const sql = `INSERT OR IGNORE INTO domains (value, import_id) VALUES ${chunk
-      .map((_) => "(?, ?)")
-      .join(",")};`;
+      .map((_) => '(?, ?)')
+      .join(',')};`;
     const values = chunk.flatMap((value) => [value, importId]);
     await db.run(sql, values);
 
     reportProcessedChunk(totalChunks, order);
 
-    await db.run("COMMIT;");
+    await db.run('COMMIT;');
 
     return values.length;
   } catch (e) {
-    await db.run("ROLLBACK;");
+    await db.run('ROLLBACK;');
     throw e;
   }
 }
@@ -96,17 +99,17 @@ void (async ({ filePath }: typeof cliOptions) => {
 
   const fileContent = await readFile(filePath);
 
-  console.info("Opening file...");
+  console.info('Opening file...');
 
-  const lines = fileContent.toString().split("\n");
+  const lines = fileContent.toString().split('\n');
 
-  console.info("Normalizing domain names...");
+  console.info('Normalizing domain names...');
 
   const normalizedValues = lines.map(normalizeDomain);
 
-  console.info("Connecting to database...");
+  console.info('Connecting to database...');
 
-  const dbPath = join(__dirname, "..", "./sqlite.db");
+  const dbPath = join(__dirname, '..', './sqlite.db');
   const db = await open<sqlite3.Database, sqlite3.Statement>({
     filename: dbPath,
     driver: sqlite3.Database,
@@ -123,7 +126,7 @@ void (async ({ filePath }: typeof cliOptions) => {
     return array;
   }, [] as string[][]);
 
-  console.info("Writing to database...");
+  console.info('Writing to database...');
 
   let rowsWritten = 0;
 
@@ -145,7 +148,7 @@ void (async ({ filePath }: typeof cliOptions) => {
   const ignoredRows = normalizedValues.length - rowsWritten;
   const info = `${rowsWritten} rows created out of ${
     normalizedValues.length
-  } records.${ignoredRows > 0 ? `${ignoredRows} rows ignored.` : ""}`;
+  } records.${ignoredRows > 0 ? `${ignoredRows} rows ignored.` : ''}`;
   console.info(info);
 
   db.close();

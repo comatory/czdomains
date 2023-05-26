@@ -45,7 +45,7 @@ const migrate = async (client: Database, version?: string) => {
           }
         });
       });
-    }
+    },
   });
 
   const result = await postgrator.migrate(version);

@@ -1,6 +1,6 @@
 import { join } from 'node:path';
 
-import type { FastifyInstance } from "fastify"
+import type { FastifyInstance } from 'fastify';
 import fastifyStatic from '@fastify/static';
 import fastifyView from '@fastify/view';
 import handlebars from 'handlebars';
@@ -24,8 +24,8 @@ const configureTemplates = (app: FastifyInstance) => {
         section: 'partials/section.hbs',
         navigation: 'partials/navigation.hbs',
       },
-    }
-  })
+    },
+  });
 };
 
 /**
@@ -34,4 +34,4 @@ const configureTemplates = (app: FastifyInstance) => {
 export const configureViews = (app: FastifyInstance) => {
   configureStaticAssets(app);
   configureTemplates(app);
-}
+};
