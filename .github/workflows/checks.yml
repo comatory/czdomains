@@ -4,7 +4,8 @@ on:
   push:
 
 jobs:
-  type-check:
+  checks:
+    name: Checks
     runs-on: ubuntu-latest
 
     steps:
