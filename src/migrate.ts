@@ -18,7 +18,7 @@ const cliOptions = yargs(process.argv.slice(2))
   .help()
   .parseSync();
 
-const list = (client: Database) => {
+function list(client: Database) {
   client.all('SELECT * FROM migrations', (err, rows) => {
     if (err) {
       throw err;
@@ -28,9 +28,9 @@ const list = (client: Database) => {
       console.log(`${row.md5}: ${row.name}`);
     }
   });
-};
+}
 
-const migrate = async (client: Database, version?: string) => {
+async function migrate(client: Database, version?: string) {
   const postgrator = new Postgrator({
     driver: 'sqlite3',
     migrationPattern: join(__dirname, 'lib', '/migrations/*.sql'),
@@ -60,7 +60,7 @@ const migrate = async (client: Database, version?: string) => {
   }
 
   console.log('Migration done');
-};
+}
 
 void (async (options: typeof cliOptions) => {
   verbose();

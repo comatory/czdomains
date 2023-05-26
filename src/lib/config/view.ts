@@ -5,13 +5,13 @@ import fastifyStatic from '@fastify/static';
 import fastifyView from '@fastify/view';
 import handlebars from 'handlebars';
 
-const configureStaticAssets = (app: FastifyInstance) => {
+function configureStaticAssets(app: FastifyInstance) {
   app.register(fastifyStatic, {
     root: join(__dirname, '..', '..', '..', 'static'),
   });
-};
+}
 
-const configureTemplates = (app: FastifyInstance) => {
+function configureTemplates(app: FastifyInstance) {
   app.register(fastifyView, {
     engine: {
       handlebars: handlebars,
@@ -26,12 +26,12 @@ const configureTemplates = (app: FastifyInstance) => {
       },
     },
   });
-};
+}
 
 /**
  * Sets up template rendering and static assets.
  */
-export const configureViews = (app: FastifyInstance) => {
+export function configureViews(app: FastifyInstance) {
   configureStaticAssets(app);
   configureTemplates(app);
-};
+}

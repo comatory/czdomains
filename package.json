@@ -14,6 +14,7 @@
     "import": "tsx src/import.ts",
     "format": "prettier --write .",
     "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint --ext .ts src",
     "prepare": "husky install"
   },
   "repository": {
@@ -43,6 +44,9 @@
     "@tsconfig/node18": "^1.0.1",
     "@types/node": "^18.15.11",
     "@types/yargs": "^17.0.24",
+    "@typescript-eslint/eslint-plugin": "^5.59.7",
+    "@typescript-eslint/parser": "^5.59.7",
+    "eslint": "^8.41.0",
     "husky": "^8.0.3",
     "prettier": "^2.8.8",
     "typescript": "^5.0.3"
