@@ -19,11 +19,7 @@ const cliOptions = yargs(process.argv.slice(2))
   .parseSync();
 
 const list = (client: Database) => {
-  client.all<{
-    name: string;
-    version: string;
-    md5: string;
-  }>('SELECT * FROM migrations', (err, rows) => {
+  client.all('SELECT * FROM migrations', (err, rows) => {
     if (err) {
       throw err;
     }
