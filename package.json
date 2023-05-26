@@ -13,6 +13,7 @@
     "migrate": "tsx src/migrate.ts",
     "import": "tsx src/import.ts",
     "format": "prettier --write .",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
     "prepare": "husky install"
   },
   "repository": {
