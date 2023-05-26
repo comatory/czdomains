@@ -2,6 +2,11 @@ import type { FastifyInstance } from 'fastify';
 
 import { createDatabase } from '../services/db';
 
+type UnwrapPromise<T> = T extends Promise<infer U> ? U : T;
+interface Application extends FastifyInstance {
+  services: UnwrapPromise<ReturnType<typeof createServices>>;
+}
+
 async function createServices() {
   const db = await createDatabase();
 
@@ -10,8 +15,12 @@ async function createServices() {
   };
 }
 
-export async function configureServices(app: FastifyInstance) {
+export async function configureServices(
+  app: FastifyInstance,
+): Promise<Application> {
   const services = await createServices();
 
-  return app.decorate('services', services);
+  app.decorate('services', services);
+
+  return app as Application;
 }

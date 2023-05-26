@@ -8,8 +8,7 @@ const PORT = Number.isNaN(Number(process.env.PORT))
   : Number(process.env.PORT);
 
 void (async function () {
-  const instance = fastify();
-  const server = await configureServices(instance);
+  const server = await configureServices(fastify());
   configureViews(server);
 
   server.get('/ping', async (_, __) => {
