@@ -2,6 +2,7 @@ import fastify from 'fastify';
 
 import { configureViews } from './config/view';
 import { configureServices } from './config/services';
+import { getDomains } from './data-utils/domains';
 
 const PORT = Number.isNaN(Number(process.env.PORT))
   ? 3000
@@ -17,6 +18,11 @@ void (async function () {
 
   server.get('/', async (_, reply) => {
     return reply.view('index.hbs');
+  });
+
+  server.get('/browse/:filter', async (_, reply) => {
+    const list = await getDomains(server.services.db);
+    return reply.view('browse.hbs', { list });
   });
 
   server.listen({ port: PORT }, (err, address) => {
