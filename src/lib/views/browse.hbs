@@ -9,8 +9,9 @@
       </p>
       <ul>
         {{#each list}}
-          <li>ID: {{id}}</li>
-          <li>value: {{value}}</li>
+          <li>
+            <a href="/domain/{{uuid}}">{{value}}</a>
+          </li>
         {{/each}}
       </ul>
     {{/ section }}

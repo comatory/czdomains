@@ -1,4 +1,5 @@
 import { readFile } from 'fs/promises';
+import { randomUUID } from 'crypto';
 import { join } from 'path';
 
 import sqlite3 from 'sqlite3';
@@ -17,7 +18,7 @@ const cliOptions = yargs(process.argv.slice(2))
 
 const HTTPS_RE = /^http(s?):\/\//i;
 const WWW_RE = /^www\./i;
-const MAX_VARIABLES_CHUNK_SIZE = 32766 / 2;
+const MAX_VARIABLES_CHUNK_SIZE = 32766 / 3;
 
 function normalizeDomain(value: string): string {
   let normalizedValue = value;
@@ -77,10 +78,10 @@ async function insertDomains({
       ? newImport.id
       : await getImportIdByDate(db, now);
 
-    const sql = `INSERT OR IGNORE INTO domains (value, import_id) VALUES ${chunk
-      .map((_) => '(?, ?)')
+    const sql = `INSERT OR IGNORE INTO domains (value, uuid, import_id) VALUES ${chunk
+      .map((_) => '(?, ?, ?)')
       .join(',')};`;
-    const values = chunk.flatMap((value) => [value, importId]);
+    const values = chunk.flatMap((value) => [value, randomUUID(), importId]);
     await db.run(sql, values);
 
     reportProcessedChunk(totalChunks, order);
