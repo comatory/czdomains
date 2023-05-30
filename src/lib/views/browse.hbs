@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <link rel="stylesheet" href="/styles/browse.css">
+  </head>
   <body>
     {{> heading}}
     {{#> section }}
       {{> navigation isBrowse=true}}
-      <p>
-        Browse the domains.
-      </p>
+      {{> browse-navigation filter=filter}}
       <ul>
         {{#each list}}
           <li>

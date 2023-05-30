@@ -12,6 +12,21 @@ function configureStaticAssets(app: FastifyInstance) {
 }
 
 function configureTemplates(app: FastifyInstance) {
+  handlebars.registerHelper(
+    'ifEquals',
+    function (
+      this: unknown,
+      arg1: string,
+      arg2: string,
+      options: {
+        fn: (context: unknown) => string;
+        inverse: (context: unknown) => string;
+      },
+    ) {
+      return arg1 == arg2 ? options.fn(this) : options.inverse(this);
+    },
+  );
+
   app.register(fastifyView, {
     engine: {
       handlebars: handlebars,
@@ -23,6 +38,8 @@ function configureTemplates(app: FastifyInstance) {
         heading: 'partials/heading.hbs',
         section: 'partials/section.hbs',
         navigation: 'partials/navigation.hbs',
+        'browse-navigation': 'partials/browse-navigation.hbs',
+        'browse-navigation-item': 'partials/browse-navigation-item.hbs',
       },
     },
   });

@@ -20,9 +20,9 @@ void (async function () {
     return reply.view('index.hbs');
   });
 
-  server.get('/browse/:filter', async (_, reply) => {
+  server.get('/browse/:filter', async (request, reply) => {
     const list = await getDomains(server.services.db);
-    return reply.view('browse.hbs', { list });
+    return reply.view('browse.hbs', { list, filter: request.params.filter });
   });
 
   server.listen({ port: PORT }, (err, address) => {

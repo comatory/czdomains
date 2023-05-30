@@ -1,0 +1,7 @@
+<li class="browse-navigation__item">
+  {{#ifEquals url filter}}
+    <a href="/browse/{{ url }}"><strong>{{ label }}</strong></a>
+  {{else}}
+    <a href="/browse/{{ url }}">{{ label }}</a>
+    {{/ifEquals}}
+</li>
