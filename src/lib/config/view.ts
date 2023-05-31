@@ -23,7 +23,7 @@ function configureTemplates(app: FastifyInstance) {
         inverse: (context: unknown) => string;
       },
     ) {
-      return arg1 == arg2 ? options.fn(this) : options.inverse(this);
+      return arg1 === arg2 ? options.fn(this) : options.inverse(this);
     },
   );
 
