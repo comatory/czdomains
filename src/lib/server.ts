@@ -20,8 +20,23 @@ void (async function () {
     return reply.view('index.hbs');
   });
 
-  server.get('/browse/:filter', async (request, reply) => {
-    const list = await getDomains(server.services.db);
+  server.get<{
+    Params: {
+      filter: 'all' | 'numbers' | 'a_e' | 'f_j' | 'k_o' | 'p_t' | 'u_z';
+    };
+    Querystring: {
+      page: number;
+      size: number;
+    };
+  }>('/browse/:filter', async (request, reply) => {
+    const { filter } = request.params;
+    const { page, size } = request.query;
+    const list = await getDomains(server.services.db, {
+      filter,
+      page,
+      size,
+    });
+
     return reply.view('browse.hbs', { list, filter: request.params.filter });
   });
 
