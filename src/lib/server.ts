@@ -28,17 +28,41 @@ void (async function () {
       page: number;
       size: number;
     };
-  }>('/browse/:filter', async (request, reply) => {
-    const { filter } = request.params;
-    const { page, size } = request.query;
-    const list = await getDomains(server.services.db, {
-      filter,
-      page,
-      size,
-    });
+  }>(
+    '/browse/:filter',
+    {
+      schema: {
+        querystring: {
+          type: 'object',
+          properties: {
+            page: { type: 'number' },
+            size: { type: 'number' },
+          },
+          required: ['page', 'size'],
+        },
+        params: {
+          type: 'object',
+          properties: {
+            filter: {
+              type: 'string',
+              enum: ['all', 'numbers', 'a_e', 'f_j', 'k_o', 'p_t', 'u_z'],
+            },
+          },
+        },
+      },
+    },
+    async (request, reply) => {
+      const { filter } = request.params;
+      const { page, size } = request.query;
+      const list = await getDomains(server.services.db, {
+        filter,
+        page,
+        size,
+      });
 
-    return reply.view('browse.hbs', { list, filter: request.params.filter });
-  });
+      return reply.view('browse.hbs', { list, filter: request.params.filter });
+    },
+  );
 
   server.listen({ port: PORT }, (err, address) => {
     if (err) {
