@@ -38,7 +38,6 @@ function configureTemplates(app: FastifyInstance) {
         heading: 'partials/heading.hbs',
         section: 'partials/section.hbs',
         navigation: 'partials/navigation.hbs',
-        'browse-navigation': 'partials/browse-navigation.hbs',
         'browse-navigation-item': 'partials/browse-navigation-item.hbs',
       },
     },
