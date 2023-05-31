@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "title": "Browse query string schema",
+  "properties": {
+    "page": { "type": "number" },
+    "size": { "type": "number" }
+  },
+  "additionalProperties": false,
+  "required": ["page", "size"]
+}

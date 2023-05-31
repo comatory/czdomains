@@ -2,15 +2,19 @@ import type { Database } from 'sqlite';
 
 import { domain } from '../models/domain';
 import type { Domain } from '../models/domain';
+import type { BrowseParamsSchema } from '../types/params';
+import type { BrowseQueryStringSchema } from '../types/querystring';
 
 export async function getDomains(
   db: Database,
   {
     page,
     size,
+    filter,
   }: {
-    page: number;
-    size: number;
+    page: BrowseQueryStringSchema['page'];
+    size: BrowseQueryStringSchema['size'];
+    filter: BrowseParamsSchema['filter'];
   },
 ): Promise<Domain[]> {
   const rows = (

@@ -3,7 +3,7 @@ import type { FastifyInstance } from 'fastify';
 import { createDatabase } from '../services/db';
 
 type UnwrapPromise<T> = T extends Promise<infer U> ? U : T;
-interface Application extends FastifyInstance {
+export interface Application extends FastifyInstance {
   services: UnwrapPromise<ReturnType<typeof createServices>>;
 }
 
