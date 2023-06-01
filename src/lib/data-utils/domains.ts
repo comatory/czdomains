@@ -29,30 +29,38 @@ export async function getDomains(
     size: BrowseQueryStringSchema['size'];
     filter: BrowseParamsSchema['filter'];
   },
-): Promise<Domain[]> {
+): Promise<{
+  rows: Domain[];
+  totalCount: number;
+}> {
   const { start, end } = BROWSE_FILTER_MAP[filter];
 
-  const rows = (
-    await db.all<Array<Record<string, unknown>>>(
-      [
-        'SELECT * FROM domains',
-        start.length < 1 && end.length < 1
-          ? ''
-          : 'WHERE value BETWEEN $start AND $end',
-        'ORDER BY value ASC',
-        'LIMIT $limit',
-        'OFFSET $offset;',
-      ]
-        .filter((text) => text.length > 0)
-        .join(' '),
-      {
-        $offset: page * size,
-        $limit: size,
-        $start: start || undefined,
-        $end: end || undefined,
-      },
-    )
-  ).map((row) => domain.parse(row));
+  const rows = await db.all<Array<Record<string, unknown>>>(
+    [
+      'SELECT id, value, uuid, COUNT() OVER() as totalCount',
+      'FROM domains',
+      start.length < 1 && end.length < 1
+        ? ''
+        : 'WHERE value BETWEEN $start AND $end',
+      'ORDER BY value ASC',
+      'LIMIT $limit',
+      'OFFSET $offset;',
+    ]
+      .filter((text) => text.length > 0)
+      .join(' '),
+    {
+      $offset: page * size,
+      $limit: size,
+      $start: start || undefined,
+      $end: end || undefined,
+    },
+  );
+  const maybeCount = rows.length > 0 ? rows[0].totalCount : 0;
+  const domainRows = rows.map((row) => domain.parse(row));
+  const count: number = typeof maybeCount === 'number' ? maybeCount : 0;
 
-  return rows;
+  return {
+    rows: domainRows,
+    totalCount: Math.round(count / size),
+  };
 }

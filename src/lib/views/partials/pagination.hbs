@@ -14,6 +14,15 @@
     >
       Previous
     </button>
+  {{ else }}
+    <button
+      type="submit"
+      disabled
+      name="page"
+      class="pagination__button pagination__button--previous"
+    >
+      Previous
+    </button>
   {{/if}}
 
   <span class="pagination__current">
@@ -31,6 +40,15 @@
       type="submit"
       name="page"
       value="{{ nextPage }}"
+      class="pagination__button pagination__button--next"
+    >
+      Next
+    </button>
+  {{ else }}
+    <button
+      type="submit"
+      name="page"
+      disabled
       class="pagination__button pagination__button--next"
     >
       Next

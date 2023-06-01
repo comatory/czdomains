@@ -20,21 +20,21 @@ export function configureRoutes(server: Application) {
     async (request, reply) => {
       const { filter } = request.params;
       const { page, size } = request.query;
-      const list = await getDomains(server.services.db, {
+      const { rows, totalCount } = await getDomains(server.services.db, {
         filter,
         page,
         size,
       });
 
       return reply.view('browse.hbs', {
-        list,
+        list: rows,
         filter: request.params.filter,
         page,
-        previous: false,
-        next: true,
+        previous: page - 1 >= 0,
+        next: page + 1 < totalCount,
         prevPage: page - 1,
         nextPage: page + 1,
-        totalPages: 100,
+        totalPages: totalCount,
         size,
       });
     },
