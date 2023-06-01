@@ -10,5 +10,11 @@ export async function createDatabase() {
     driver: sqlite3.Database,
   });
 
+  if (process.env.NODE_ENV === 'development') {
+    db.on('trace', (query: string) => {
+      console.info(query);
+    });
+  }
+
   return db;
 }

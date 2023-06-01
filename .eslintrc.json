@@ -14,7 +14,13 @@
   "rules": {
     "indent": ["error", 2],
     "linebreak-style": ["error", "unix"],
-    "quotes": ["error", "single"],
+    "quotes": [
+      "error",
+      "single",
+      {
+        "allowTemplateLiterals": true
+      }
+    ],
     "semi": ["error", "always"],
     "func-style": ["error", "declaration"],
     "@typescript-eslint/no-extra-semi": "off",
