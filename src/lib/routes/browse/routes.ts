@@ -26,7 +26,17 @@ export function configureRoutes(server: Application) {
         size,
       });
 
-      return reply.view('browse.hbs', { list, filter: request.params.filter });
+      return reply.view('browse.hbs', {
+        list,
+        filter: request.params.filter,
+        page,
+        previous: false,
+        next: true,
+        prevPage: page - 1,
+        nextPage: page + 1,
+        totalPages: 100,
+        size,
+      });
     },
   );
 

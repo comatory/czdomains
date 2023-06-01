@@ -27,6 +27,13 @@ function configureTemplates(app: FastifyInstance) {
     },
   );
 
+  handlebars.registerHelper(
+    'concat',
+    function (this: unknown, ...args: unknown[]) {
+      return args.slice(0, -1).join('');
+    },
+  );
+
   app.register(fastifyView, {
     engine: {
       handlebars: handlebars,
@@ -39,6 +46,7 @@ function configureTemplates(app: FastifyInstance) {
         section: 'partials/section.hbs',
         navigation: 'partials/navigation.hbs',
         'browse-navigation-item': 'partials/browse-navigation-item.hbs',
+        pagination: 'partials/pagination.hbs',
       },
     },
   });

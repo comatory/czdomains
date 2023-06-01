@@ -23,6 +23,17 @@
           </li>
         {{/each}}
       </ul>
+      {{> pagination
+            path="/browse"
+            filter=filter
+            page=page
+            previous=previous
+            next=next
+            prevPage=prevPage
+            nextPage=nextPage
+            totalPages=totalPages
+            size=size
+      }}
     {{/ section }}
   </body>
 </html>

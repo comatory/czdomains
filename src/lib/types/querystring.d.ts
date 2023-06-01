@@ -7,5 +7,5 @@
 
 export interface BrowseQueryStringSchema {
   page: number;
-  size: number;
+  size: 10 | 20 | 50 | 100;
 }
