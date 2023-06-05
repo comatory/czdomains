@@ -5,7 +5,6 @@
   name="pagination"
   class="pagination"
 >
-  <input type="submit" hidden />
   {{#if previous}}
     <button
       type="submit"
@@ -27,9 +26,7 @@
   {{/if}}
 
   <span class="pagination__current">
-    Page <input type="text" value="{{ page }}" name="page" accesskey="enter" /> of {{ totalPages }}
-  </button>
-
+    Page {{ page }} of {{ totalPages }}
   </span>
 
   <input
