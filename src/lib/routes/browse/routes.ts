@@ -29,7 +29,7 @@ export function configureRoutes(server: Application) {
       return reply.view('browse.hbs', {
         list: rows,
         filter: request.params.filter,
-        page,
+        page: page + 1,
         previous: page - 1 >= 0,
         next: page + 1 < totalCount,
         prevPage: page - 1,
