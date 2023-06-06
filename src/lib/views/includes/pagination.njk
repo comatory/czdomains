@@ -8,24 +8,23 @@
   {% set previous = pagination.page > 0 %}
   {% set next = pagination.page < pagination.totalCount %}
 
+  {% set sizeQuery = "size" ~ "=" ~ pagination.size %}
+  {% set navigationHref = pagination.path ~ "/" ~ pagination.filter ~ "?" ~ sizeQuery %}
+
   {% if previous %}
-    <button
-      type="submit"
-      name="page"
-      value="{{ page - 1 }}"
+    {% set pageQuery = "page" ~ "=" ~ (pagination.page - 1) %}
+    <a
+      href="{{ navigationHref ~ "&" ~ pageQuery }}"
       class="pagination__button pagination__button--previous"
     >
       Previous
-    </button>
+    </a>
   {% else %}
-    <button
-      type="submit"
-      disabled
-      name="page"
+    <a
       class="pagination__button pagination__button--previous"
     >
       Previous
-    </button>
+    </a>
   {% endif %}
 
   <span class="pagination__current">
@@ -39,22 +38,18 @@
   />
 
   {% if next %}
-    <button
-      type="submit"
-      name="page"
-      value="{{ page + 1 }}"
+    {% set pageQuery = "page" ~ "=" ~ (pagination.page + 1) %}
+    <a
+      href="{{ navigationHref ~ "&" ~ pageQuery }}"
       class="pagination__button pagination__button--next"
     >
       Next
-    </button>
+    </a>
   {% else %}
-    <button
-      type="submit"
-      name="page"
-      disabled
+    <a
       class="pagination__button pagination__button--next"
     >
       Next
-    </button>
+    </a>
   {% endif %}
 </form>
