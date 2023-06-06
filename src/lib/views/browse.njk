@@ -1,0 +1,41 @@
+{% extends "layout.njk" %}
+
+{% block head %}
+  <link rel="stylesheet" href="/styles/browse.css">
+{% endblock %}
+
+{% block content %}
+  {% set navigation = { isBrowse: true } %}
+  {% include "includes/navigation.njk" %}
+  <ul class="browse-navigation">
+    {% set browseNavigation = { path: "all", label: "All", filter: filter } %}
+    {% include "includes/browse-navigation-item.njk" %}
+    {% set browseNavigation = { path: "numbers", label: "0-9", filter: filter } %}
+    {% include "includes/browse-navigation-item.njk" %}
+    {% set browseNavigation = { path: "a_e", label: "a-e", filter: filter } %}
+    {% include "includes/browse-navigation-item.njk" %}
+    {% set browseNavigation = { path: "f_j", label: "f-j", filter: filter } %}
+    {% include "includes/browse-navigation-item.njk" %}
+    {% set browseNavigation = { path: "k_o", label: "k-o", filter: filter } %}
+    {% include "includes/browse-navigation-item.njk" %}
+    {% set browseNavigation = { path: "p_t", label: "p-t", filter: filter } %}
+    {% include "includes/browse-navigation-item.njk" %}
+    {% set browseNavigation = { path: "u_z", label: "u-z", filter: filter } %}
+    {% include "includes/browse-navigation-item.njk" %}
+  </ul>
+  <ul>
+    {% for item in list %}
+      <li>
+        <a href="/domain/{{ item.uuid }}">{{ item.value }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+  {% set pagination = {
+    path: "/browse",
+    filter: filter,
+    page: page,
+    totalCount: totalCount,
+    size: size
+  } %}
+  {% include "includes/pagination.njk" %}
+{% endblock %}

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>czdomains</title>
+    <link rel='stylesheet' href='/styles/main.css' />
+    {% block head %}{% endblock %}
+  </head>
+  <body>
+    {% include "includes/heading.njk" %}
+    <section class="page-section">
+      {% block content %}{% endblock %}
+    </section>
+  </body>

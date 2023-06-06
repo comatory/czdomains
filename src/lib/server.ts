@@ -19,7 +19,7 @@ void (async function () {
   configureBrowseRoutes(server);
 
   server.get('/', async (_, reply) => {
-    return reply.view('index.hbs');
+    return reply.view('index.njk');
   });
 
   server.listen({ port: PORT }, (err, address) => {

@@ -26,15 +26,11 @@ export function configureRoutes(server: Application) {
         size,
       });
 
-      return reply.view('browse.hbs', {
+      return reply.view('browse.njk', {
         list: rows,
         filter: request.params.filter,
         page,
-        previous: page - 1 >= 0,
-        next: page + 1 < totalCount,
-        prevPage: page - 1,
-        nextPage: page + 1,
-        totalPages: totalCount,
+        totalCount,
         size,
       });
     },

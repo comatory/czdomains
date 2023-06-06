@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import type { FastifyInstance } from 'fastify';
 import fastifyStatic from '@fastify/static';
 import fastifyView from '@fastify/view';
-import handlebars from 'handlebars';
+import nunjucks from 'nunjucks';
 
 function configureStaticAssets(app: FastifyInstance) {
   app.register(fastifyStatic, {
@@ -12,42 +12,14 @@ function configureStaticAssets(app: FastifyInstance) {
 }
 
 function configureTemplates(app: FastifyInstance) {
-  handlebars.registerHelper(
-    'ifEquals',
-    function (
-      this: unknown,
-      arg1: string,
-      arg2: string,
-      options: {
-        fn: (context: unknown) => string;
-        inverse: (context: unknown) => string;
-      },
-    ) {
-      return arg1 === arg2 ? options.fn(this) : options.inverse(this);
-    },
-  );
-
-  handlebars.registerHelper(
-    'concat',
-    function (this: unknown, ...args: unknown[]) {
-      return args.slice(0, -1).join('');
-    },
-  );
-
   app.register(fastifyView, {
     engine: {
-      handlebars: handlebars,
+      nunjucks,
     },
-    root: join(__dirname, '..', 'views'),
-    layout: 'layout.hbs',
+    templates: [join(__dirname, '..', 'views')],
+    production: process.env.NODE_ENV === 'production',
     options: {
-      partials: {
-        heading: 'partials/heading.hbs',
-        section: 'partials/section.hbs',
-        navigation: 'partials/navigation.hbs',
-        'browse-navigation-item': 'partials/browse-navigation-item.hbs',
-        pagination: 'partials/pagination.hbs',
-      },
+      noCache: process.env.NODE_ENV !== 'production',
     },
   });
 }
