@@ -11,6 +11,22 @@
   {% set sizeQuery = "size" ~ "=" ~ pagination.size %}
   {% set navigationHref = pagination.path ~ "/" ~ pagination.filter ~ "?" ~ sizeQuery %}
 
+  {% if pagination.totalCount > 1 %}
+    {% set pageQuery = "page" ~ "=" ~ 0 %}
+    <a
+      href="{{ navigationHref ~ "&" ~ pageQuery }}"
+      class="pagination__button pagination__button--first"
+    >
+      First
+    </a>
+  {% else %}
+    <a
+      class="pagination__button pagination__button--first"
+    >
+      First
+    </a>
+  {% endif %}
+
   {% if previous %}
     {% set pageQuery = "page" ~ "=" ~ (pagination.page - 1) %}
     <a
@@ -50,6 +66,22 @@
       class="pagination__button pagination__button--next"
     >
       Next
+    </a>
+  {% endif %}
+
+  {% if pagination.totalCount > 1 %}
+    {% set pageQuery = "page" ~ "=" ~ pagination.totalCount %}
+    <a
+      href="{{ navigationHref ~ "&" ~ pageQuery }}"
+      class="pagination__button pagination__button--last"
+    >
+      Last
+    </a>
+  {% else %}
+    <a
+      class="pagination__button pagination__button--first"
+    >
+      Last
     </a>
   {% endif %}
 </form>
