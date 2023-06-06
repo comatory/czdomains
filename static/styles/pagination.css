@@ -12,3 +12,8 @@
 .pagination__current {
   margin: 0 0.5rem;
 }
+
+.pagination__current__input {
+  max-width: 4rem;
+  width: fit-content;
+}

@@ -27,7 +27,7 @@
     </a>
   {% endif %}
 
-  {% if previous %}
+  {% if previous and pagination.totalCount > 0 %}
     {% set pageQuery = "page" ~ "=" ~ (pagination.page - 1) %}
     <a
       href="{{ navigationHref ~ "&" ~ pageQuery }}"
@@ -44,7 +44,15 @@
   {% endif %}
 
   <span class="pagination__current">
-    Page {{ pagination.page }} of {{ pagination.totalCount }}
+    <button type="submit" hidden></button>
+    Page
+      <input
+        type="number"
+        value="{{ pagination.page }}"
+        name="page"
+        class="pagination__current__input"
+      />
+      / {{ pagination.totalCount }}
   </span>
 
   <input
@@ -53,7 +61,7 @@
     value="{{ pagination.size }}"
   />
 
-  {% if next %}
+  {% if next and pagination.totalCount > 0 %}
     {% set pageQuery = "page" ~ "=" ~ (pagination.page + 1) %}
     <a
       href="{{ navigationHref ~ "&" ~ pageQuery }}"
