@@ -9,7 +9,8 @@
   margin: 0 0.25rem;
 }
 
-.pagination__current {
+.pagination__current,
+.pagination__per {
   margin: 0 0.5rem;
 }
 

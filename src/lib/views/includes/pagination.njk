@@ -56,23 +56,25 @@
       / {{ pagination.totalCount }}
   </span>
 
-  <label for="per-page">Size:</label>
-  <select
-    value={{ pagination.size | string }}
-    name="size"
-    id="per-page"
-    class="pagination__per"
-    onchange="pagination.submit()"
-  >
-    {% set paginationOption = { value: 10, currentValue: pagination.size } %}
-    {% include "./pagination-size-option.njk" %}
-    {% set paginationOption = { value: 20, currentValue: pagination.size } %}
-    {% include "./pagination-size-option.njk" %}
-    {% set paginationOption = { value: 50, currentValue: pagination.size } %}
-    {% include "./pagination-size-option.njk" %}
-    {% set paginationOption = { value: 100, currentValue: pagination.size } %}
-    {% include "./pagination-size-option.njk" %}
-  </select>
+  <div class="pagination__per">
+    <label for="per-page">Size:</label>
+    <select
+      value={{ pagination.size | string }}
+      name="size"
+      id="per-page"
+      class="pagination__per__select"
+      onchange="pagination.submit()"
+    >
+      {% set paginationOption = { value: 10, currentValue: pagination.size } %}
+      {% include "./pagination-size-option.njk" %}
+      {% set paginationOption = { value: 20, currentValue: pagination.size } %}
+      {% include "./pagination-size-option.njk" %}
+      {% set paginationOption = { value: 50, currentValue: pagination.size } %}
+      {% include "./pagination-size-option.njk" %}
+      {% set paginationOption = { value: 100, currentValue: pagination.size } %}
+      {% include "./pagination-size-option.njk" %}
+    </select>
+  </div>
 
   {% if next and pagination.totalCount > 0 %}
     {% set pageQuery = "page" ~ "=" ~ (pagination.page + 1) %}
