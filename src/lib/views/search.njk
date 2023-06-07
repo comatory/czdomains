@@ -1,0 +1,41 @@
+{% extends "layout.njk" %}
+
+{% block head %}
+  <link rel="stylesheet" href="/styles/pagination.css">
+{% endblock %}
+
+{% block content %}
+  {% set navigation = { isSearch: true } %}
+  {% include "includes/navigation.njk" %}
+  <p>
+    <form
+      action="/search"
+      method="GET"
+      autocomplete="off"
+      name="q"
+      class="search"
+    >
+      <input type="text" value="{{ search }}" name="q" />
+      <input type="submit" value="Search" />
+      <input type="hidden" value="0" name="page" />
+      <input type="hidden" value="{{ size }}" name="size" />
+    </form>
+  </p>
+  <ul>
+    {% for item in list %}
+      <li>
+        <a href="/domain/{{ item.uuid }}">{{ item.value }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+  {% set pagination = {
+    path: "/search",
+    page: page,
+    totalCount: totalCount,
+    size: size,
+    extraFields: [
+      { name: "q", value: search }
+    ]
+  } %}
+  {% include "includes/pagination.njk" %}
+{% endblock %}

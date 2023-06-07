@@ -1,15 +1,25 @@
 <form
   method="GET"
-  action="{{ pagination.path ~ "/" ~ pagination.filter }}"
+  action="{{ pagination.path ~ "/" ~ (pagination.filter or "") }}"
   autocomplete="off"
   name="pagination"
   class="pagination"
 >
+  {% if pagination.extraFields %}
+    {% set extraFields = "" %}
+    {% set extraSep = joiner("&") %}
+    {% for field in pagination.extraFields %}
+      {% set extraFields = extraFields ~ extraSep() ~ field.name ~ "=" ~ field.value %}
+      <input type="hidden" name="{{ field.name }}" value="{{ field.value }}" />
+    {% endfor %}
+  {% endif %}
+
   {% set previous = pagination.page > 0 %}
   {% set next = pagination.page < pagination.totalCount %}
 
   {% set sizeQuery = "size" ~ "=" ~ pagination.size %}
-  {% set navigationHref = pagination.path ~ "/" ~ pagination.filter ~ "?" ~ sizeQuery %}
+
+  {% set navigationHref = pagination.path ~ "/" ~ (pagination.filter or "") ~ "?" ~ sizeQuery ~ "&" ~ (extraFields or "") %}
 
   {% if pagination.totalCount > 1 %}
     {% set pageQuery = "page" ~ "=" ~ 0 %}

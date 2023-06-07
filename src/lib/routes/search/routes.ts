@@ -5,6 +5,7 @@ import type {
 } from 'fastify';
 
 import queryStringSchema from './querystring.schema.json';
+import { searchDomains } from '../../data-utils/search-domains';
 import type { SearchQueryStringSchema } from '../../types/schemas';
 
 function plugin(
@@ -24,9 +25,18 @@ function plugin(
     async (request, reply) => {
       /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
       const { page, size, q } = request.query;
+      const { rows, totalCount } = await searchDomains(server.services.db, {
+        page,
+        size,
+        q,
+      });
 
-      return reply.code(200).send({
-        ok: true,
+      return reply.view('search.njk', {
+        list: rows,
+        page,
+        totalCount,
+        size,
+        search: q,
       });
     },
   );
