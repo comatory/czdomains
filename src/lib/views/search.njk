@@ -21,6 +21,9 @@
       <input type="hidden" value="{{ size }}" name="size" />
     </form>
   </p>
+
+  <p>Found {{ (size * totalCount) or list.length }} result(s)</p>
+
   <ul>
     {% for item in list %}
       <li>
