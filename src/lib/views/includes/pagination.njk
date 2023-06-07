@@ -17,13 +17,13 @@
       href="{{ navigationHref ~ "&" ~ pageQuery }}"
       class="pagination__button pagination__button--first"
     >
-      First
+      << First
     </a>
   {% else %}
     <a
       class="pagination__button pagination__button--first"
     >
-      First
+      << First
     </a>
   {% endif %}
 
@@ -33,13 +33,13 @@
       href="{{ navigationHref ~ "&" ~ pageQuery }}"
       class="pagination__button pagination__button--previous"
     >
-      Previous
+      < Previous
     </a>
   {% else %}
     <a
       class="pagination__button pagination__button--previous"
     >
-      Previous
+      < Previous
     </a>
   {% endif %}
 
@@ -82,13 +82,13 @@
       href="{{ navigationHref ~ "&" ~ pageQuery }}"
       class="pagination__button pagination__button--next"
     >
-      Next
+      Next >
     </a>
   {% else %}
     <a
       class="pagination__button pagination__button--next"
     >
-      Next
+      Next >
     </a>
   {% endif %}
 
@@ -98,13 +98,13 @@
       href="{{ navigationHref ~ "&" ~ pageQuery }}"
       class="pagination__button pagination__button--last"
     >
-      Last
+      Last >>
     </a>
   {% else %}
     <a
       class="pagination__button pagination__button--first"
     >
-      Last
+      Last >>
     </a>
   {% endif %}
 </form>
