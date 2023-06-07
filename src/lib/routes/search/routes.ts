@@ -1,12 +1,21 @@
-import type { FastifyInstance } from 'fastify';
+import type {
+  FastifyInstance,
+  FastifyPlugin,
+  FastifyPluginOptions,
+} from 'fastify';
+
 import queryStringSchema from './querystring.schema.json';
 import type { SearchQueryStringSchema } from '../../types/schemas';
 
-export function configureRoutes(server: FastifyInstance) {
+function plugin(
+  server: FastifyInstance,
+  options: FastifyPluginOptions,
+  done: () => void,
+) {
   server.get<{
     Querystring: SearchQueryStringSchema;
   }>(
-    '/search',
+    '/',
     {
       schema: {
         querystring: queryStringSchema,
@@ -21,4 +30,8 @@ export function configureRoutes(server: FastifyInstance) {
       });
     },
   );
+
+  done();
 }
+
+export const searchPlugin: FastifyPlugin = plugin;

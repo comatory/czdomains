@@ -1,16 +1,25 @@
-import type { FastifyInstance } from 'fastify';
+import type {
+  FastifyInstance,
+  FastifyPlugin,
+  FastifyPluginOptions,
+} from 'fastify';
+
 import { getDomains } from '../../data-utils/domains';
 import queryStringSchema from './querystring.schema.json';
 import paramsSchema from './params.schema.json';
 import type { BrowseParamsSchema } from '../../types/schemas';
 import type { BrowseQueryStringSchema } from '../../types/schemas';
 
-export function configureRoutes(server: FastifyInstance) {
+export function plugin(
+  server: FastifyInstance,
+  _options: FastifyPluginOptions,
+  done: () => void,
+) {
   server.get<{
     Params: BrowseParamsSchema;
     Querystring: BrowseQueryStringSchema;
   }>(
-    '/browse/:filter',
+    '/:filter',
     {
       schema: {
         querystring: queryStringSchema,
@@ -36,5 +45,7 @@ export function configureRoutes(server: FastifyInstance) {
     },
   );
 
-  return server;
+  done();
 }
+
+export const browsePlugin: FastifyPlugin = plugin;
