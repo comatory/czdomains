@@ -1,11 +1,11 @@
+import type { FastifyInstance } from 'fastify';
 import { getDomains } from '../../data-utils/domains';
-import type { Application } from '../../config/services';
 import queryStringSchema from './querystring.schema.json';
 import paramsSchema from './params.schema.json';
 import type { BrowseParamsSchema } from '../../types/schemas';
 import type { BrowseQueryStringSchema } from '../../types/schemas';
 
-export function configureRoutes(server: Application) {
+export function configureRoutes(server: FastifyInstance) {
   server.get<{
     Params: BrowseParamsSchema;
     Querystring: BrowseQueryStringSchema;

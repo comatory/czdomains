@@ -1,8 +1,8 @@
-import type { Application } from '../../config/services';
+import type { FastifyInstance } from 'fastify';
 import queryStringSchema from './querystring.schema.json';
 import type { SearchQueryStringSchema } from '../../types/schemas';
 
-export function configureRoutes(server: Application) {
+export function configureRoutes(server: FastifyInstance) {
   server.get<{
     Querystring: SearchQueryStringSchema;
   }>(
