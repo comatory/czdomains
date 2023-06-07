@@ -16,7 +16,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "lint": "eslint --ext .ts src",
     "prepare": "husky install",
-    "schema:compile": "json2ts -i src/**/*.json -o src/lib/types/"
+    "schema:compile": "json2ts -i src/**/*.schema.json > src/lib/types/schemas.d.ts"
   },
   "repository": {
     "type": "git",

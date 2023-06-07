@@ -1,9 +1,9 @@
 import { getDomains } from '../../data-utils/domains';
 import type { Application } from '../../config/services';
-import queryStringSchema from './schemas/querystring.json';
-import paramsSchema from './schemas/params.json';
-import type { BrowseParamsSchema } from '../../types/params';
-import type { BrowseQueryStringSchema } from '../../types/querystring';
+import queryStringSchema from './querystring.schema.json';
+import paramsSchema from './params.schema.json';
+import type { BrowseParamsSchema } from '../../types/schemas';
+import type { BrowseQueryStringSchema } from '../../types/schemas';
 
 export function configureRoutes(server: Application) {
   server.get<{
