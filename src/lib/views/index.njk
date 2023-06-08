@@ -42,5 +42,5 @@
     <dd>TBD</dd>
   </dl>
   <hr/>
-  <em>Latest addition: {{ lastImport or "N/A" }}</em>
+  <em>Latest addition: {{ lastImport.toLocaleString() if lastImport else "N/A" }}</em>
 {% endblock %}
