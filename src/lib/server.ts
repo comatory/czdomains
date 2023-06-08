@@ -2,6 +2,7 @@ import fastify from 'fastify';
 
 import { configureViews } from './config/view';
 import { configureServices } from './config/services';
+import { indexPlugin } from './routes/index/routes';
 import { browsePlugin } from './routes/browse/routes';
 import { searchPlugin } from './routes/search/routes';
 
@@ -17,10 +18,7 @@ void (async function () {
     return 'pong\n';
   });
 
-  server.get('/', async (_, reply) => {
-    return reply.view('index.njk');
-  });
-
+  server.register(indexPlugin, { prefix: '/' });
   server.register(browsePlugin, { prefix: '/browse' });
   server.register(searchPlugin, { prefix: '/search' });
 
