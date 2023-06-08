@@ -1,6 +1,7 @@
 import type { Database } from 'sqlite';
 
 import { domain } from '../../models/domain';
+import { normalizePageCount } from '../../utils/pagination';
 import type { SearchQueryStringSchema } from '../../types/schemas';
 import type { Domain } from '../../models/domain';
 
@@ -35,12 +36,11 @@ export async function searchDomains(
     },
   );
 
-  const maybeCount = rows.length > 0 ? rows[0].totalCount : 0;
   const domainRows = rows.map((row) => domain.parse(row));
-  const count: number = typeof maybeCount === 'number' ? maybeCount : 0;
+  const count = normalizePageCount(rows[0].totalCount, size);
 
   return {
     rows: domainRows,
-    totalCount: Math.round(count / size),
+    totalCount: count,
   };
 }
