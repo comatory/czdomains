@@ -7,6 +7,7 @@ import type {
 import paramsSchema from './params.schema.json';
 import { getDomain } from './get-domain';
 import { getArchivedSnapshot } from './get-archived-snapshot';
+import { getWhoisData } from './get-whois-data';
 import type { DomainParamsSchema } from '../../types/schemas';
 
 export function plugin(
@@ -35,11 +36,13 @@ export function plugin(
       }
 
       const archivedSnapshot = await getArchivedSnapshot(domain.value);
+      const whoisData = await getWhoisData(domain.value);
 
       return reply.view('domain.njk', {
         domain,
         importEntry,
         archivedSnapshot,
+        whoisData,
       });
     },
   );

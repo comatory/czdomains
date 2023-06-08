@@ -3,6 +3,7 @@
 {% block head %}
   <link rel="stylesheet" href="/styles/domain.css">
   <link rel="stylesheet" href="/styles/pagination.css">
+  <link rel="stylesheet" href="/styles/identity-information.css">
 {% endblock %}
 
 {% block content %}
@@ -41,4 +42,96 @@
       {% endif %}
     </tbody>
   </table>
+
+  {% if whoisData %}
+    <table class="domain-information">
+      <caption>WHOIS</caption>
+      <tbody class="domain-information_body">
+        <tr class="domain-information_body_row">
+          <td class="domain-information_body_row_cell">Created at</td>
+          <td class="domain-information_body_row_cell">{{ whoisData.create_date.toLocaleString()  }}</td>
+        </tr>
+        <tr class="domain-information_body_row">
+          <td class="domain-information_body_row_cell">Updated at</td>
+          <td class="domain-information_body_row_cell">{{ whoisData.update_date.toLocaleString()  }}</td>
+        </tr>
+        <tr class="domain-information_body_row">
+          <td class="domain-information_body_row_cell">Expires at</td>
+          <td class="domain-information_body_row_cell">{{ whoisData.expire_date.toLocaleString()  }}</td>
+        </tr>
+        <tr class="domain-information_body_row">
+          <td class="domain-information_body_row_cell">Age (years)</td>
+          <td class="domain-information_body_row_cell">{{ (whoisData.domain_age / 365) | round }}</td>
+        </tr>
+        <tr class="domain-information_body_row">
+          <td class="domain-information_body_row_cell">Registrar name</td>
+          <td class="domain-information_body_row_cell">{{ whoisData.registrar.name or "N/A" }}</td>
+        </tr>
+        <tr class="domain-information_body_row">
+          <td class="domain-information_body_row_cell">Registrar URL</td>
+          <td class="domain-information_body_row_cell">{{ (whoisData.registrar.url | urlize | safe) if whoisData.registrar.url else "N/A" }}</td>
+        </tr>
+        <tr class="domain-information_body_row">
+          <td class="domain-information_body_row_cell">Nameservers</td>
+          <td class="domain-information_body_row_cell">{{ (whoisData.nameservers | join) if whoisData.nameservers.length > 0 else "N/A" }}</td>
+        </tr>
+
+        {% set identity = {
+          label: "Registrant",
+          name: whoisData.registrant.name,
+          organization: whoisData.registrant.organization,
+          street_address: whoisData.registrant.street_address,
+          city: whoisData.registrant.city,
+          region: whoisData.registrant.region,
+          country: whoisData.registrant.country,
+          zip_code: whoisData.registrant.zip_code,
+          phone: whoisData.registrant.phone,
+          email: whoisData.registrant.email
+        } %}
+        {% include "includes/identity-rows.njk" %}
+
+        {% set identity = {
+          label: "Admin",
+          name: whoisData.admin.name,
+          organization: whoisData.admin.organization,
+          street_address: whoisData.admin.street_address,
+          city: whoisData.admin.city,
+          region: whoisData.admin.region,
+          country: whoisData.admin.country,
+          zip_code: whoisData.admin.zip_code,
+          phone: whoisData.admin.phone,
+          email: whoisData.admin.email
+        } %}
+        {% include "includes/identity-rows.njk" %}
+
+        {% set identity = {
+          label: "Tech",
+          name: whoisData.tech.name,
+          organization: whoisData.tech.organization,
+          street_address: whoisData.tech.street_address,
+          city: whoisData.tech.city,
+          region: whoisData.tech.region,
+          country: whoisData.tech.country,
+          zip_code: whoisData.tech.zip_code,
+          phone: whoisData.tech.phone,
+          email: whoisData.tech.email
+        } %}
+        {% include "includes/identity-rows.njk" %}
+
+        {% set identity = {
+          label: "Billing",
+          name: whoisData.billing.name,
+          organization: whoisData.billing.organization,
+          street_address: whoisData.billing.street_address,
+          city: whoisData.billing.city,
+          region: whoisData.billing.region,
+          country: whoisData.billing.country,
+          zip_code: whoisData.billing.zip_code,
+          phone: whoisData.billing.phone,
+          email: whoisData.billing.email
+        } %}
+        {% include "includes/identity-rows.njk" %}
+      </tbody>
+    </table>
+  {% endif %}
 {% endblock %}

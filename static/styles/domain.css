@@ -1,3 +1,9 @@
 .domain-information_body_row_cell:nth-of-type(odd) {
   font-weight: bold;
 }
+
+.domain-information caption {
+  margin-top: 0.5rem;
+  font-weight: bold;
+  font-size: 1.25rem;
+}

@@ -59,6 +59,7 @@
     "@fastify/static": "^6.10.0",
     "@fastify/view": "^7.4.1",
     "fastify": "^4.15.0",
+    "minidotenv": "^1.1.0",
     "nunjucks": "^3.2.4",
     "postgrator": "^7.1.1",
     "sqlite": "^4.2.1",
