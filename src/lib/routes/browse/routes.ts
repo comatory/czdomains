@@ -4,7 +4,7 @@ import type {
   FastifyPluginOptions,
 } from 'fastify';
 
-import { getDomains } from '../../data-utils/get-domains';
+import { getDomains } from './get-domains';
 import queryStringSchema from './querystring.schema.json';
 import paramsSchema from './params.schema.json';
 import type { BrowseParamsSchema } from '../../types/schemas';

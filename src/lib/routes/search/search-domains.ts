@@ -1,8 +1,8 @@
 import type { Database } from 'sqlite';
 
-import { domain } from '../models/domain';
-import type { SearchQueryStringSchema } from '../types/schemas';
-import type { Domain } from '../models/domain';
+import { domain } from '../../models/domain';
+import type { SearchQueryStringSchema } from '../../types/schemas';
+import type { Domain } from '../../models/domain';
 
 export async function searchDomains(
   db: Database,

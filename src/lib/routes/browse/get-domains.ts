@@ -1,9 +1,9 @@
 import type { Database } from 'sqlite';
 
-import { domain } from '../models/domain';
-import type { Domain } from '../models/domain';
-import type { BrowseParamsSchema } from '../types/schemas';
-import type { BrowseQueryStringSchema } from '../types/schemas';
+import { domain } from '../../models/domain';
+import type { Domain } from '../../models/domain';
+import type { BrowseParamsSchema } from '../../types/schemas';
+import type { BrowseQueryStringSchema } from '../../types/schemas';
 
 const BROWSE_FILTER_MAP: Record<
   BrowseParamsSchema['filter'],

@@ -5,7 +5,7 @@ import type {
 } from 'fastify';
 
 import queryStringSchema from './querystring.schema.json';
-import { searchDomains } from '../../data-utils/search-domains';
+import { searchDomains } from './search-domains';
 import type { SearchQueryStringSchema } from '../../types/schemas';
 
 function plugin(
