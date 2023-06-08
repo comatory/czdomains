@@ -29,6 +29,16 @@
         <td class="domain-information_body_row_cell">Added</td>
         <td class="domain-information_body_row_cell">{{ importEntry.created_at.toLocaleString() if importEntry else "N/A"  }}</td>
       </tr>
+      {% if archivedSnapshot.archived_snapshots and archivedSnapshot.archived_snapshots.closest and archivedSnapshot.archived_snapshots.closest.available %}
+        <tr class="domain-information_body_row">
+          <td class="domain-information_body_row_cell">Archive link</td>
+          <td class="domain-information_body_row_cell">{{ archivedSnapshot.archived_snapshots.closest.url | urlize | safe  }}</td>
+        </tr>
+        <tr class="domain-information_body_row">
+          <td class="domain-information_body_row_cell">Archived at</td>
+          <td class="domain-information_body_row_cell">{{ archivedSnapshot.archived_snapshots.closest.timestamp.toLocaleString()  }}</td>
+        </tr>
+      {% endif %}
     </tbody>
   </table>
 {% endblock %}

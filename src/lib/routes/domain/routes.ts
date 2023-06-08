@@ -6,6 +6,7 @@ import type {
 
 import paramsSchema from './params.schema.json';
 import { getDomain } from './get-domain';
+import { getArchivedSnapshot } from './get-archived-snapshot';
 import type { DomainParamsSchema } from '../../types/schemas';
 
 export function plugin(
@@ -33,9 +34,12 @@ export function plugin(
         return reply.callNotFound();
       }
 
+      const archivedSnapshot = await getArchivedSnapshot(domain.value);
+
       return reply.view('domain.njk', {
         domain,
         importEntry,
+        archivedSnapshot,
       });
     },
   );
