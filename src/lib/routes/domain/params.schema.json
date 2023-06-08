@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "title": "Domain params schema",
+  "properties": {
+    "uuid": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "required": ["uuid"]
+}

@@ -1,0 +1,34 @@
+{% extends "layout.njk" %}
+
+{% block head %}
+  <link rel="stylesheet" href="/styles/domain.css">
+  <link rel="stylesheet" href="/styles/pagination.css">
+{% endblock %}
+
+{% block content %}
+  {% set navigation = { isBrowse: true } %}
+  {% include "includes/navigation.njk" %}
+
+  <h2>
+    <a href="{{ ('http://' ~ domain.value) | safe }}"
+      target="_blank"
+      noreferrer
+      noopener
+    >
+      {{ domain.value }}
+    </a>
+  </h2>
+
+  <table class="domain-information">
+    <tbody class="domain-information_body">
+      <tr class="domain-information_body_row">
+        <td class="domain-information_body_row_cell">URL</td>
+        <td class="domain-information_body_row_cell">{{ domain.value }}</td>
+      </tr>
+      <tr class="domain-information_body_row">
+        <td class="domain-information_body_row_cell">Added</td>
+        <td class="domain-information_body_row_cell">{{ importEntry.created_at.toLocaleString() if importEntry else "N/A"  }}</td>
+      </tr>
+    </tbody>
+  </table>
+{% endblock %}

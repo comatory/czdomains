@@ -1,0 +1,3 @@
+.domain-information_body_row_cell:nth-of-type(odd) {
+  font-weight: bold;
+}

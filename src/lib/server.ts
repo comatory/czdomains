@@ -5,6 +5,7 @@ import { configureServices } from './config/services';
 import { indexPlugin } from './routes/index/routes';
 import { browsePlugin } from './routes/browse/routes';
 import { searchPlugin } from './routes/search/routes';
+import { domainPlugin } from './routes/domain/routes';
 
 const PORT = Number.isNaN(Number(process.env.PORT))
   ? 3000
@@ -21,6 +22,7 @@ void (async function () {
   server.register(indexPlugin, { prefix: '/' });
   server.register(browsePlugin, { prefix: '/browse' });
   server.register(searchPlugin, { prefix: '/search' });
+  server.register(domainPlugin, { prefix: '/domain' });
 
   server.listen({ port: PORT }, (err, address) => {
     if (err) {
