@@ -8,6 +8,7 @@
     "prebuild": "npm run clean",
     "start": "NODE_ENV=production ts-node --transpile-only src/index.ts",
     "dev": "NODE_ENV=development ts-node-dev --respawn --transpile-only src/index.ts",
+    "dev:debug": "NODE_ENV=development ts-node-dev --inspect-brk --respawn --transpile-only src/index.ts",
     "clean": "rm -rf dist",
     "test": "test",
     "migrate": "tsx src/migrate.ts",

@@ -57,7 +57,7 @@ export async function getDomains(
     },
   );
   const domainRows = rows.map((row) => domain.parse(row));
-  const count = normalizePageCount(rows[0].totalCount, size);
+  const count = normalizePageCount(rows[0]?.totalCount, size);
 
   return {
     rows: domainRows,
