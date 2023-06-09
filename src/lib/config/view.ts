@@ -4,6 +4,11 @@ import type { FastifyInstance } from 'fastify';
 import fastifyStatic from '@fastify/static';
 import fastifyView from '@fastify/view';
 import nunjucks from 'nunjucks';
+import { registerWith } from 'nunjucks-intl';
+
+function configureInternationalization(env: typeof nunjucks) {
+  registerWith(env);
+}
 
 function configureStaticAssets(app: FastifyInstance) {
   app.register(fastifyStatic, {
@@ -20,6 +25,9 @@ function configureTemplates(app: FastifyInstance) {
     production: process.env.NODE_ENV === 'production',
     options: {
       noCache: process.env.NODE_ENV !== 'production',
+      onConfigure: (env: typeof nunjucks) => {
+        configureInternationalization(env);
+      },
     },
   });
 }
