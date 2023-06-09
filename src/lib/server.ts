@@ -3,6 +3,7 @@ import fastify from 'fastify';
 import { configureViews } from './config/view';
 import { configureServices } from './config/services';
 import { configureParsers } from './config/parsers';
+import { configureHooks } from './config/hooks';
 import { indexPlugin } from './routes/index/routes';
 import { browsePlugin } from './routes/browse/routes';
 import { searchPlugin } from './routes/search/routes';
@@ -15,8 +16,9 @@ const PORT = Number.isNaN(Number(process.env.PORT))
 
 void (async function () {
   const server = await configureServices(fastify());
-  configureViews(server);
   configureParsers(server);
+  configureHooks(server);
+  configureViews(server);
 
   server.get('/ping', async (_, __) => {
     return 'pong\n';

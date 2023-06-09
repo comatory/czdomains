@@ -7,6 +7,8 @@ import type {
 import type { LanguageBodySchema } from '../../types/schemas.d';
 import languageBodySchema from './body.schema.json';
 
+import { setLanguageCookie } from '../../utils/cookies';
+
 export function plugin(
   server: FastifyInstance,
   _options: FastifyPluginOptions,
@@ -17,10 +19,7 @@ export function plugin(
   }>('/', { schema: { body: languageBodySchema } }, (request, reply) => {
     const { language } = request.body;
 
-    reply.setCookie('language', language, {
-      path: '/',
-      signed: true,
-    });
+    setLanguageCookie(reply, language);
 
     reply.redirect('/');
   });
