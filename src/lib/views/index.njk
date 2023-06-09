@@ -1,5 +1,9 @@
 {% extends "layout.njk" %}
 
+{% block head %}
+  <link rel="stylesheet" href="/styles/home.css">
+{% endblock %}
+
 {% block content %}
   {% set navigation = { isHome: true } %}
   {% include "includes/navigation.njk" %}
@@ -46,5 +50,15 @@
     czdomains is using IP2Location.io <a href=https://www.ip2location.io>IP geolocation</a> web service.
   </p>
   <hr/>
-  <em>Latest addition: {{ lastImport.toLocaleString() if lastImport else "N/A" }}</em>
+  <div class="footer">
+    <em>Latest addition: {{ lastImport.toLocaleString() if lastImport else "N/A" }}</em>
+    <span>
+      <form
+        action="/language"
+        method="POST"
+      >
+        Language: <input type="submit" class="{{ 'footer__language__button--active' if language === 'en' else 'footer__language__button' }}" value="en" name="language" /> <input type="submit" class="{{ 'footer__language__button--active' if language === 'cz' else 'footer__language__button' }}" value="cz" name="language" />
+      </form>
+    </span>
+  </div>
 {% endblock %}

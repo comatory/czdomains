@@ -11,10 +11,16 @@ export function plugin(
   _options: FastifyPluginOptions,
   done: () => void,
 ) {
-  server.get('/', async (_, reply) => {
+  server.get('/', async (request, reply) => {
     const lastImport = await getLastImport(server.services.db);
+    const languageCookie = request.cookies.language
+      ? request.unsignCookie(request.cookies.language)
+      : null;
 
-    return reply.view('index.njk', { lastImport });
+    return reply.view('index.njk', {
+      lastImport,
+      language: languageCookie?.value ?? 'en',
+    });
   });
 
   done();
