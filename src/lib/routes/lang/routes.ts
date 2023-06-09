@@ -4,14 +4,18 @@ import type {
   FastifyPluginOptions,
 } from 'fastify';
 
+import type { LanguageBodySchema } from '../../types/schemas.d';
+import languageBodySchema from './body.schema.json';
+
 export function plugin(
   server: FastifyInstance,
   _options: FastifyPluginOptions,
   done: () => void,
 ) {
-  server.post('/', (request, reply) => {
+  server.post<{
+    Body: LanguageBodySchema;
+  }>('/', { schema: { body: languageBodySchema } }, (request, reply) => {
     const { language } = request.body;
-    console.log('hit', language);
 
     reply.setCookie('language', language, {
       path: '/',

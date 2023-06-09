@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "title": "Language body schema",
+  "properties": {
+    "language": {
+      "type": "string",
+      "enum": ["en", "cz"]
+    }
+  },
+  "additionalProperties": false,
+  "required": ["language"]
+}
