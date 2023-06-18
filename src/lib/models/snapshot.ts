@@ -23,7 +23,7 @@ export const snapshot = z.object({
       .object({
         available: z.boolean(),
         url: z.string().url(),
-        timestamp: z.string().transform(parseTimestamp),
+        timestamp: z.string().transform(parseTimestamp).optional(),
         status: z.string().transform((val) => Number.parseInt(val, 10)),
       })
       .optional(),

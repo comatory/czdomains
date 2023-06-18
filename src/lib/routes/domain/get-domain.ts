@@ -34,6 +34,10 @@ export async function getDomain(
   const selectedDomain = row ? domain.parse(row) : null;
   const selectedImportEntry = importRow ? importEntry.parse(importRow) : null;
 
+  if (selectedDomain && selectedImportEntry) {
+    console.log(typeof selectedImportEntry.created_at);
+  }
+
   return {
     domain: selectedDomain,
     importEntry: selectedImportEntry,
