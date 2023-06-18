@@ -1,6 +1,7 @@
 .navigation-list {
   width: 100%;
   margin: 0 auto;
+  padding: 0;
   display: flex;
   list-style-type: none;
   align-items: center;
