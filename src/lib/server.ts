@@ -4,6 +4,7 @@ import { configureViews } from './config/view';
 import { configureServices } from './config/services';
 import { configureParsers } from './config/parsers';
 import { configureHooks } from './config/hooks';
+import { configureRateLimit } from './config/rate-limit';
 import { indexPlugin } from './routes/index/routes';
 import { browsePlugin } from './routes/browse/routes';
 import { searchPlugin } from './routes/search/routes';
@@ -19,6 +20,7 @@ void (async function () {
   configureParsers(server);
   configureHooks(server);
   configureViews(server);
+  await configureRateLimit(server);
 
   server.get('/ping', async (_, __) => {
     return 'pong\n';

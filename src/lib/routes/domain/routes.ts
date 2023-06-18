@@ -23,6 +23,12 @@ export function plugin(
       schema: {
         params: paramsSchema,
       },
+      config: {
+        rateLimit: {
+          max: 2,
+          timeWindow: '1 minute',
+        },
+      },
     },
     async (request, reply) => {
       const { uuid } = request.params;
