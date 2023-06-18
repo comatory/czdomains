@@ -24,10 +24,14 @@ function isValidValue(value: string | null): value is 'en' | 'cz' {
   return value === 'en' || value === 'cz';
 }
 
-export function intl(request: FastifyRequest): LocalisedMessages {
+export function intl(language: 'en' | 'cz'): LocalisedMessages {
+  return localisations.messages[language];
+}
+
+export function getLanguageId(request: FastifyRequest): 'en' | 'cz' {
   const cookie = request.cookies?.language;
   const value = cookie ? request.unsignCookie(cookie)?.value : null;
   const language = isValidValue(value) ? value : 'en';
 
-  return localisations.messages[language];
+  return language;
 }
