@@ -15,6 +15,10 @@ export async function getArchivedSnapshot(
 
     console.log('Response status:', response.status);
 
+    if (response.status !== 200) {
+      throw new Error('Failed to fetch the snapshot');
+    }
+
     const json = await response.json();
 
     return snapshot.parse(json);

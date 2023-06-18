@@ -15,6 +15,10 @@ export async function getWhoisData(domain: string): Promise<WhoisData | null> {
 
     console.log('Response status:', response.status);
 
+    if (response.status !== 200) {
+      throw new Error('Failed to fetch the WHOIS data');
+    }
+
     const json = await response.json();
     console.log(json);
 
