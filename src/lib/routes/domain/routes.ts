@@ -9,7 +9,6 @@ import { getDomain } from './get-domain';
 import { getArchivedSnapshot } from './get-archived-snapshot';
 import { getWhoisData } from './get-whois-data';
 import type { DomainParamsSchema } from '../../types/schemas';
-import { getLanguageId, intl } from '../../utils/intl';
 
 export function plugin(
   server: FastifyInstance,
@@ -45,15 +44,11 @@ export function plugin(
       const archivedSnapshot = await getArchivedSnapshot(domain.value);
       const whoisData = await getWhoisData(domain.value);
 
-      const language = getLanguageId(request);
-
       return reply.view('domain.njk', {
         domain,
         importEntry,
         archivedSnapshot,
         whoisData,
-        language,
-        intl: intl(language),
       });
     },
   );

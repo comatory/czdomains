@@ -6,18 +6,34 @@ import fastifyView from '@fastify/view';
 import nunjucks from 'nunjucks';
 import { registerWith } from 'nunjucks-intl';
 
+import { getLanguageId, localizedIntl } from '../utils/intl';
+
 function configureInternationalization(env: typeof nunjucks) {
   registerWith(env);
 }
 
-function configureStaticAssets(app: FastifyInstance) {
-  app.register(fastifyStatic, {
+function configureTranslations(server: FastifyInstance) {
+  server.addHook('preHandler', (request, reply, done) => {
+    const language = getLanguageId(request);
+    const intl = localizedIntl(language);
+
+    reply.locals = {
+      language,
+      intl,
+    };
+
+    done();
+  });
+}
+
+function configureStaticAssets(server: FastifyInstance) {
+  server.register(fastifyStatic, {
     root: join(__dirname, '..', '..', '..', 'static'),
   });
 }
 
-function configureTemplates(app: FastifyInstance) {
-  app.register(fastifyView, {
+function configureTemplates(server: FastifyInstance) {
+  server.register(fastifyView, {
     engine: {
       nunjucks,
     },
@@ -29,13 +45,18 @@ function configureTemplates(app: FastifyInstance) {
         configureInternationalization(env);
       },
     },
+    defaultContext: {
+      language: 'en',
+      intl: localizedIntl('en'),
+    },
   });
 }
 
 /**
  * Sets up template rendering and static assets.
  */
-export function configureViews(app: FastifyInstance) {
-  configureStaticAssets(app);
-  configureTemplates(app);
+export function configureViews(server: FastifyInstance) {
+  configureStaticAssets(server);
+  configureTemplates(server);
+  configureTranslations(server);
 }

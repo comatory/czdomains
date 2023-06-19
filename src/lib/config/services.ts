@@ -2,6 +2,9 @@ import type { FastifyInstance } from 'fastify';
 
 import { createDatabase } from '../services/db';
 
+type UnwrapPromise<T> = T extends Promise<infer U> ? U : T;
+export type Services = UnwrapPromise<ReturnType<typeof createServices>>;
+
 async function createServices() {
   const db = await createDatabase();
 

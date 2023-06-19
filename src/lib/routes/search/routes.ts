@@ -6,7 +6,6 @@ import type {
 
 import queryStringSchema from './querystring.schema.json';
 import { searchDomains } from './search-domains';
-import { getLanguageId, intl } from '../../utils/intl';
 import type { SearchQueryStringSchema } from '../../types/schemas';
 
 function plugin(
@@ -31,16 +30,12 @@ function plugin(
         q,
       });
 
-      const language = getLanguageId(request);
-
       return reply.view('search.njk', {
         list: rows,
         page,
         totalCount,
         size,
         search: q,
-        intl: intl(language),
-        language,
       });
     },
   );

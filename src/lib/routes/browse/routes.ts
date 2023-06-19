@@ -7,7 +7,6 @@ import type {
 import { getDomains } from './get-domains';
 import queryStringSchema from './querystring.schema.json';
 import paramsSchema from './params.schema.json';
-import { getLanguageId, intl } from '../../utils/intl';
 import type { BrowseParamsSchema } from '../../types/schemas';
 import type { BrowseQueryStringSchema } from '../../types/schemas';
 
@@ -36,16 +35,12 @@ export function plugin(
         size,
       });
 
-      const language = getLanguageId(request);
-
       return reply.view('browse.njk', {
         list: rows,
         filter: request.params.filter,
         page,
         totalCount,
         size,
-        language,
-        intl: intl(language),
       });
     },
   );

@@ -24,7 +24,7 @@ function isValidValue(value: string | null): value is 'en' | 'cz' {
   return value === 'en' || value === 'cz';
 }
 
-export function intl(language: 'en' | 'cz'): LocalisedMessages {
+export function localizedIntl(language: 'en' | 'cz'): LocalisedMessages {
   return localisations.messages[language];
 }
 
