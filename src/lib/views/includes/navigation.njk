@@ -2,32 +2,28 @@
   <nav class="navigation">
     <ul class="navigation-list">
       <li class="navigation-list__item">
-        {% if navigation.isHome %}
-          <a href="/"><strong>Home</strong></span>
-        {% else %}
-          <a href="/">Home</a>
-        {% endif %}
+        <a href="/" class="navigation-list__item__link {{ "navigation-list__item__link--active" if navigation.isHome else ""}}">
+          <img src="/images/earth.gif" alt="Clipart of Earth" class="navigation-list__item__link__icon" />
+          Home
+        </a>
       </li>
       <li class="navigation-list__item">
-        {% if navigation.isSearch %}
-          <a href="/search"><strong>Search</strong></a>
-        {% else %}
-          <a href="/search">Search</a>
-        {% endif %}
+        <a href="/search" class="navigation-list__item__link {{ "navigation-list__item__link--active" if navigation.isSearch else ""}}">
+          <img src="/images/button-m.gif" alt="Clipart of magnifying glass" class="navigation-list__item__link__icon" />
+          Search
+        </a>
       </li>
       <li class="navigation-list__item">
-        {% if navigation.isBrowse %}
-          <a href="/browse/all"><strong>Browse</strong></a>
-        {% else %}
-          <a href="/browse/all">Browse</a>
-        {% endif %}
+        <a href="/browse/all" class="navigation-list__item__link {{ "navigation-list__item__link--active" if navigation.isBrowse else ""}}">
+          <img src="/images/index.gif" alt="Clipart of index cards container" class="navigation-list__item__link__icon" />
+          Browse
+        </a>
       </li>
       <li class="navigation-list__item">
-        {% if navigation.isSubmit %}
-          <a href="/submit"><strong>Submit</strong></a>
-        {% else %}
-          <a href="/submit">Submit</a>
-        {% endif %}
+        <a href="/submit" class="navigation-list__item__link {{ "navigation-list__item__link--active" if navigation.isSubmit else ""}}">
+          <img src="/images/mail4.gif" alt="Clipart of mailing box" class="navigation-list__item__link__icon" />
+          Submit
+        </a>
       </li>
     </ul>
   </nav>

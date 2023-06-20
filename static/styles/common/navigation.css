@@ -11,3 +11,16 @@
 .navigation-list__item:not(:last-child) {
   margin-right: var(--spacing-base);
 }
+
+.navigation-list__item__link {
+  display: flex;
+  align-items: center;
+}
+
+.navigation-list__item__link--active {
+  font-weight: bold;
+}
+
+.navigation-list__item__link__icon {
+  padding-right: var(--padding-base);
+}
