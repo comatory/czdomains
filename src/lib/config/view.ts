@@ -20,7 +20,6 @@ function configureTranslations(server: FastifyInstance) {
     reply.locals = {
       language,
       intl,
-      renderString: nunjucks.renderString,
     };
 
     done();
