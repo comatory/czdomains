@@ -64,7 +64,7 @@ describe('index route', () => {
     });
 
     expect(response.payload).toEqual(
-      expect.stringContaining('Latest addition: 1/1/2021, 1:00:00 AM'),
+      expect.stringContaining('Latest addition: 1/1/2021, 12:00:00 AM'),
     );
   });
 
