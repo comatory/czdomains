@@ -16,13 +16,14 @@
       class="search"
     >
       <input type="text" value="{{ search }}" name="q" />
-      <input type="submit" value="Search" />
+      <input type="submit" value="{{ intlGet("search.form.button") }}" />
       <input type="hidden" value="0" name="page" />
       <input type="hidden" value="{{ size }}" name="size" />
     </form>
   </p>
 
-  <p>Found {{ (size * totalCount) or list.length }} result(s)</p>
+  {% set count = (size * totalCount) or list.length %}
+  <p>{{ formatMessage(intlGet("search.resultCount"), { count: count }) }}</p>
 
   <ul>
     {% for item in list %}

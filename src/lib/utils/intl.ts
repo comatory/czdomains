@@ -7,6 +7,9 @@ const localisations = {
   locales: ['en', 'cz'],
   messages: {
     en: {
+      heading: {
+        subheading: 'Database of Czechia TLD domains',
+      },
       navigation: {
         home: 'Home',
         search: 'Search',
@@ -39,8 +42,48 @@ const localisations = {
           language: 'Language',
         },
       },
+      pagination: {
+        first: 'First',
+        previous: 'Previous',
+        page: 'Page',
+        size: 'Size',
+        next: 'Next',
+        last: 'Last',
+      },
+      search: {
+        form: {
+          button: 'Search',
+        },
+        resultCount: 'Found {count} result(s).',
+      },
+      domain: {
+        url: 'URL',
+        added: 'Added',
+        archiveLink: 'Archive link',
+        archivedAt: 'Archived at',
+        table: {
+          createdAt: 'Created at',
+          updatedAt: 'Updated at',
+          expiresAt: 'Expires at',
+          age: 'Age (years)',
+          nameOrganization: 'Name / Organization',
+          address: 'Address',
+          phone: 'Phone',
+          email: 'Email',
+        },
+        registrarName: 'Registrátor',
+        registrarUrl: 'URL registrátora',
+        nameservers: 'Nameservery',
+        registrant: 'Registrant',
+        admin: 'Administrátor',
+        technical: 'Technický kontakt',
+        billing: 'Fakturační kontakt',
+      },
     },
     cz: {
+      heading: {
+        subheading: 'Databáze českých TLD domén',
+      },
       navigation: {
         home: 'Domů',
         search: 'Hledat',
@@ -72,6 +115,43 @@ const localisations = {
           lastUpdate: 'Poslední příspevěk: {date}.',
           language: 'Jazyk',
         },
+      },
+      pagination: {
+        first: 'První',
+        previous: 'Předchozí',
+        page: 'Stránka',
+        size: 'Velikost',
+        next: 'Další',
+        last: 'Poslední',
+      },
+      search: {
+        form: {
+          button: 'Hledat',
+        },
+        resultCount: 'Nalezeno {count} výsledků',
+      },
+      domain: {
+        url: 'URL',
+        added: 'Přidáno',
+        archiveLink: 'Archivní odkaz',
+        archivedAt: 'Archivováno v',
+        table: {
+          createdAt: 'Vytvořeno',
+          updatedAt: 'Aktualizováno',
+          expiresAt: 'Platnost',
+          age: 'Stáří (roky)',
+          nameOrganization: 'Jméno / Organizace',
+          address: 'Adresa',
+          phone: 'Telefon',
+          email: 'Email',
+        },
+        registrarName: 'Registrátor',
+        registrarUrl: 'URL registrátora',
+        nameservers: 'Nameservery',
+        registrant: 'Registrant',
+        admin: 'Administrátor',
+        technical: 'Technický kontakt',
+        billing: 'Fakturační kontakt',
       },
     },
   },

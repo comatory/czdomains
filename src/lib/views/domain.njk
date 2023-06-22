@@ -23,20 +23,20 @@
   <table class="domain-information">
     <tbody class="domain-information_body">
       <tr class="domain-information_body_row">
-        <td class="domain-information_body_row_cell">URL</td>
+        <td class="domain-information_body_row_cell">{{ intlGet("domain.url") }}</td>
         <td class="domain-information_body_row_cell">{{ domain.value }}</td>
       </tr>
       <tr class="domain-information_body_row">
-        <td class="domain-information_body_row_cell">Added</td>
+        <td class="domain-information_body_row_cell">{{ intlGet("domain.added") }}</td>
         <td class="domain-information_body_row_cell">{{ importEntry.created_at.toLocaleString() if importEntry else "N/A"  }}</td>
       </tr>
       {% if archivedSnapshot.archived_snapshots and archivedSnapshot.archived_snapshots.closest and archivedSnapshot.archived_snapshots.closest.available %}
         <tr class="domain-information_body_row">
-          <td class="domain-information_body_row_cell">Archive link</td>
+          <td class="domain-information_body_row_cell">{{ intlGet("domain.archiveLink") }}</td>
           <td class="domain-information_body_row_cell">{{ archivedSnapshot.archived_snapshots.closest.url | urlize | safe  }}</td>
         </tr>
         <tr class="domain-information_body_row">
-          <td class="domain-information_body_row_cell">Archived at</td>
+          <td class="domain-information_body_row_cell">{{ intlGet("domain.archivedAt") }}</td>
           <td class="domain-information_body_row_cell">{{ archivedSnapshot.archived_snapshots.closest.timestamp.toLocaleString()  }}</td>
         </tr>
       {% endif %}
@@ -48,36 +48,36 @@
       <caption>WHOIS</caption>
       <tbody class="domain-information_body">
         <tr class="domain-information_body_row">
-          <td class="domain-information_body_row_cell">Created at</td>
+          <td class="domain-information_body_row_cell">{{ intlGet("domain.table.createdAt") }}</td>
           <td class="domain-information_body_row_cell">{{ whoisData.create_date.toLocaleString()  }}</td>
         </tr>
         <tr class="domain-information_body_row">
-          <td class="domain-information_body_row_cell">Updated at</td>
+          <td class="domain-information_body_row_cell">{{ intlGet("domain.table.updatedAt") }}</td>
           <td class="domain-information_body_row_cell">{{ whoisData.update_date.toLocaleString()  }}</td>
         </tr>
         <tr class="domain-information_body_row">
-          <td class="domain-information_body_row_cell">Expires at</td>
+          <td class="domain-information_body_row_cell">{{ intlGet("domain.table.expiresAt") }}</td>
           <td class="domain-information_body_row_cell">{{ whoisData.expire_date.toLocaleString()  }}</td>
         </tr>
         <tr class="domain-information_body_row">
-          <td class="domain-information_body_row_cell">Age (years)</td>
+          <td class="domain-information_body_row_cell">{{ intlGet("domain.table.age") }}</td>
           <td class="domain-information_body_row_cell">{{ (whoisData.domain_age / 365) | round }}</td>
         </tr>
         <tr class="domain-information_body_row">
-          <td class="domain-information_body_row_cell">Registrar name</td>
+          <td class="domain-information_body_row_cell">{{ intlGet("domain.registrarName") }}</td>
           <td class="domain-information_body_row_cell">{{ whoisData.registrar.name or "N/A" }}</td>
         </tr>
         <tr class="domain-information_body_row">
-          <td class="domain-information_body_row_cell">Registrar URL</td>
+          <td class="domain-information_body_row_cell">{{ intlGet("domain.registrarUrl") }}</td>
           <td class="domain-information_body_row_cell">{{ (whoisData.registrar.url | urlize | safe) if whoisData.registrar.url else "N/A" }}</td>
         </tr>
         <tr class="domain-information_body_row">
-          <td class="domain-information_body_row_cell">Nameservers</td>
+          <td class="domain-information_body_row_cell">{{ intlGet("domain.nameservers") }}</td>
           <td class="domain-information_body_row_cell">{{ (whoisData.nameservers | join) if whoisData.nameservers.length > 0 else "N/A" }}</td>
         </tr>
 
         {% set identity = {
-          label: "Registrant",
+          label: intlGet("domain.registrant"),
           name: whoisData.registrant.name,
           organization: whoisData.registrant.organization,
           street_address: whoisData.registrant.street_address,
@@ -91,7 +91,7 @@
         {% include "includes/identity-rows.njk" %}
 
         {% set identity = {
-          label: "Admin",
+          label: intlGet("domain.admin"),
           name: whoisData.admin.name,
           organization: whoisData.admin.organization,
           street_address: whoisData.admin.street_address,
@@ -105,7 +105,7 @@
         {% include "includes/identity-rows.njk" %}
 
         {% set identity = {
-          label: "Tech",
+          label: intlGet("domain.technical"),
           name: whoisData.tech.name,
           organization: whoisData.tech.organization,
           street_address: whoisData.tech.street_address,
@@ -119,7 +119,7 @@
         {% include "includes/identity-rows.njk" %}
 
         {% set identity = {
-          label: "Billing",
+          label: intlGet("domain.billing"),
           name: whoisData.billing.name,
           organization: whoisData.billing.organization,
           street_address: whoisData.billing.street_address,

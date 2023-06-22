@@ -27,13 +27,13 @@
       href="{{ navigationHref ~ "&" ~ pageQuery }}"
       class="pagination__button pagination__button--first"
     >
-      << First
+      << {{ intlGet("pagination.first") }}
     </a>
   {% else %}
     <a
       class="pagination__button pagination__button--first"
     >
-      << First
+      << {{ intlGet("pagination.first") }}
     </a>
   {% endif %}
 
@@ -43,19 +43,19 @@
       href="{{ navigationHref ~ "&" ~ pageQuery }}"
       class="pagination__button pagination__button--previous"
     >
-      < Previous
+      < {{ intlGet("pagination.previous") }}
     </a>
   {% else %}
     <a
       class="pagination__button pagination__button--previous"
     >
-      < Previous
+      < {{ intlGet("pagination.previous") }}
     </a>
   {% endif %}
 
   <span class="pagination__current">
     <button type="submit" hidden></button>
-    <label for="current-page">Page:</label>
+    <label for="current-page">{{ intlGet("pagination.page") }}:</label>
       <input
         type="number"
         value="{{ pagination.page }}"
@@ -67,7 +67,7 @@
   </span>
 
   <div class="pagination__per">
-    <label for="per-page">Size:</label>
+    <label for="per-page">{{ intlGet("pagination.size") }}:</label>
     <select
       value={{ pagination.size | string }}
       name="size"
@@ -92,13 +92,13 @@
       href="{{ navigationHref ~ "&" ~ pageQuery }}"
       class="pagination__button pagination__button--next"
     >
-      Next >
+      {{ intlGet("pagination.next") }} >
     </a>
   {% else %}
     <a
       class="pagination__button pagination__button--next"
     >
-      Next >
+      {{ intlGet("pagination.next") }} >
     </a>
   {% endif %}
 
@@ -108,13 +108,13 @@
       href="{{ navigationHref ~ "&" ~ pageQuery }}"
       class="pagination__button pagination__button--last"
     >
-      Last >>
+      {{ intlGet("pagination.last") }} >>
     </a>
   {% else %}
     <a
       class="pagination__button pagination__button--first"
     >
-      Last >>
+      {{ intlGet("pagination.last") }} >>
     </a>
   {% endif %}
 </form>
