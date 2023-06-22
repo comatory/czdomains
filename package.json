@@ -10,7 +10,7 @@
     "dev": "NODE_ENV=development ts-node-dev --respawn --transpile-only src/index.ts",
     "dev:debug": "NODE_ENV=development ts-node-dev --inspect-brk --respawn --transpile-only src/index.ts",
     "clean": "rm -rf dist",
-    "test": "test",
+    "test": "jest",
     "migrate": "tsx src/migrate.ts",
     "import": "tsx src/import.ts",
     "format": "prettier --write .",
@@ -44,6 +44,7 @@
   "homepage": "https://github.com/comatory/czdomains#readme",
   "devDependencies": {
     "@tsconfig/node18": "^1.0.1",
+    "@types/jest": "^29.5.2",
     "@types/nunjucks": "^3.2.2",
     "@types/yargs": "^17.0.24",
     "@typescript-eslint/eslint-plugin": "^5.59.7",
@@ -52,6 +53,7 @@
     "husky": "^8.0.3",
     "json-schema-to-typescript": "^13.0.1",
     "prettier": "^2.8.8",
+    "ts-jest": "^29.1.0",
     "typescript": "^5.0.3",
     "undici": "^5.22.1"
   },
