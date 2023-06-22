@@ -7,6 +7,12 @@ const localisations = {
   locales: ['en', 'cz'],
   messages: {
     en: {
+      navigation: {
+        home: 'Home',
+        search: 'Search',
+        browse: 'Browse',
+        submit: 'Submit',
+      },
       home: {
         about:
           'Simple database of Czechia TLD domains which were registered in the past. You can search by its name to get its detail.',
@@ -35,6 +41,12 @@ const localisations = {
       },
     },
     cz: {
+      navigation: {
+        home: 'Domů',
+        search: 'Hledat',
+        browse: 'Procházet',
+        submit: 'Přidat',
+      },
       home: {
         about:
           'Jednoduchá databáze domén s českou koncovkou, které byly v minulosti registrovány. Můžete vyhledávat podle názvu, abyste získali podrobnosti.',

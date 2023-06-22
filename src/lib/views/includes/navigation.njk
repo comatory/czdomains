@@ -4,25 +4,25 @@
       <li class="navigation-list__item">
         <a href="/" class="navigation-list__item__link {{ "navigation-list__item__link--active" if navigation.isHome else ""}}">
           <img src="/images/earth.gif" alt="Clipart of Earth" class="navigation-list__item__link__icon" />
-          Home
+          {{ intlGet("navigation.home") }}
         </a>
       </li>
       <li class="navigation-list__item">
         <a href="/search" class="navigation-list__item__link {{ "navigation-list__item__link--active" if navigation.isSearch else ""}}">
           <img src="/images/button-m.gif" alt="Clipart of magnifying glass" class="navigation-list__item__link__icon" />
-          Search
+          {{ intlGet("navigation.search") }}
         </a>
       </li>
       <li class="navigation-list__item">
         <a href="/browse/all" class="navigation-list__item__link {{ "navigation-list__item__link--active" if navigation.isBrowse else ""}}">
           <img src="/images/index.gif" alt="Clipart of index cards container" class="navigation-list__item__link__icon" />
-          Browse
+          {{ intlGet("navigation.browse") }}
         </a>
       </li>
       <li class="navigation-list__item">
         <a href="/submit" class="navigation-list__item__link {{ "navigation-list__item__link--active" if navigation.isSubmit else ""}}">
           <img src="/images/mail4.gif" alt="Clipart of mailing box" class="navigation-list__item__link__icon" />
-          Submit
+          {{ intlGet("navigation.submit") }}
         </a>
       </li>
     </ul>
