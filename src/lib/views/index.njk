@@ -11,21 +11,13 @@
     {{ intlGet("home.about") }}
   </p>
   <p>
-    Some entries contain
-    <a
-      href="https://archive.org"
-      target="_blank"
-      rel="noreferrer noopener"
-    >
-      archive.org
-    </a>
-    links. You can also request these links on demand but beware <em>capacity is limited</em>.
+    {{ formatMessage(
+        intlGet("home.description"), {
+          link: "<a href='https://archive.org' target='_blank' rel='noreferrer noopener'>archive.org</a>",
+          emStart: "<em>",
+          emClose: "</em>"
+        }) | safe }}
   </p>
-  <p>
-    Submissions are welcome if the domain is not already in the database.
-    Each submission is reviewed by the administrator.
-  </p>
-  <hr />
   <h4>FAQ</h4>
   <dl>
     <dt>What is Czechia?</dt>

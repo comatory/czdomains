@@ -7,12 +7,14 @@ const localisations = {
       home: {
         about:
           'Simple database of Czechia TLD domains which were registered in the past. You can search by its name to get its detail.',
+        description: 'You can retrieve domain\'s {link} status and WHOIS data but {emStart}beware the capacity is limited{emClose} when doing so. Submissions are welcome if the domain is not already in the database. Each submission is reviewed by the administrator.',
       },
     },
     cz: {
       home: {
         about:
           'Jednoduchá databáze domén s českou koncovkou, které byly v minulosti registrovány. Můžete vyhledávat podle názvu, abyste získali podrobnosti.',
+        description: 'Můžete získat archivní informace z {link} a WHOIS data, ale {emStart}tato činnost je kapacitně omezena{emClose}. Pokud chcete do databáze přidat novou doménu, jste vítáni, ale každý příspěvek musí být manuálně schválen.',
       },
     },
   },
