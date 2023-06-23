@@ -52,6 +52,7 @@
     "eslint": "^8.41.0",
     "husky": "^8.0.3",
     "json-schema-to-typescript": "^13.0.1",
+    "msw": "^1.2.2",
     "prettier": "^2.8.8",
     "ts-jest": "^29.1.0",
     "typescript": "^5.0.3",
