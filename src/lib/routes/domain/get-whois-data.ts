@@ -20,7 +20,6 @@ export async function getWhoisData(domain: string): Promise<WhoisData | null> {
     }
 
     const json = await response.json();
-    console.log(json);
 
     return whoisData.parse(json);
   } catch (e) {
