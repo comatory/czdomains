@@ -1,12 +1,11 @@
-import { createApp } from '../../app';
+import type { TestApp } from '../../test-utils/app';
+import { createTestApp } from '../../test-utils/app';
 import * as GetLastImportModule from './get-last-import';
-
-type UnwrapPromise<T> = T extends Promise<infer U> ? U : T;
 
 jest.mock('./get-last-import');
 
 describe('index route', () => {
-  let server: UnwrapPromise<ReturnType<typeof createApp>>;
+  let server: TestApp;
 
   const getLastImportSpy = jest.spyOn(GetLastImportModule, 'getLastImport');
 
@@ -15,7 +14,7 @@ describe('index route', () => {
   });
 
   beforeAll(async () => {
-    server = await createApp();
+    server = await createTestApp();
   });
 
   afterAll(async () => {
