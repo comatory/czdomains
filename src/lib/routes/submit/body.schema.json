@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "title": "Submit confirmation body schema",
+  "properties": {
+    "domain": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "required": ["domain"]
+}

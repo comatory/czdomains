@@ -71,13 +71,25 @@ const localisations = {
           phone: 'Phone',
           email: 'Email',
         },
-        registrarName: 'Registrátor',
-        registrarUrl: 'URL registrátora',
-        nameservers: 'Nameservery',
+        registrarName: 'Registrar',
+        registrarUrl: 'Registrar URL',
+        nameservers: 'Nameservers',
         registrant: 'Registrant',
-        admin: 'Administrátor',
-        technical: 'Technický kontakt',
-        billing: 'Fakturační kontakt',
+        admin: 'Administrator',
+        technical: 'Technical contact',
+        billing: 'Billing contact',
+      },
+      submit: {
+        rules:
+          'If you wish to add a domain that is missing in our database, please use the form below. The submission will be manually approved by the administrator.',
+        confirmFormLabel: 'Please type domain only for confirmation:',
+        domain: 'Domain',
+        confirmedFormLabel: 'You are allowed to submit the domain.',
+        notConfirmed:
+          'The domain {boldStart}{domain}{boldEnd} could not be confirmed.',
+        tryAgain: 'Try again',
+        notValid:
+          'The format of the domain is not allowed. Do not include "http" or subdomains - just plain domain name. Only ".cz" domains allowed.',
       },
     },
     cz: {
@@ -152,6 +164,18 @@ const localisations = {
         admin: 'Administrátor',
         technical: 'Technický kontakt',
         billing: 'Fakturační kontakt',
+      },
+      submit: {
+        rules:
+          'Pokud byste rádi přidali do databáze chybějící doménu, prosím využijte tento formulář. Přidání domény musí být manuálně shváleno administrátorem.',
+        confirmFormLabel: 'Prosím napište název domény pro potvrzení:',
+        domain: 'Doména',
+        confirmedFormLabel: 'Povoleno přidat doménu.',
+        notConfirmed:
+          'Doména {boldStart}{domain}{boldEnd} nemohla být potvrzena.',
+        tryAgain: 'Zkusit znovu',
+        notValid:
+          'Formát domény není povolen. Neuvádějte "http" nebo subdomény - pouze název domény. Povoleny jsou pouze domény s koncovkou ".cz".',
       },
     },
   },

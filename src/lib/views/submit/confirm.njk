@@ -1,0 +1,44 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+  {% set navigation = { isSubmit: true } %}
+  {% include "includes/navigation.njk" %}
+
+  {% if domain %}
+    <p>
+      {{ formatMessage(intlGet("submit.notConfirmed"), {
+        domain: query,
+        boldStart: "<strong>",
+        boldEnd: "</strong>"
+      }) | safe }}
+    </p>
+  {% endif %}
+
+  {% if not valid %}
+    <p>
+      {{ intlGet("submit.notValid") }}
+    </p>
+  {% endif %}
+
+  {% if domain or not valid %}
+    <a href="/submit">{{ intlGet("submit.tryAgain") }}</a>
+  {% endif %}
+
+  {% if not domain and valid %}
+    <p>
+      {{ intlGet("submit.confirmedFormLabel") }}
+    </p>
+
+    <form
+      action="/submit/tbd"
+      method="POST"
+    >
+      <label>
+        {{ intlGet("submit.domain") }}
+        <br />
+        <input type="text" value="{{ query }}" name="domain" />
+        <input type="submit" />
+      </label>
+    </form>
+  {% endif %}
+{% endblock %}

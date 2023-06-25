@@ -10,6 +10,7 @@ import { browsePlugin } from './routes/browse/routes';
 import { searchPlugin } from './routes/search/routes';
 import { domainPlugin } from './routes/domain/routes';
 import { languagePlugin } from './routes/lang/routes';
+import { submitPlugin } from './routes/submit/routes';
 
 /**
  * Function that builds and runs the Fastify server.
@@ -31,6 +32,7 @@ export async function createApp() {
   server.register(searchPlugin, { prefix: '/search' });
   server.register(domainPlugin, { prefix: '/domain' });
   server.register(languagePlugin, { prefix: '/language' });
+  server.register(submitPlugin, { prefix: '/submit' });
 
   return server;
 }
