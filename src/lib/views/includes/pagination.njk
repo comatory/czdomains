@@ -1,0 +1,120 @@
+<form
+  method="GET"
+  action="{{ pagination.path ~ "/" ~ (pagination.filter or "") }}"
+  autocomplete="off"
+  name="pagination"
+  class="pagination"
+>
+  {% if pagination.extraFields %}
+    {% set extraFields = "" %}
+    {% set extraSep = joiner("&") %}
+    {% for field in pagination.extraFields %}
+      {% set extraFields = extraFields ~ extraSep() ~ field.name ~ "=" ~ field.value %}
+      <input type="hidden" name="{{ field.name }}" value="{{ field.value }}" />
+    {% endfor %}
+  {% endif %}
+
+  {% set previous = pagination.page > 0 %}
+  {% set next = pagination.page < pagination.totalCount %}
+
+  {% set sizeQuery = "size" ~ "=" ~ pagination.size %}
+
+  {% set navigationHref = pagination.path ~ "/" ~ (pagination.filter or "") ~ "?" ~ sizeQuery ~ "&" ~ (extraFields or "") %}
+
+  {% if pagination.totalCount > 1 %}
+    {% set pageQuery = "page" ~ "=" ~ 0 %}
+    <a
+      href="{{ navigationHref ~ "&" ~ pageQuery }}"
+      class="pagination__button pagination__button--first"
+    >
+      << {{ intlGet("pagination.first") }}
+    </a>
+  {% else %}
+    <a
+      class="pagination__button pagination__button--first"
+    >
+      << {{ intlGet("pagination.first") }}
+    </a>
+  {% endif %}
+
+  {% if previous and pagination.totalCount > 0 %}
+    {% set pageQuery = "page" ~ "=" ~ (pagination.page - 1) %}
+    <a
+      href="{{ navigationHref ~ "&" ~ pageQuery }}"
+      class="pagination__button pagination__button--previous"
+    >
+      < {{ intlGet("pagination.previous") }}
+    </a>
+  {% else %}
+    <a
+      class="pagination__button pagination__button--previous"
+    >
+      < {{ intlGet("pagination.previous") }}
+    </a>
+  {% endif %}
+
+  <span class="pagination__current">
+    <button type="submit" hidden></button>
+    <label for="current-page">{{ intlGet("pagination.page") }}:</label>
+      <input
+        type="number"
+        value="{{ pagination.page }}"
+        name="page"
+        class="pagination__current__input"
+        id="current-page"
+      />
+      / {{ pagination.totalCount }}
+  </span>
+
+  <div class="pagination__per">
+    <label for="per-page">{{ intlGet("pagination.size") }}:</label>
+    <select
+      value={{ pagination.size | string }}
+      name="size"
+      id="per-page"
+      class="pagination__per__select"
+      onchange="pagination.submit()"
+    >
+      {% set paginationOption = { value: 10, currentValue: pagination.size } %}
+      {% include "./pagination-size-option.njk" %}
+      {% set paginationOption = { value: 20, currentValue: pagination.size } %}
+      {% include "./pagination-size-option.njk" %}
+      {% set paginationOption = { value: 50, currentValue: pagination.size } %}
+      {% include "./pagination-size-option.njk" %}
+      {% set paginationOption = { value: 100, currentValue: pagination.size } %}
+      {% include "./pagination-size-option.njk" %}
+    </select>
+  </div>
+
+  {% if next and pagination.totalCount > 0 %}
+    {% set pageQuery = "page" ~ "=" ~ (pagination.page + 1) %}
+    <a
+      href="{{ navigationHref ~ "&" ~ pageQuery }}"
+      class="pagination__button pagination__button--next"
+    >
+      {{ intlGet("pagination.next") }} >
+    </a>
+  {% else %}
+    <a
+      class="pagination__button pagination__button--next"
+    >
+      {{ intlGet("pagination.next") }} >
+    </a>
+  {% endif %}
+
+  {% if pagination.totalCount > 1 %}
+    {% set pageQuery = "page" ~ "=" ~ pagination.totalCount %}
+    <a
+      href="{{ navigationHref ~ "&" ~ pageQuery }}"
+      class="pagination__button pagination__button--last"
+    >
+      {{ intlGet("pagination.last") }} >>
+    </a>
+  {% else %}
+    <a
+      class="pagination__button pagination__button--first"
+    >
+      {{ intlGet("pagination.last") }} >>
+    </a>
+  {% endif %}
+</form>

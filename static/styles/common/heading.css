@@ -1,0 +1,30 @@
+.heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heading__text {
+  margin: 0 var(--spacing-sm);
+  display: inline-block;
+}
+
+.heading__text--national-1 {
+  color: white;
+}
+
+.heading__text--national-2 {
+  color: blue;
+}
+
+.heading__text--national-3 {
+  color: red;
+}
+
+.heading__main {
+  display: inline-block;
+}
+
+.heading__subheading-header {
+  margin: 0;
+}

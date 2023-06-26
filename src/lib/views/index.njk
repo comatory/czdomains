@@ -1,0 +1,80 @@
+{% extends "layout.njk" %}
+
+{% block head %}
+  <link rel="stylesheet" href="/styles/home.css">
+{% endblock %}
+
+{% block content %}
+  {% set navigation = { isHome: true } %}
+  {% include "includes/navigation.njk" %}
+  <p>
+    {{ intlGet("home.about") }}
+  </p>
+  <p>
+    {{ formatMessage(
+        intlGet("home.description"), {
+          link: "<a href='https://archive.org' target='_blank' rel='noreferrer noopener'>archive.org</a>",
+          emStart: "<em>",
+          emClose: "</em>"
+        }) | safe }}
+  </p>
+  <h4>FAQ</h4>
+  <dl>
+    <dt>{{ intlGet("home.faq.tldHistoryQuestion") }}</dt>
+    <dd>
+      {{ formatMessage(
+           intlGet("home.faq.tldHistoryAnswer"), {
+             source: "<a href='https://muzeuminternetu.cz/info/y1991.php3' target='_blank' rel='noreferrer noopener'>muzeuminternetu.cz</a>"
+           }) | safe }}
+    </dd>
+    <dt>{{ intlGet("home.faq.tldCreateQuestion") }}</dt>
+    <dd>
+      {{ formatMessage(
+           intlGet("home.faq.tldCreateAnswer"), {
+             source: "<a href='https://muzeuminternetu.cz/info/y1993.php3' target='_blank' rel='noreferrer noopener'>muzeuminternetu.cz</a>"
+           }) | safe }}
+    </dd>
+    <dt>{{ intlGet("home.faq.firstCzWebsiteQuestion") }}</dt>
+    <dd>
+      {{ formatMessage(
+           intlGet("home.faq.firstCzWebsiteAnswer"), {
+             source: "<a href='https://www.muzeuminternetu.cz/expo/fzu.php3' target='_blank' rel='noreferrer noopener'>www</a>"
+           }) | safe }}
+    </dd>
+  </dl>
+  <h4>{{ intlGet("home.attributions.title") }}</h4>
+  <p>
+    {{ formatMessage(
+         intlGet("home.attributions.whois"), {
+           source: "<a href=https://www.ip2location.io>IP geolocation</a>",
+           emStart: "<em>",
+           emEnd: "</em>"
+         }) | safe }}
+    {{ formatMessage(
+         intlGet("home.attributions.icons"), {
+           source: "<a href='https://archive.org/details/html-clipart-CD/HTML_CLIPART/'>HTML Clipart by JAL Tech (archive link)</a>"
+         }) | safe }}
+    {{ formatMessage(
+         intlGet("home.attributions.submission"), {
+           source: "<a href='https://formspree.io/'>formspree.io</a>"
+         }) | safe }}
+
+  </p>
+  <hr/>
+  <div class="footer">
+    <em>
+      {% set lastImportDate = lastImport.toLocaleString() if lastImport else "N/A" %}
+      {{ formatMessage(intlGet("home.footer.lastUpdate"), {
+        date: lastImportDate
+      }) }}
+    </em>
+    <span>
+      <form
+        action="/language"
+        method="POST"
+      >
+        {{ intlGet("home.footer.language") }}: <input type="submit" class="{{ 'footer__language__button--active' if language === 'en' else 'footer__language__button' }}" value="en" name="language" /> <input type="submit" class="{{ 'footer__language__button--active' if language === 'cz' else 'footer__language__button' }}" value="cz" name="language" />
+      </form>
+    </span>
+  </div>
+{% endblock %}

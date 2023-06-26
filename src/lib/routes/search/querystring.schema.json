@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "title": "Search query string schema",
+  "properties": {
+    "page": { "type": "number", "default": 0 },
+    "size": {
+      "type": "number",
+      "enum": [10, 20, 50, 100],
+      "default": 20
+    },
+    "q": { "type": "string", "default": "" }
+  },
+  "additionalProperties": false,
+  "required": ["page", "size", "q"]
+}

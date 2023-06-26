@@ -13,4 +13,7 @@
   --color-primary: black;
   --color-secondary: darkgray;
   --color-background: var(--color-secondary);
+  --color-background-contrast: lavender;
+  --color-success: mediumseagreen;
+  --color-error: crimson;
 }

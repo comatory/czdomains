@@ -1,0 +1,19 @@
+<tr class="identity-information_body_row identity-information_body_row--labeled">
+  <td class="identity-information_body_row_cell">{{ identity.label }}</td>
+</tr>
+<tr class="identity-information_body_row">
+  <td class="identity-information_body_row_cell">{{ intlGet("domain.table.nameOrganization") }}</td>
+  <td class="identity-information_body_row_cell">{{ ([ identity.name, identity.organization ] | join) if (identity.name or identity.organization) else "N/A" }}</td>
+</tr>
+<tr class="identity-information_body_row">
+  <td class="identity-information_body_row_cell">{{ intlGet("domain.table.address") }}</td>
+  <td class="identity-information_body_row_cell">{{ ([ identity.street_address, identity.city, identity.region, identity.country, identity.zip_code ] | join) if (identity.street_address or identity.city or identity.region or identity.country or identity.zip_code) else "N/A" }}</td>
+</tr>
+<tr class="identity-information_body_row">
+  <td class="identity-information_body_row_cell">{{ intlGet("domain.table.phone") }}</td>
+  <td class="identity-information_body_row_cell">{{ identity.phone or "N/A" }}</td>
+</tr>
+<tr class="identity-information_body_row">
+  <td class="identity-information_body_row_cell">{{ intlGet("domain.table.email") }}</td>
+  <td class="identity-information_body_row_cell">{{ identity.email or "N/A" }}</td>
+</tr>

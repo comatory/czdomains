@@ -1,0 +1,137 @@
+{% extends "layout.njk" %}
+
+{% block head %}
+  <link rel="stylesheet" href="/styles/domain.css">
+  <link rel="stylesheet" href="/styles/pagination.css">
+  <link rel="stylesheet" href="/styles/identity-information.css">
+{% endblock %}
+
+{% block content %}
+  {% set navigation = { isBrowse: true } %}
+  {% include "includes/navigation.njk" %}
+
+  <h2>
+    <a href="{{ ('http://' ~ domain.value) | safe }}"
+      target="_blank"
+      noreferrer
+      noopener
+    >
+      {{ domain.value }}
+    </a>
+  </h2>
+
+  <table class="domain-information">
+    <tbody class="domain-information_body">
+      <tr class="domain-information_body_row">
+        <td class="domain-information_body_row_cell">{{ intlGet("domain.url") }}</td>
+        <td class="domain-information_body_row_cell">{{ domain.value }}</td>
+      </tr>
+      <tr class="domain-information_body_row">
+        <td class="domain-information_body_row_cell">{{ intlGet("domain.added") }}</td>
+        <td class="domain-information_body_row_cell">{{ importEntry.created_at.toLocaleString() if importEntry else "N/A"  }}</td>
+      </tr>
+      {% if archivedSnapshot.archived_snapshots and archivedSnapshot.archived_snapshots.closest and archivedSnapshot.archived_snapshots.closest.available %}
+        <tr class="domain-information_body_row">
+          <td class="domain-information_body_row_cell">{{ intlGet("domain.archiveLink") }}</td>
+          <td class="domain-information_body_row_cell">{{ archivedSnapshot.archived_snapshots.closest.url | urlize | safe  }}</td>
+        </tr>
+        <tr class="domain-information_body_row">
+          <td class="domain-information_body_row_cell">{{ intlGet("domain.archivedAt") }}</td>
+          <td class="domain-information_body_row_cell">{{ archivedSnapshot.archived_snapshots.closest.timestamp.toLocaleString()  }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+
+  {% if whoisData %}
+    <table class="domain-information">
+      <caption>WHOIS</caption>
+      <tbody class="domain-information_body">
+        <tr class="domain-information_body_row">
+          <td class="domain-information_body_row_cell">{{ intlGet("domain.table.createdAt") }}</td>
+          <td class="domain-information_body_row_cell">{{ whoisData.create_date.toLocaleString()  }}</td>
+        </tr>
+        <tr class="domain-information_body_row">
+          <td class="domain-information_body_row_cell">{{ intlGet("domain.table.updatedAt") }}</td>
+          <td class="domain-information_body_row_cell">{{ whoisData.update_date.toLocaleString()  }}</td>
+        </tr>
+        <tr class="domain-information_body_row">
+          <td class="domain-information_body_row_cell">{{ intlGet("domain.table.expiresAt") }}</td>
+          <td class="domain-information_body_row_cell">{{ whoisData.expire_date.toLocaleString()  }}</td>
+        </tr>
+        <tr class="domain-information_body_row">
+          <td class="domain-information_body_row_cell">{{ intlGet("domain.table.age") }}</td>
+          <td class="domain-information_body_row_cell">{{ (whoisData.domain_age / 365) | round }}</td>
+        </tr>
+        <tr class="domain-information_body_row">
+          <td class="domain-information_body_row_cell">{{ intlGet("domain.registrarName") }}</td>
+          <td class="domain-information_body_row_cell">{{ whoisData.registrar.name or "N/A" }}</td>
+        </tr>
+        <tr class="domain-information_body_row">
+          <td class="domain-information_body_row_cell">{{ intlGet("domain.registrarUrl") }}</td>
+          <td class="domain-information_body_row_cell">{{ (whoisData.registrar.url | urlize | safe) if whoisData.registrar.url else "N/A" }}</td>
+        </tr>
+        <tr class="domain-information_body_row">
+          <td class="domain-information_body_row_cell">{{ intlGet("domain.nameservers") }}</td>
+          <td class="domain-information_body_row_cell">{{ (whoisData.nameservers | join) if whoisData.nameservers.length > 0 else "N/A" }}</td>
+        </tr>
+
+        {% set identity = {
+          label: intlGet("domain.registrant"),
+          name: whoisData.registrant.name,
+          organization: whoisData.registrant.organization,
+          street_address: whoisData.registrant.street_address,
+          city: whoisData.registrant.city,
+          region: whoisData.registrant.region,
+          country: whoisData.registrant.country,
+          zip_code: whoisData.registrant.zip_code,
+          phone: whoisData.registrant.phone,
+          email: whoisData.registrant.email
+        } %}
+        {% include "includes/identity-rows.njk" %}
+
+        {% set identity = {
+          label: intlGet("domain.admin"),
+          name: whoisData.admin.name,
+          organization: whoisData.admin.organization,
+          street_address: whoisData.admin.street_address,
+          city: whoisData.admin.city,
+          region: whoisData.admin.region,
+          country: whoisData.admin.country,
+          zip_code: whoisData.admin.zip_code,
+          phone: whoisData.admin.phone,
+          email: whoisData.admin.email
+        } %}
+        {% include "includes/identity-rows.njk" %}
+
+        {% set identity = {
+          label: intlGet("domain.technical"),
+          name: whoisData.tech.name,
+          organization: whoisData.tech.organization,
+          street_address: whoisData.tech.street_address,
+          city: whoisData.tech.city,
+          region: whoisData.tech.region,
+          country: whoisData.tech.country,
+          zip_code: whoisData.tech.zip_code,
+          phone: whoisData.tech.phone,
+          email: whoisData.tech.email
+        } %}
+        {% include "includes/identity-rows.njk" %}
+
+        {% set identity = {
+          label: intlGet("domain.billing"),
+          name: whoisData.billing.name,
+          organization: whoisData.billing.organization,
+          street_address: whoisData.billing.street_address,
+          city: whoisData.billing.city,
+          region: whoisData.billing.region,
+          country: whoisData.billing.country,
+          zip_code: whoisData.billing.zip_code,
+          phone: whoisData.billing.phone,
+          email: whoisData.billing.email
+        } %}
+        {% include "includes/identity-rows.njk" %}
+      </tbody>
+    </table>
+  {% endif %}
+{% endblock %}

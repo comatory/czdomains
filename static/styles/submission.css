@@ -1,0 +1,12 @@
+.submission__sent {
+  color: var(--color-success);
+  font-weight: bold;
+  padding: var(--padding-base);
+  background-color: var(--color-background-contrast);
+}
+
+.submission__error {
+  color: var(--color-error);
+  padding: var(--padding-base);
+  background-color: var(--color-background-contrast);
+}

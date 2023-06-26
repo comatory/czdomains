@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="{{ language }}">
+  <head>
+    <title>czdomains</title>
+    <link rel='stylesheet' href='/styles/main.css' />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block head %}{% endblock %}
+  </head>
+  <body>
+    {% include "includes/heading.njk" %}
+    <section class="page-section">
+      {% block content %}{% endblock %}
+    </section>
+  </body>

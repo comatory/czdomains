@@ -1,0 +1,8 @@
+.identity-information_body_row_cell:nth-of-type(odd) {
+  font-weight: bold;
+}
+
+.identity-information_body_row--labeled {
+  font-weight: bold;
+  text-transform: uppercase;
+}

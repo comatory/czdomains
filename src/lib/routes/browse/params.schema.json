@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "title": "Browse params schema",
+  "properties": {
+    "filter": {
+      "type": "string",
+      "enum": ["all", "numbers", "a_e", "f_j", "k_o", "p_t", "u_z"]
+    }
+  },
+  "additionalProperties": false,
+  "required": ["filter"]
+}

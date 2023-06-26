@@ -1,0 +1,59 @@
+{% extends "layout.njk" %}
+
+{% block head %}
+  <link rel="stylesheet" href="/styles/submission.css">
+{% endblock %}
+
+{% block content %}
+  {% set navigation = { isSubmit: true } %}
+  {% include "includes/navigation.njk" %}
+
+  {% if sent %}
+    <p class="submission__sent">{{ intlGet("submit.sent") }}</p>
+  {% endif %}
+
+
+  <p>
+    {{ formatMessage(intlGet("submit.rules"), {
+      url: "<a href='https://formspree.io/legal/privacy-policy/' target='_blank'>formspree.io Privacy Policy</a>"
+    }) | safe }}
+  </p>
+
+  {% if domain and not sent %}
+    {% set domainUrl = '/domain/' ~ domain.uuid %}
+    <p class="submission__error">
+      {{ formatMessage(intlGet("submit.alreadyExists"), {
+        domain: domain.value,
+        linkStart: "<a href=" ~ domainUrl ~ ">",
+        linkEnd: "</a>"
+      }) | safe }}
+    </p>
+  {% endif %}
+
+  {% if not valid and not sent %}
+    <p class="submission__error">
+      {{ intlGet("submit.notValid") }}
+    </p>
+  {% endif %}
+
+  <form
+    action="/submit/confirm"
+    method="POST"
+  >
+    <div>
+      <label>
+        {{ intlGet("submit.email") }}
+        <br />
+        <input type="email" name="email" value="{{ email if not sent else "" }}" required />
+      </label>
+    </div>
+    <div>
+      <label>
+        {{ intlGet("submit.domain") }}
+        <br />
+        <input type="text" value="{{ query if not sent else "" }}" name="domain" required />
+      </label>
+    </div>
+    <button type="submit">Send</button>
+  </form>
+{% endblock %}

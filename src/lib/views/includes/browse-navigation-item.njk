@@ -1,0 +1,8 @@
+<li class="browse-navigation__item">
+  {% set href = "/browse" ~ "/" ~ browseNavigation.path %}
+  {% if browseNavigation.path === browseNavigation.filter %}
+    <a href="{{ href }}"><strong>{{ browseNavigation.label }}</strong></a>
+  {% else %}
+    <a href="{{ href }}">{{ browseNavigation.label }}</a>
+  {% endif %}
+</li>
