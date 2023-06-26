@@ -1,11 +1,15 @@
 {% extends "layout.njk" %}
 
+{% block head %}
+  <link rel="stylesheet" href="/styles/submission.css">
+{% endblock %}
+
 {% block content %}
   {% set navigation = { isSubmit: true } %}
   {% include "includes/navigation.njk" %}
 
   {% if sent %}
-    <p>{{ intlGet("submit.sent") }}</p>
+    <p class="submission__sent">{{ intlGet("submit.sent") }}</p>
   {% endif %}
 
 
@@ -15,7 +19,7 @@
 
   {% if domain and not sent %}
     {% set domainUrl = '/domain/' ~ domain.uuid %}
-    <p>
+    <p class="submission__error">
       {{ formatMessage(intlGet("submit.alreadyExists"), {
         domain: domain.value,
         linkStart: "<a href=" ~ domainUrl ~ ">",
@@ -25,7 +29,7 @@
   {% endif %}
 
   {% if not valid and not sent %}
-    <p>
+    <p class="submission__error">
       {{ intlGet("submit.notValid") }}
     </p>
   {% endif %}
