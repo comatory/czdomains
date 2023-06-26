@@ -17,7 +17,11 @@ export function sendSubmission({
     data.append('domain', domain);
     data.append('email', email);
 
-    console.log(`Submitting form to ${url}`);
+    console.log(
+      `Submitting form to ${url} with domain: ${data.get(
+        'domain',
+      )}, email: ${data.get('email')}`,
+    );
 
     fetch(url, {
       method: 'POST',
