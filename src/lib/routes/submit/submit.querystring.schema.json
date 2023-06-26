@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "title": "Submit querystring schema",
+  "properties": {
+    "sent": {
+      "type": "boolean"
+    }
+  },
+  "additionalProperties": false,
+  "required": []
+}

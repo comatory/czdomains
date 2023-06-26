@@ -1,0 +1,53 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+  {% set navigation = { isSubmit: true } %}
+  {% include "includes/navigation.njk" %}
+
+  {% if sent %}
+    <p>{{ intlGet("submit.sent") }}</p>
+  {% endif %}
+
+
+  <p>
+    {{ intlGet("submit.rules") }}
+  </p>
+
+  {% if domain and not sent %}
+    {% set domainUrl = '/domain/' ~ domain.uuid %}
+    <p>
+      {{ formatMessage(intlGet("submit.alreadyExists"), {
+        domain: domain.value,
+        linkStart: "<a href=" ~ domainUrl ~ ">",
+        linkEnd: "</a>"
+      }) | safe }}
+    </p>
+  {% endif %}
+
+  {% if not valid and not sent %}
+    <p>
+      {{ intlGet("submit.notValid") }}
+    </p>
+  {% endif %}
+
+  <form
+    action="/submit/confirm"
+    method="POST"
+  >
+    <div>
+      <label>
+        {{ intlGet("submit.email") }}
+        <br />
+        <input type="email" name="email" value="{{ email if not sent else "" }}" required />
+      </label>
+    </div>
+    <div>
+      <label>
+        {{ intlGet("submit.domain") }}
+        <br />
+        <input type="text" value="{{ query if not sent else "" }}" name="domain" required />
+      </label>
+    </div>
+    <button type="submit">Send</button>
+  </form>
+{% endblock %}

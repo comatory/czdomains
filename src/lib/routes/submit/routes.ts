@@ -4,9 +4,14 @@ import type {
   FastifyPluginOptions,
 } from 'fastify';
 
-import bodySchema from './body.schema.json';
-import type { SubmitConfirmationBodySchema } from '../../types/schemas.d';
+import confirmBodySchema from './confirm.body.schema.json';
+import submitQueryStringSchema from './submit.querystring.schema.json';
+import type {
+  SubmitQuerystringSchema,
+  SubmitConfirmationBodySchema,
+} from '../../types/schemas.d';
 import { searchDomain } from './search-domain';
+import { sendSubmission } from './send-submission';
 
 function validateDomainInput(input: string) {
   return /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.cz$/.test(input);
@@ -17,9 +22,24 @@ function plugin(
   _options: FastifyPluginOptions,
   done: () => void,
 ) {
-  server.get('/', async (_, reply) => {
-    return reply.view('submit/submit.njk');
-  });
+  server.get<{
+    Querystring: SubmitQuerystringSchema;
+  }>(
+    '/',
+    {
+      schema: {
+        querystring: submitQueryStringSchema,
+      },
+    },
+    async (request, reply) => {
+      const sent = Boolean(request.query.sent);
+
+      return reply.view('submit.njk', {
+        valid: true,
+        sent,
+      });
+    },
+  );
 
   server.post<{
     Body: SubmitConfirmationBodySchema;
@@ -27,19 +47,29 @@ function plugin(
     '/confirm',
     {
       schema: {
-        body: bodySchema,
+        body: confirmBodySchema,
       },
     },
     async (request, reply) => {
-      const domainInput = request.body.domain;
-      const domain = await searchDomain(server.services.db, domainInput);
+      const { email, domain } = request.body;
+      const existingDomain = await searchDomain(server.services.db, domain);
+      const valid = validateDomainInput(domain);
 
-      return reply.view('submit/confirm.njk', {
+      if (existingDomain || !valid) {
+        return reply.view('submit.njk', {
+          domain: existingDomain,
+          email,
+          query: domain,
+          valid,
+        });
+      }
+
+      const submissionSent = await sendSubmission({
+        email,
         domain,
-        query: domainInput,
-        valid: validateDomainInput(domainInput),
-        formUrl: process.env.FORM_SUBMISSION_ACTION_URL,
       });
+
+      return reply.redirect(`/submit?sent=${submissionSent}`);
     },
   );
 

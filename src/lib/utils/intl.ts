@@ -82,14 +82,14 @@ const localisations = {
       submit: {
         rules:
           'If you wish to add a domain that is missing in our database, please use the form below. The submission will be manually approved by the administrator.',
-        confirmFormLabel: 'Please type domain only for confirmation:',
         domain: 'Domain',
         confirmedFormLabel: 'You are allowed to submit the domain.',
-        notConfirmed:
-          'The domain {boldStart}{domain}{boldEnd} could not be confirmed.',
-        tryAgain: 'Try again',
+        alreadyExists:
+          'The domain {linkStart}{domain}{linkEnd} is already present in the database.',
         notValid:
           'The format of the domain is not allowed. Do not include "http" or subdomains - just plain domain name. Only ".cz" domains allowed.',
+        email: 'Email',
+        sent: 'Your domain was submitted.',
       },
     },
     cz: {
@@ -168,14 +168,13 @@ const localisations = {
       submit: {
         rules:
           'Pokud byste rádi přidali do databáze chybějící doménu, prosím využijte tento formulář. Přidání domény musí být manuálně shváleno administrátorem.',
-        confirmFormLabel: 'Prosím napište název domény pro potvrzení:',
         domain: 'Doména',
-        confirmedFormLabel: 'Povoleno přidat doménu.',
-        notConfirmed:
-          'Doména {boldStart}{domain}{boldEnd} nemohla být potvrzena.',
-        tryAgain: 'Zkusit znovu',
+        alreadyExists:
+          'Doména {linkStart}{domain}{linkEnd} je již uložena v naší databázi.',
         notValid:
           'Formát domény není povolen. Neuvádějte "http" nebo subdomény - pouze název domény. Povoleny jsou pouze domény s koncovkou ".cz".',
+        email: 'Email',
+        sent: 'Your domain was submitted.',
       },
     },
   },
