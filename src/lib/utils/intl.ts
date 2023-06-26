@@ -34,8 +34,10 @@ const localisations = {
         },
         attributions: {
           title: 'Attributions',
-          whois: 'czdomains is using IP2Location.io {source} web service.',
+          whois:
+            '{emStart}czdomains{emEnd} is using IP2Location.io {source} web service.',
           icons: 'The icons come from {source}.',
+          submission: 'Submitting domains is possible thanks to {source}.',
         },
         footer: {
           lastUpdate: 'Latest addition: {date}.',
@@ -81,7 +83,7 @@ const localisations = {
       },
       submit: {
         rules:
-          'If you wish to add a domain that is missing in our database, please use the form below. The submission will be manually approved by the administrator.',
+          'If you wish to add a domain that is missing in our database, please use the form below. The submission will be manually approved by the administrator. I do not collect your emails, they are only used for anti-spam purposes and I delete them right away. Please refer to {url} for more information.',
         domain: 'Domain',
         confirmedFormLabel: 'You are allowed to submit the domain.',
         alreadyExists:
@@ -120,8 +122,10 @@ const localisations = {
         },
         attributions: {
           title: 'Zdoje',
-          whois: 'czdomains používají IP2Location.io {source} službu.',
+          whois:
+            '{emStart}czdomains{emEnd} používají IP2Location.io {source} službu.',
           icons: 'Ikony pochází z {source}.',
+          submission: 'Přidávání domén je možné díky {source}.',
         },
         footer: {
           lastUpdate: 'Poslední příspevěk: {date}.',
@@ -167,7 +171,7 @@ const localisations = {
       },
       submit: {
         rules:
-          'Pokud byste rádi přidali do databáze chybějící doménu, prosím využijte tento formulář. Přidání domény musí být manuálně shváleno administrátorem.',
+          'Pokud byste rádi přidali do databáze chybějící doménu, prosím využijte tento formulář. Přidání domény musí být manuálně shváleno administrátorem. Vaše emaily nejsou sbírány k marketingovým účelům, pouze slouží k protispamové kontrole a jsou posléze ihned mazány. Pro víc informací si přečtěte {url}.',
         domain: 'Doména',
         alreadyExists:
           'Doména {linkStart}{domain}{linkEnd} je již uložena v naší databázi.',

@@ -14,7 +14,9 @@
 
 
   <p>
-    {{ intlGet("submit.rules") }}
+    {{ formatMessage(intlGet("submit.rules"), {
+      url: "<a href='https://formspree.io/legal/privacy-policy/' target='_blank'>formspree.io Privacy Policy</a>"
+    }) | safe }}
   </p>
 
   {% if domain and not sent %}

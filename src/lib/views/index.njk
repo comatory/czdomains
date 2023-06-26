@@ -46,14 +46,19 @@
   <p>
     {{ formatMessage(
          intlGet("home.attributions.whois"), {
-           source: "<a href=https://www.ip2location.io>IP geolocation</a>"
+           source: "<a href=https://www.ip2location.io>IP geolocation</a>",
+           emStart: "<em>",
+           emEnd: "</em>"
          }) | safe }}
-  </p>
-  <p>
     {{ formatMessage(
          intlGet("home.attributions.icons"), {
            source: "<a href='https://archive.org/details/html-clipart-CD/HTML_CLIPART/'>HTML Clipart by JAL Tech (archive link)</a>"
          }) | safe }}
+    {{ formatMessage(
+         intlGet("home.attributions.submission"), {
+           source: "<a href='https://formspree.io/'>formspree.io</a>"
+         }) | safe }}
+
   </p>
   <hr/>
   <div class="footer">
