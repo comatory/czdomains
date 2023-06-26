@@ -30,15 +30,24 @@
     </p>
 
     <form
-      action="/submit/tbd"
+      action="{{ formUrl }}"
       method="POST"
     >
-      <label>
-        {{ intlGet("submit.domain") }}
-        <br />
-        <input type="text" value="{{ query }}" name="domain" />
-        <input type="submit" />
-      </label>
+      <div>
+        <label>
+          Your email
+          <br />
+          <input type="email" name="email" />
+        </label>
+      </div>
+      <div>
+        <label>
+          {{ intlGet("submit.domain") }}
+          <br />
+          <input type="text" value="{{ query }}" name="domain" readonly />
+        </label>
+      </div>
+      <button type="submit">Send</button>
     </form>
   {% endif %}
 {% endblock %}

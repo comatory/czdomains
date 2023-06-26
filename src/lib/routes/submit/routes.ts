@@ -38,6 +38,7 @@ function plugin(
         domain,
         query: domainInput,
         valid: validateDomainInput(domainInput),
+        formUrl: process.env.FORM_SUBMISSION_ACTION_URL,
       });
     },
   );
