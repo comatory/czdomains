@@ -42,6 +42,7 @@ const localisations = {
         footer: {
           lastUpdate: 'Latest addition: {date}.',
           language: 'Language',
+          source: '{linkStart}Source code{linkEnd}',
         },
       },
       pagination: {
@@ -121,7 +122,7 @@ const localisations = {
             'První česká WWW stránka patřila české komunitě fyziků vysokých energií. Stránka byla spuštěna 6. června 1993. Rekonstruovanou verzi můžete vidět zde: {source}.',
         },
         attributions: {
-          title: 'Zdoje',
+          title: 'Zdroje',
           whois:
             '{emStart}czdomains{emEnd} používají IP2Location.io {source} službu.',
           icons: 'Ikony pochází z {source}.',
@@ -130,6 +131,7 @@ const localisations = {
         footer: {
           lastUpdate: 'Poslední příspevěk: {date}.',
           language: 'Jazyk',
+          source: '{linkStart}Zdrojový kód{linkEnd}',
         },
       },
       pagination: {

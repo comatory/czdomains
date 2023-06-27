@@ -62,12 +62,20 @@
   </p>
   <hr/>
   <div class="footer">
-    <em>
-      {% set lastImportDate = lastImport.toLocaleString() if lastImport else "N/A" %}
-      {{ formatMessage(intlGet("home.footer.lastUpdate"), {
-        date: lastImportDate
-      }) }}
-    </em>
+    <div>
+      <em>
+        {% set lastImportDate = lastImport.toLocaleString() if lastImport else "N/A" %}
+        {{ formatMessage(intlGet("home.footer.lastUpdate"), {
+          date: lastImportDate
+        }) }}
+      </em>
+      <span>
+        {{ formatMessage(intlGet("home.footer.source"), {
+          linkStart: "<a href='https://github.com/comatory/czdomains' target='_blank'>",
+          linkEnd: "</a>"
+        }) | safe }}
+      </span>
+    </div>
     <span>
       <form
         action="/language"
