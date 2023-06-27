@@ -49,6 +49,12 @@ function plugin(
       schema: {
         body: confirmBodySchema,
       },
+      config: {
+        rateLimit: {
+          max: 1,
+          timeWindow: '1 minute',
+        },
+      },
     },
     async (request, reply) => {
       const { email, domain } = request.body;
