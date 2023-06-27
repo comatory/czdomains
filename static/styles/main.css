@@ -1,16 +1,24 @@
 @import url('variables.css');
 @import url('common/index.css');
 
+* {
+  box-sizing: border-box;
+}
+
 html {
   margin: 0;
   padding: 0;
   background-color: var(--color-background);
   font-size: var(--font-base-absolute);
   font-family: var(--font-family);
+  max-width: 1024px;
+  box-sizing: border-box;
 }
 
 body {
+  width: 100%;
   padding: var(--padding-base);
+  margin: 0;
   font-size: var(--font-base);
 }
 

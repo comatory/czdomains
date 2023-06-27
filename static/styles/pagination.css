@@ -18,3 +18,9 @@
   max-width: 4rem;
   width: fit-content;
 }
+
+@media (max-width: 500px) {
+  .pagination {
+    flex-wrap: wrap;
+  }
+}
