@@ -24,3 +24,14 @@
 .navigation-list__item__link__icon {
   padding-right: var(--padding-base);
 }
+
+@media (max-width: 500px) {
+  .navigation {
+    flex-wrap: wrap;
+  }
+
+  .navigation-list__item__link__icon {
+    width: 15px;
+    height: auto;
+  }
+}
