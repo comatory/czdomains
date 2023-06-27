@@ -1,7 +1,11 @@
 # czdomains
 
+![screenshot of the application](./doc/screenshot.png)
+
 Database of registered `.cz` (Czechia) TLD domains. Contains frontend which can
 be queried. Each entry can look up an archived content on archive.org and look-up its WHOIS data.
+
+An instance running at [czdomains.synacek.xyz](https://czdomains.synacek.xyz).
 
 ## Prerequisites
 
