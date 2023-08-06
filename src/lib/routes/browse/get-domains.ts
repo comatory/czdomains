@@ -19,6 +19,10 @@ const BROWSE_FILTER_MAP: Record<
   u_z: { start: 'u', end: 'z' },
 } as const;
 
+function getBoundedEndCharacter(text: string): string {
+  return String.fromCharCode(text.charCodeAt(0) + 1);
+}
+
 export async function getDomains(
   db: Database,
   {
@@ -53,7 +57,7 @@ export async function getDomains(
       $offset: page * size,
       $limit: size,
       $start: start || undefined,
-      $end: end || undefined,
+      $end: end.length > 0 ? getBoundedEndCharacter(end) : undefined,
     },
   );
   const domainRows = rows.map((row) => domain.parse(row));
