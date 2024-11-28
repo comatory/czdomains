@@ -14,6 +14,12 @@ const cliOptions = yargs(process.argv.slice(2))
     description: 'Path to file with domain names',
     demandOption: true,
   })
+  .options('dbFilePath', {
+    alias: 'db',
+    type: 'string',
+    description: 'Path to the sqlite database file',
+    demandOption: false,
+  })
   .parseSync();
 
 const HTTPS_RE = /^http(s?):\/\//i;
@@ -110,7 +116,7 @@ void (async ({ filePath }: typeof cliOptions) => {
 
   console.info('Connecting to database...');
 
-  const dbPath = join(__dirname, '..', './sqlite.db');
+  const dbPath = join(__dirname, '..', cliOptions.dbFilePath ?? './sqlite.db');
   const db = await open<sqlite3.Database, sqlite3.Statement>({
     filename: dbPath,
     driver: sqlite3.Database,

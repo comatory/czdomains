@@ -1,4 +1,6 @@
 sqlite.db
 node_modules/
 dist/
+data/*
+!data/.gitkeep
 .env

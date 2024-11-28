@@ -15,6 +15,12 @@ const cliOptions = yargs(process.argv.slice(2))
     type: 'boolean',
     description: 'List all migrations',
   })
+  .options('dbFilePath', {
+    alias: 'db',
+    type: 'string',
+    description: 'Path to the sqlite database file',
+    require: false,
+  })
   .help()
   .parseSync();
 
@@ -64,7 +70,16 @@ async function migrate(client: Database, version?: string) {
 
 void (async (options: typeof cliOptions) => {
   verbose();
-  const client = new Database(join(__dirname, '..', 'sqlite.db'));
+
+  if (options.filePath) {
+    console.info(`Override detected. Using database file: ${options.filePath}`);
+  }
+
+  const dbPath = options.filePath
+    ? join(__dirname, '..', options.filePath)
+    : join(__dirname, '..', 'sqlite.db');
+
+  const client = new Database(dbPath);
 
   try {
     if (options.list) {

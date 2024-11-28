@@ -6,6 +6,8 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "prebuild": "npm run clean",
+    "prestart:ci": "DB_PATH=$(node -e 'console.log(require(\"minidotenv\")()(\"DB_PATH\"))'); tsx src/migrate.ts --dbFilePath=$DB_PATH",
+    "start:ci": "NODE_ENV=production ts-node --transpile-only src/index.ts",
     "start": "NODE_ENV=production ts-node --transpile-only src/index.ts",
     "dev": "NODE_ENV=development ts-node-dev --respawn --transpile-only src/index.ts",
     "dev:debug": "NODE_ENV=development ts-node-dev --inspect-brk --respawn --transpile-only src/index.ts",
@@ -24,7 +26,7 @@
     "url": "git+https://github.com/comatory/czdomains.git"
   },
   "engines": {
-    "node": ">= 18.6.0"
+    "node": "18.20.5"
   },
   "keywords": [
     "server",

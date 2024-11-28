@@ -15,8 +15,8 @@ import { submitPlugin } from './routes/submit/routes';
 /**
  * Function that builds and runs the Fastify server.
  */
-export async function createApp() {
-  const server = await configureServices(fastify());
+export async function createApp(options: { dbFilePath: string | undefined }) {
+  const server = await configureServices(fastify(), options);
 
   configureParsers(server);
   configureHooks(server);
