@@ -4,9 +4,9 @@ import { cwd } from 'node:process';
 import { open } from 'sqlite';
 import sqlite3 from 'sqlite3';
 
-export async function createDatabase() {
+export async function createDatabase({ dbFilePath }: { dbFilePath?: string }) {
   const db = await open({
-    filename: join(cwd(), 'sqlite.db'),
+    filename: join(cwd(), dbFilePath ?? 'sqlite.db'),
     driver: sqlite3.Database,
   });
 
