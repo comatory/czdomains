@@ -75,8 +75,8 @@ void (async (options: typeof cliOptions) => {
     console.info(`Override detected. Using database file: ${options.filePath}`);
   }
 
-  const dbPath = options.filePath
-    ? join(__dirname, '..', options.filePath)
+  const dbPath = options.dbFilePath
+    ? join(__dirname, '..', options.dbFilePath)
     : join(__dirname, '..', 'sqlite.db');
 
   const client = new Database(dbPath);
